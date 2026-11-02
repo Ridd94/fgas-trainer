@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>F-Gas Cat I Trainer</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one centred column, a sticky top bar, one card per screen. Cold side blue accent, hot side amber for the exam mode. */
+:root{
+  --bg:#eef2f4; --surface:#ffffff; --surface2:#e3e9ec; --fg:#15232b; --muted:#5b6b75; --line:#cdd6db;
+  --accent:#0b6e8f; --accent-ink:#ffffff; --amber:#b85f05; --amber-soft:#fff1df;
+  --good:#1b7f4a; --good-soft:#e2f3e8; --bad:#b8322b; --bad-soft:#fbe6e4;
+  --display:"Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;
+  --body:"Barlow","Helvetica Neue",Arial,sans-serif;
+  --mono:"JetBrains Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0f171c; --surface:#172229; --surface2:#1f2d35; --fg:#e6edf0; --muted:#96a6ae; --line:#2a3a43;
+  --accent:#4fb5d6; --accent-ink:#06202b; --amber:#f0a33b; --amber-soft:#3a2a12;
+  --good:#4cc081; --good-soft:#143826; --bad:#ef6b61; --bad-soft:#3f1d1a; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0f171c; --surface:#172229; --surface2:#1f2d35; --fg:#e6edf0; --muted:#96a6ae; --line:#2a3a43;
+  --accent:#4fb5d6; --accent-ink:#06202b; --amber:#f0a33b; --amber-soft:#3a2a12;
+  --good:#4cc081; --good-soft:#143826; --bad:#ef6b61; --bad-soft:#3f1d1a; color-scheme:dark }
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.wrap{max-width:720px;margin:0 auto}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);margin:0 calc(-1*max(16px,env(safe-area-inset-left,0px))) 20px calc(-1*max(16px,env(safe-area-inset-right,0px)));
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:10px;border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:.01em;display:flex;align-items:center;gap:10px;background:none;border:0;color:var(--fg);padding:0;cursor:pointer}
+.brand .tag{font-family:var(--mono);font-size:12px;font-weight:500;background:var(--accent);color:var(--accent-ink);padding:2px 7px;border-radius:4px}
+.stat{font-family:var(--mono);font-size:13px;color:var(--muted);white-space:nowrap}
+h1,h2,h3{font-family:var(--display);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:34px;font-weight:700}
+h2{font-size:24px;font-weight:700}
+h3{font-size:18px;font-weight:600}
+p{margin:0}
+.muted{color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px}
+.stack{display:flex;flex-direction:column;gap:16px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+button{font-family:inherit;font-size:16px;cursor:pointer}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:11px 18px;border-radius:8px;font-weight:600}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.amber{background:var(--amber);color:#fff;border-color:var(--amber)}
+.btn:focus-visible,.opt:focus-visible,.term:focus-visible,.chip:focus-visible,.brand:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.mode{border:1px solid var(--line);border-radius:10px;padding:16px;background:var(--surface);text-align:left;color:var(--fg);display:flex;flex-direction:column;gap:6px;min-width:0}
+.mode[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 2px var(--accent)}
+.mode.exam[aria-pressed="true"]{border-color:var(--amber);box-shadow:inset 0 0 0 2px var(--amber)}
+.mode .t{font-family:var(--display);font-size:20px;font-weight:700}
+.mode .d{font-size:14px;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;padding:6px 12px;font-size:14px;font-weight:500}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.chip .n{font-family:var(--mono);font-size:12px;opacity:.75;margin-left:4px}
+.progress{height:6px;background:var(--surface2);border-radius:3px;overflow:hidden}
+.progress>i{display:block;height:100%;background:var(--accent);width:0;transition:width .25s}
+.exam .progress>i{background:var(--amber)}
+.qmeta{display:flex;justify-content:space-between;gap:10px;font-family:var(--mono);font-size:13px;color:var(--muted)}
+.topic{color:var(--accent);font-weight:600;font-family:var(--body);font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+.qtext{font-size:21px;font-weight:500;line-height:1.35}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:8px;padding:12px 14px;font-size:17px;line-height:1.4;width:100%}
+.opt .k{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--muted);border:1px solid var(--line);border-radius:4px;min-width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;flex:none;margin-top:1px}
+.opt[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 2px var(--accent)}
+.opt[aria-pressed="true"] .k{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.opt.right{border-color:var(--good);background:var(--good-soft)}
+.opt.right .k{background:var(--good);color:#fff;border-color:var(--good)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.wrong .k{background:var(--bad);color:#fff;border-color:var(--bad)}
+.opt:disabled{cursor:default}
+.feedback{border-radius:8px;padding:14px 16px;border:1px solid;display:flex;flex-direction:column;gap:6px}
+.feedback.ok{border-color:var(--good);background:var(--good-soft)}
+.feedback.no{border-color:var(--bad);background:var(--bad-soft)}
+.feedback .v{font-family:var(--display);font-size:20px;font-weight:700}
+.feedback.ok .v{color:var(--good)} .feedback.no .v{color:var(--bad)}
+.feedback .why{font-size:16px}
+.score{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.tile{background:var(--surface2);border-radius:8px;padding:12px 14px;min-width:0}
+.tile .b{font-family:var(--display);font-size:32px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.tile .l{font-size:13px;color:var(--muted);margin-top:4px}
+.pass{color:var(--good)} .fail{color:var(--bad)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+td.num{text-align:right;font-family:var(--mono);font-size:14px}
+.bar{height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;min-width:80px}
+.bar>i{display:block;height:100%;background:var(--good)}
+.review{display:flex;flex-direction:column;gap:12px}
+.rv{border:1px solid var(--line);border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:6px;font-size:15px}
+.rv .q{font-weight:600;font-size:16px}
+.rv .you{color:var(--bad)} .rv .ans{color:var(--good);font-weight:600}
+.note{font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+.footer-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between;align-items:center}
+.kbd{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.term{display:inline;cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:var(--accent);text-decoration-thickness:2px;text-underline-offset:3px;border-radius:2px}
+.term:hover{background:var(--surface2)}
+.sheet-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:20;display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:var(--surface);color:var(--fg);border-radius:14px 14px 0 0;width:100%;max-width:720px;padding:18px max(16px,env(safe-area-inset-left,0px)) calc(18px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:8px;max-height:70vh;overflow:auto;box-shadow:0 -8px 30px rgba(0,0,0,.2)}
+.sheet .h{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.sheet h3{font-size:22px}
+.sheet .x{border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;width:36px;height:36px;font-size:18px;flex:none}
+.sheet .d{font-size:16px}
+.sheet .see{font-size:14px;color:var(--muted)}
+@media (min-width:600px){ .sheet-bg{align-items:center} .sheet{border-radius:14px;max-height:80vh} }
+.search{width:100%;font:inherit;font-size:17px;padding:11px 14px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--fg)}
+.gl{display:flex;flex-direction:column;gap:0}
+.gl .g{padding:12px 0;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:4px}
+.gl .g b{font-family:var(--display);font-size:18px;font-weight:600}
+.gl .g span{font-size:15px}
+.hdr-actions{display:flex;align-items:center;gap:10px}
+.btn.small{padding:7px 12px;font-size:14px}
+@media (max-width:600px){ .kbd{display:none} }
+@media (max-width:480px){ h1{font-size:28px} .qtext{font-size:19px} .opt{font-size:16px} body{font-size:16px} .stat{display:none} }
+@media (prefers-reduced-motion: reduce){ .progress>i{transition:none} }
+</style>
+</head>
+<body>
+
+<header><div class="wrap">
+  <button class="brand" id="home-btn" type="button">F-Gas Cat I Trainer <span class="tag">2079-11</span></button>
+  <div class="hdr-actions"><div class="stat" id="hdr-stat"></div><button type="button" class="btn small" id="gl-btn">Glossary</button></div>
+</div></header>
+
+<main class="wrap" id="app"></main>
+
+<script>
+/* ---------- Question bank ---------- */
+const T = {
+  R:"Regulations & certification", G:"Refrigerants & GWP", L:"Leak checking",
+  V:"Recovery & disposal", I:"Installation & commissioning", S:"System operation",
+  H:"Health & safety", D:"Records & operator duties"
+};
+const Q = [
+// Regulations
+{t:"R",q:"What is the main purpose of the F-Gas Regulation?",a:["To reduce emissions of fluorinated greenhouse gases and limit their use","To protect the ozone layer from chlorine-based refrigerants","To set minimum energy efficiency ratings for air conditioning","To control the price of refrigerant cylinders"],c:0,e:"The F-Gas Regulation (EU 517/2014, kept in GB law after Brexit) exists to cut emissions of fluorinated greenhouse gases such as HFCs. Ozone protection is the job of the separate ODS Regulation."},
+{t:"R",q:"Which regulation controls ozone depleting substances such as R22?",a:["The ODS Regulation (EC 1005/2009 as kept in GB law)","The F-Gas Regulation","The Pressure Equipment Regulations","The Building Regulations Part L"],c:0,e:"R22 is an HCFC containing chlorine, so it is an ozone depleting substance. It is controlled by the ODS Regulation, not the F-Gas Regulation, although both are covered in the 2079 syllabus."},
+{t:"R",q:"Which F-gas personnel category allows you to carry out all activities (leak checking, recovery, installation, maintenance and decommissioning) on any charge size?",a:["Category I","Category II","Category III","Category IV"],c:0,e:"Category I is the full qualification (2079-11). The other categories are restricted either by activity or by charge size."},
+{t:"R",q:"A Category II certificate holder may install, maintain and recover refrigerant from systems containing:",a:["Less than 3 kg of F-gas (6 kg if hermetically sealed and labelled as such)","Any charge size, as long as it is below 500 tonnes CO2e","Less than 10 kg of F-gas","Only hermetically sealed systems"],c:0,e:"Category II covers leak checks without breaking into the circuit on any system, but install, maintenance, service and recovery only on systems under 3 kg (6 kg hermetically sealed and labelled)."},
+{t:"R",q:"A Category IV certificate permits which activity?",a:["Leak checking only, without breaking into the refrigerant circuit","Recovery from systems under 3 kg","Installation of small split systems","Brazing of refrigerant pipework"],c:0,e:"Category IV is leak checking only, and only by methods that do not break into the circuit. Category III is recovery from small systems."},
+{t:"R",q:"A Category III certificate permits which activity?",a:["Recovery of refrigerant from systems containing less than 3 kg (6 kg hermetic)","Leak checking of any system","Installation of systems under 3 kg","Maintenance of systems up to 50 tonnes CO2e"],c:0,e:"Category III allows recovery only, from small systems (under 3 kg, or under 6 kg if hermetically sealed and labelled). It does not permit installation or maintenance."},
+{t:"R",q:"When was the use of recycled or reclaimed R22 for servicing finally banned?",a:["1 January 2015","1 January 2010","1 January 2020","1 January 2025"],c:0,e:"Virgin R22 was banned for servicing from 1 January 2010. Recycled and reclaimed R22 could be used until 31 December 2014, so the total ban started 1 January 2015. Systems may still run on their existing charge but cannot be topped up."},
+{t:"R",q:"Since 1 January 2020 it has been prohibited to service or maintain equipment with a charge of 40 tonnes CO2e or more using:",a:["Virgin HFCs with a GWP of 2500 or more","Any HFC refrigerant","Reclaimed HFCs of any GWP","Natural refrigerants"],c:0,e:"The 2020 service ban applies to virgin (new) HFCs with a GWP of 2500 or more, such as R404A, in systems of 40 tonnes CO2e or more. Recycled or reclaimed high-GWP refrigerant may still be used until 2030. The ban does not apply to equipment designed to cool below minus 50 degrees C."},
+{t:"R",q:"How does the HFC phase-down work?",a:["A quota system limits the amount of HFC, measured in CO2 equivalent, that producers and importers may place on the market each year","Each contractor is allowed a fixed number of kilograms per year","All HFC refrigerants are banned from a single date","Only refrigerants with a GWP above 2500 are restricted"],c:0,e:"The phase-down works through quotas on producers and importers, measured in tonnes CO2e. The quota steps down over time, which pushes the market towards lower-GWP refrigerants and makes high-GWP gas scarce and expensive."},
+{t:"R",q:"Who enforces the F-Gas Regulation in Great Britain?",a:["The environmental regulator (Environment Agency in England, Natural Resources Wales, SEPA in Scotland)","The Health and Safety Executive","City and Guilds","The local fire authority"],c:0,e:"The Environment Agency enforces F-gas in England, with Natural Resources Wales and SEPA in Wales and Scotland. The HSE deals with health and safety and pressure systems, not F-gas compliance."},
+{t:"R",q:"A business that installs, services, repairs or decommissions stationary refrigeration, air conditioning or heat pump equipment containing F-gas must hold:",a:["A company (undertaking) certificate from a certification body such as REFCOM, in addition to its engineers holding personnel certificates","Only personnel certificates for each engineer","A licence from the local council","An ISO 9001 certificate"],c:0,e:"Both are needed. Individual engineers need a personnel certificate (such as 2079-11) and the business itself must hold a company certificate from an approved body such as REFCOM, Quidos or Bureau Veritas."},
+{t:"R",q:"Non-hermetically sealed equipment pre-charged with HFCs (for example a split air conditioning system) may only be sold to an end user if:",a:["There is evidence that it will be installed by a certified person or company","The buyer signs a disclaimer","The charge is below 3 kg","The GWP is below 2500"],c:0,e:"The regulation requires evidence that installation will be carried out by a certified undertaking. This stops uncertified people fitting pre-charged splits and losing refrigerant."},
+{t:"R",q:"What must the label on equipment containing F-gas state?",a:["That it contains F-gas, the refrigerant designation, the charge in kg and its CO2 equivalent, and the GWP","Only the refrigerant name","The installer's phone number and the date of installation","The energy rating of the equipment"],c:0,e:"Labels must say the equipment contains fluorinated greenhouse gases, give the refrigerant designation (e.g. R410A), the quantity in kg and tonnes CO2e, and the GWP. If gas is added on site the label must be updated."},
+{t:"R",q:"From 1 January 2020, new stationary refrigeration equipment was banned from containing HFCs with a GWP of:",a:["2500 or more","150 or more","750 or more","1000 or more"],c:0,e:"New stationary refrigeration equipment with HFCs of GWP 2500 or more (such as R404A) has been banned since 2020, except equipment designed to cool products below minus 50 degrees C."},
+{t:"R",q:"From 1 January 2025, single split air conditioning systems containing less than 3 kg of F-gas are banned if the refrigerant has a GWP of:",a:["750 or more","2500 or more","150 or more","2088 or more"],c:0,e:"The 2025 ban targets small single splits using refrigerants with GWP of 750 or more, which rules out R410A (GWP 2088). R32 (GWP 675) is below the limit, which is why the market moved to it."},
+{t:"R",q:"Domestic refrigerators and freezers have been banned from containing HFCs with a GWP of 150 or more since:",a:["1 January 2015","1 January 2020","1 January 2010","1 January 2025"],c:0,e:"Since 2015 new domestic fridges and freezers cannot use HFCs with a GWP of 150 or more. Most now use R600a (isobutane), a hydrocarbon with a GWP of about 3."},
+{t:"R",q:"Which of these best describes a hermetically sealed system under the F-Gas Regulation?",a:["All refrigerant-containing parts are made tight by welding, brazing or a similar permanent connection, and the tested leak rate is below 3 g per year","Any system with a sealed compressor","A system that has never been opened since manufacture","A system with no service ports"],c:0,e:"The definition requires permanent joints (brazed or welded, though capped valves and service ports are allowed) and a leak rate under 3 g per year at a quarter of the maximum allowable pressure. Such systems are given relaxed leak check thresholds when labelled as hermetically sealed."},
+{t:"R",q:"Under the F-Gas Regulation, who is the 'operator' of a piece of equipment?",a:["The person or company exercising actual power over the technical functioning of the equipment, normally the owner","The engineer who services it","The manufacturer","The certification body"],c:0,e:"The operator is whoever has real control over the equipment, usually the owner or the business running the premises. The operator carries the legal duties for leak checks, records and using certified people, even though the engineer does the work."},
+{t:"R",q:"Which of these is an F-gas?",a:["R134a (an HFC)","R22 (an HCFC)","R290 (propane)","R744 (carbon dioxide)"],c:0,e:"F-gases are fluorinated greenhouse gases: HFCs, PFCs and SF6. R134a is an HFC. R22 is an ozone depleting HCFC covered by the ODS Regulation, and propane and CO2 are natural refrigerants outside both."},
+{t:"R",q:"Is it an offence to deliberately release F-gas to atmosphere?",a:["Yes. Intentional release is prohibited and operators must take all precautions to prevent unintentional release","No, provided the quantity is below 3 kg","No, as long as it is done outdoors","Only if the GWP is above 2500"],c:0,e:"Deliberate venting is prohibited. Operators and technicians must take all technically and economically feasible precautions to prevent leaks, and any detected leak must be repaired without undue delay."},
+
+// Refrigerants & GWP
+{t:"G",q:"What is the Global Warming Potential (GWP) of carbon dioxide (R744)?",a:["1","0","100","10"],c:0,e:"GWP is measured relative to CO2 over 100 years, so CO2 has a GWP of 1 by definition. Everything else is compared against it."},
+{t:"G",q:"What is the GWP of R410A (the value used in the F-Gas Regulation)?",a:["2088","675","1430","3922"],c:0,e:"R410A has a GWP of 2088 (AR4 value, which the regulation uses). R32 is 675, R134a is 1430 and R404A is 3922."},
+{t:"G",q:"What is the GWP of R404A?",a:["3922","2088","1810","1430"],c:0,e:"R404A has a GWP of 3922, which is why it is caught by the 2500 GWP bans and the 2020 service ban on virgin gas in systems of 40 tonnes CO2e or more."},
+{t:"G",q:"What is the GWP of R134a?",a:["1430","675","2088","3922"],c:0,e:"R134a has a GWP of 1430. It is a pure HFC (not a blend) with no temperature glide."},
+{t:"G",q:"What is the GWP of R32?",a:["675","1430","2088","4"],c:0,e:"R32 has a GWP of 675, roughly a third of R410A, which is why it replaced R410A in small splits. It is A2L (mildly flammable)."},
+{t:"G",q:"A system contains 5 kg of R410A. What is its charge in tonnes CO2 equivalent?",a:["10.44 tonnes","5 tonnes","2.088 tonnes","104.4 tonnes"],c:0,e:"CO2e = charge in kg multiplied by GWP, divided by 1000 to give tonnes. 5 x 2088 = 10,440 kg = 10.44 tonnes CO2e. That is above 5 tonnes, so the system needs a leak check at least every 12 months."},
+{t:"G",q:"How many kilograms of R404A equal the 5 tonne CO2e leak check threshold?",a:["About 1.27 kg","About 5 kg","About 3 kg","About 12.7 kg"],c:0,e:"5000 kg CO2e divided by GWP 3922 = 1.27 kg. Even a small R404A system reaches the first leak check threshold."},
+{t:"G",q:"A system holds 3 kg of R134a. Does it reach the 5 tonne CO2e threshold for mandatory periodic leak checks?",a:["No. 3 x 1430 = 4290 kg, which is 4.29 tonnes CO2e","Yes. Any system over 3 kg is caught","Yes, because R134a is an HFC","Only if it is not hermetically sealed"],c:0,e:"3 kg x 1430 = 4290 kg = 4.29 tonnes CO2e, which is below 5 tonnes. No mandatory periodic leak check interval applies, but leaks must still be prevented and repaired and only certified people may work on it."},
+{t:"G",q:"Which of these is an HFO refrigerant?",a:["R1234yf","R410A","R290","R717"],c:0,e:"R1234yf and R1234ze are hydrofluoro-olefins (HFOs). They have very low GWP (around 4 or less) but are A2L mildly flammable. R410A is an HFC blend, R290 is propane and R717 is ammonia."},
+{t:"G",q:"Which of these is a natural refrigerant?",a:["R290 (propane)","R134a","R407C","R1234ze"],c:0,e:"Natural refrigerants include hydrocarbons such as R290 (propane) and R600a (isobutane), R744 (CO2) and R717 (ammonia). They are not F-gases but each has its own safety hazards, in this case high flammability (A3)."},
+{t:"G",q:"R22 is classed as which type of refrigerant?",a:["HCFC: it contains chlorine and depletes the ozone layer","HFC: a fluorinated greenhouse gas","HFO: a low-GWP synthetic","Hydrocarbon"],c:0,e:"R22 is a hydrochlorofluorocarbon. The chlorine gives it an ozone depletion potential, so it is controlled by the ODS Regulation. It also has a high GWP of 1810."},
+{t:"G",q:"Why must zeotropic blends such as R407C be charged as a liquid from the cylinder?",a:["The components boil at different temperatures, so charging vapour would change the blend composition","Liquid charging is faster and nothing else matters","Vapour charging would freeze the cylinder","Liquid charging reduces the GWP"],c:0,e:"Zeotropic (R400 series) blends have components with different boiling points. Taking vapour off the cylinder removes the more volatile components first, leaving the wrong mix in both cylinder and system. Always charge liquid, metered carefully so liquid does not reach the compressor."},
+{t:"G",q:"What is 'temperature glide'?",a:["The difference between the bubble point and dew point of a zeotropic blend at a given pressure","The drop in temperature across the expansion valve","The rise in temperature across the compressor","The change in cylinder temperature while charging"],c:0,e:"Zeotropic blends do not boil or condense at one fixed temperature. At a given pressure they start to boil at the bubble point and finish at the dew point. That spread is the glide. Use the dew point for superheat and the bubble point for subcooling."},
+{t:"G",q:"Which numbering series is used for azeotropic blends?",a:["R500 series (e.g. R507A)","R400 series (e.g. R407C)","R700 series (e.g. R717)","R600 series (e.g. R600a)"],c:0,e:"Azeotropic blends behave like a single refrigerant and are numbered in the 500 series. Zeotropic blends are 400 series. 700 series are inorganic (ammonia, CO2) and 600 series are hydrocarbons such as isobutane."},
+{t:"G",q:"In the safety classification A2L, what does each part mean?",a:["A = lower toxicity, 2L = lower flammability with a low burning velocity","A = flammable, 2L = low toxicity","A = ammonia based, 2L = class 2 liquid","A = approved, 2L = two litre charge limit"],c:0,e:"The letter is toxicity (A lower, B higher). The number is flammability: 1 no flame propagation, 2L lower flammability, 2 flammable, 3 higher flammability. R32 and R1234yf are A2L, R290 is A3, R134a and R410A are A1, ammonia is B2L."},
+{t:"G",q:"Which type of oil is used with HFC refrigerants such as R134a and R410A?",a:["Polyol ester (POE) oil, which is hygroscopic","Mineral oil","Engine oil","Vegetable oil"],c:0,e:"HFCs do not mix with mineral oil, so POE oil is used. POE is highly hygroscopic (absorbs moisture from the air), so oil containers must be kept sealed and systems opened for the shortest possible time."},
+{t:"G",q:"Why must different refrigerants never be mixed in a system or a recovery cylinder?",a:["Mixed refrigerant cannot be reclaimed, must be sent for destruction, and gives unpredictable pressures and performance","It is permitted as long as the GWPs are similar","Because the blend will become flammable","Because it voids the cylinder warranty"],c:0,e:"Mixed gas has no pressure-temperature data, can damage the system, and cannot be separated economically. It has to be destroyed at cost. Always identify the refrigerant before recovery and use a dedicated cylinder."},
+{t:"G",q:"GWP compares a gas to CO2 over what time period?",a:["100 years","10 years","1 year","1000 years"],c:0,e:"GWP values in the regulation are the 100-year figures from the IPCC Fourth Assessment Report (AR4)."},
+{t:"G",q:"What is the difference between recovered, recycled and reclaimed refrigerant?",a:["Recovered is removed into a container; recycled has basic cleaning such as oil separation and filtering; reclaimed is reprocessed at a facility to virgin specification","They are three words for the same thing","Recovered is clean, recycled is dirty, reclaimed is destroyed","Reclaimed is the only one that may be reused"],c:0,e:"Recovery is simply taking it out of the system. Recycling is basic on-site cleaning for reuse, typically in the same owner's equipment. Reclamation means reprocessing at a specialist facility to meet a virgin standard such as AHRI 700, after which it can be sold as reclaimed."},
+{t:"G",q:"What does ODP measure?",a:["Ozone depletion potential, relative to R11 which equals 1","The oil dilution point of a refrigerant","Operating design pressure","The temperature glide of a blend"],c:0,e:"ODP is the ozone depletion potential compared with R11 (CFC-11) at 1.0. HFCs and HFOs contain no chlorine or bromine and have an ODP of zero."},
+{t:"G",q:"Which refrigerant in this list has the highest GWP?",a:["R404A","R410A","R134a","R32"],c:0,e:"R404A at 3922 is the highest. R410A is 2088, R134a is 1430 and R32 is 675."},
+
+// Leak checking
+{t:"L",q:"Equipment containing 5 tonnes CO2e or more of F-gas (but less than 50) must be leak checked at least every:",a:["12 months (24 months if a fixed leak detection system is fitted)","6 months","3 months","24 months in all cases"],c:0,e:"The intervals are: 5 tonnes or more every 12 months, 50 tonnes or more every 6 months, 500 tonnes or more every 3 months. A fixed leak detection system doubles the allowed interval in each band."},
+{t:"L",q:"Equipment containing 50 tonnes CO2e or more (but less than 500) must be leak checked at least every:",a:["6 months (12 months with a leak detection system)","12 months","3 months","Month"],c:0,e:"50 to 500 tonnes CO2e is the middle band: every 6 months, or every 12 months if a fixed leak detection system is installed."},
+{t:"L",q:"Equipment containing 500 tonnes CO2e or more must be leak checked at least every:",a:["3 months (6 months with a leak detection system), and a leak detection system is mandatory","6 months","12 months","Week"],c:0,e:"At 500 tonnes CO2e or more the check is every 3 months (6 with detection), and a fixed leak detection system that alerts the operator must be fitted."},
+{t:"L",q:"Hermetically sealed equipment that is labelled as such is exempt from mandatory periodic leak checks if it contains less than:",a:["10 tonnes CO2e","5 tonnes CO2e","3 kg","50 tonnes CO2e"],c:0,e:"Labelled hermetically sealed equipment has a higher threshold of 10 tonnes CO2e before periodic leak checks become mandatory, compared with 5 tonnes for other equipment."},
+{t:"L",q:"After a leak has been repaired, the equipment must be checked again to confirm the repair worked within:",a:["1 month","1 week","6 months","12 months"],c:0,e:"The regulation requires a follow-up leak check within one month of a repair to verify it was effective. Ideally the repaired joint is also tested before recharging."},
+{t:"L",q:"Fixed leak detection systems must be checked for correct function at least every:",a:["12 months","3 months","6 months","5 years"],c:0,e:"Where a leak detection system is used (and relied on to double the leak check interval) it must be checked at least every 12 months to ensure it works."},
+{t:"L",q:"Which of these is an indirect leak checking method?",a:["Analysing operating pressures, temperatures, compressor current, oil and liquid levels for signs of refrigerant loss","Electronic leak detector","Soap bubble solution on a joint","UV dye and lamp"],c:0,e:"Indirect methods look at system behaviour (pressures, temperatures, sight glass, oil level, running current) for evidence of a leak. Direct methods test the pipework itself: electronic detectors, bubble solution, UV dye, or a nitrogen standing pressure test."},
+{t:"L",q:"An electronic leak detector used for F-gas leak checks must have a sensitivity of at least:",a:["5 g per year, and be checked every 12 months","50 g per year","1 kg per year","There is no minimum"],c:0,e:"Electronic detectors must detect at least 5 g per year and be verified every 12 months. The detector should also suit the refrigerant in use."},
+{t:"L",q:"A system has 12 kg of R410A and no fixed leak detection. How often must it be leak checked?",a:["Every 12 months (12 x 2088 = 25 tonnes CO2e)","Every 6 months","Every 3 months","No check required"],c:0,e:"12 kg x 2088 = 25,056 kg = 25.06 tonnes CO2e. That is in the 5 to 50 tonne band, so every 12 months."},
+{t:"L",q:"A pack holds 30 kg of R404A without a leak detection system. How often must it be leak checked?",a:["Every 6 months (30 x 3922 = 117.7 tonnes CO2e)","Every 12 months","Every 3 months","Every 24 months"],c:0,e:"30 kg x 3922 = 117,660 kg = 117.66 tonnes CO2e, which is in the 50 to 500 tonne band, so every 6 months."},
+{t:"L",q:"Which of these is the best first indication of where to look for a leak on a system?",a:["Oil staining around joints, flares, valves and the compressor shaft seal","The colour of the pipe insulation","The nameplate GWP","The age of the compressor"],c:0,e:"Refrigerant carries oil with it, so a leak usually leaves an oily or dusty stain. Joints, flare nuts, Schrader cores, valve stems and shaft seals are the usual suspects."},
+{t:"L",q:"How should an electronic leak detector probe be used on a suspected joint?",a:["Moved slowly, below the joint, because most refrigerants are heavier than air","Moved quickly above the joint","Held still at arm's length","Pressed firmly against the pipe"],c:0,e:"Refrigerant vapour sinks, so the probe should be moved slowly (about 25 to 50 mm per second) underneath joints. Draughts and other vapours can give false readings, so confirm with bubble solution."},
+{t:"L",q:"A nitrogen standing pressure test shows a small drop in pressure overnight. What must you consider before declaring a leak?",a:["The change in ambient temperature, since pressure falls as the gas cools","Whether the nitrogen has leaked through the pipe walls","Whether the GWP has changed","Nothing. Any drop is a leak"],c:0,e:"Gas pressure changes with temperature, so a reading taken cold in the morning will be lower than one taken warm. Compare temperature-corrected readings over a long enough period before concluding."},
+{t:"L",q:"Who is legally responsible for making sure the mandatory leak checks are carried out?",a:["The operator of the equipment","The engineer who installed it","The refrigerant supplier","The certification body"],c:0,e:"The operator (normally the owner) must ensure leak checks are done at the right intervals by certified personnel and must keep the records. The contractor does the work, but the duty rests with the operator."},
+{t:"L",q:"What should be done with a leak once it is found?",a:["Repair it without undue delay, then re-check within one month","Top up the refrigerant and note it for next year","Leave it if the loss is less than 1 kg a year","Add leak sealant to the system"],c:0,e:"Detected leaks must be repaired as soon as possible. Repeated topping up without repair is an offence. The repair must be verified within one month."},
+{t:"L",q:"Which gas is used for a standing pressure leak test on a new installation?",a:["Oxygen-free nitrogen (OFN) through a regulator","Compressed air","Oxygen","Acetylene"],c:0,e:"OFN is dry, inert and cheap. Compressed air introduces moisture and can form an explosive mixture with oil. Oxygen can explode on contact with oil. A regulator is essential because the cylinder pressure is far above any system rating."},
+
+// Recovery & disposal
+{t:"V",q:"A recovery cylinder must never be filled beyond what proportion of its capacity?",a:["80% by weight, checked on scales","100%","95%","50%"],c:0,e:"Liquid expands when warmed. A cylinder filled above 80% can become hydraulically full and rupture. Weigh the cylinder on scales during recovery and stop at 80% of its rated capacity (or rely on the float switch as a backup only)."},
+{t:"V",q:"What colour are refrigerant recovery cylinders in the UK?",a:["Grey body with a yellow shoulder","Green","Red","Blue"],c:0,e:"UK recovery cylinders are grey with a yellow top, which makes them easy to distinguish from virgin refrigerant cylinders. They must be labelled with the refrigerant they contain."},
+{t:"V",q:"Before using a recovery cylinder, you should:",a:["Check it is in test date, is dedicated to the right refrigerant, and evacuate it to remove air and moisture","Fill it with nitrogen","Heat it to speed up recovery","Leave the valve open to let air out"],c:0,e:"Cylinders are pressure vessels and must be in date. A cylinder containing air (non-condensables) will contaminate the recovered gas and raise pressures, so pull a vacuum on it first. Never mix refrigerants."},
+{t:"V",q:"Which recovery method is fastest for a large liquid charge?",a:["Liquid recovery, or the push-pull method","Vapour recovery only","Recovery through the suction service valve with the system running","Venting the liquid to atmosphere first"],c:0,e:"Recovering liquid moves far more refrigerant per minute than vapour. Push-pull uses the recovery machine to pull vapour from the cylinder and push it into the system, forcing liquid out into the cylinder. Finish with vapour recovery to pull the system down."},
+{t:"V",q:"When must refrigerant be recovered from a system?",a:["Before any work that opens the circuit, before decommissioning and before disposal of the equipment","Only when the equipment is scrapped","Only when the charge exceeds 3 kg","Never, if the system is under 5 tonnes CO2e"],c:0,e:"Recovery is required whenever the refrigerant would otherwise be released: opening the circuit for repair, decommissioning, and before equipment is scrapped. A certified person must do it."},
+{t:"V",q:"Recovered refrigerant that is to be sent away for reclamation or destruction is classed as:",a:["Hazardous waste, which must go with a licensed waste carrier using a consignment note","Ordinary commercial waste","Scrap metal","Non-hazardous recyclable material"],c:0,e:"Waste refrigerant is hazardous waste. It must be moved by a registered waste carrier to a permitted facility, with a hazardous waste consignment note. Oil drained from the system is also hazardous waste as it contains dissolved refrigerant."},
+{t:"V",q:"Recovered refrigerant may be reused without reclamation:",a:["After recycling, in equipment belonging to the same owner","In any customer's equipment","Never","Only if the GWP is below 750"],c:0,e:"Recycled (basically cleaned) refrigerant can go back into the same owner's equipment. To be sold or used elsewhere it must be reclaimed to virgin specification by a licensed facility."},
+{t:"V",q:"Can recovered refrigerant be put into an empty disposable (virgin) cylinder?",a:["No. Only approved refillable recovery cylinders may be used","Yes, if it is the same refrigerant","Yes, if the cylinder is in test date","Yes, up to 50% full"],c:0,e:"Disposable cylinders are not designed or tested for refilling and have no relief device suited to it. Refilling one is dangerous and illegal. Use a dedicated, in-date recovery cylinder."},
+{t:"V",q:"What does the float switch on a recovery cylinder do?",a:["Stops the recovery machine when the cylinder reaches 80% full","Indicates the refrigerant type","Vents excess pressure","Measures the vacuum level"],c:0,e:"The float switch is a backup to prevent overfilling. It should not replace weighing the cylinder on scales."},
+{t:"V",q:"When recovering a flammable (A2L or A3) refrigerant, the recovery machine must be:",a:["Rated for flammable refrigerants (spark-free) and used in a ventilated area away from ignition sources","Any standard machine","Run at maximum speed to reduce exposure time","Earthed to the water main"],c:0,e:"Standard recovery machines contain switches and motors that can ignite a flammable gas. Use a machine certified for A2L or A3 refrigerants, ventilate the area and remove all ignition sources."},
+{t:"V",q:"To what level should a system normally be recovered before opening it for repair?",a:["To a low pressure or slight vacuum as specified by the regulation and recovery unit instructions, so that as little refrigerant as possible remains","To atmospheric pressure","Until the cylinder is full","Until the recovery machine gets warm"],c:0,e:"Recover until the system is below atmospheric pressure (a slight vacuum) so minimal gas is released when the circuit is opened. Break the vacuum with OFN before brazing."},
+{t:"V",q:"What should you do with compressor oil drained from a system?",a:["Treat it as hazardous waste because it contains dissolved refrigerant","Pour it down a drain","Reuse it in the new compressor","Burn it in a workshop heater"],c:0,e:"Used refrigeration oil contains refrigerant and possibly acids and metal particles. It must be stored in a sealed container and disposed of as hazardous waste."},
+
+// Installation & commissioning
+{t:"I",q:"Why is oxygen-free nitrogen purged through the pipework while brazing?",a:["To stop copper oxide scale forming inside the pipe, which would contaminate the system and block filters and expansion valves","To cool the joint faster","To stop the flame blowing out","To make the brazing rod flow more easily"],c:0,e:"Heating copper in air forms black oxide scale on the inside of the pipe. Scale breaks off and blocks driers, strainers and expansion valves. A gentle OFN purge displaces the air and keeps the pipe clean."},
+{t:"I",q:"Which gas must never be used to pressure test a refrigeration system?",a:["Oxygen or compressed air","Oxygen-free nitrogen","Dry nitrogen with a trace of the system refrigerant","Helium"],c:0,e:"Oxygen reacts explosively with oil in the system. Compressed air contains moisture and can also form an explosive mixture with oil. Only OFN (or OFN with a small trace of refrigerant where permitted) should be used."},
+{t:"I",q:"A strength (pressure) test on a new installation is typically carried out at:",a:["1.1 times the maximum allowable pressure (PS) of the system, with OFN","Half the maximum allowable pressure","The normal operating suction pressure","10 bar for all systems"],c:0,e:"EN 378 calls for a strength test at 1.1 x PS as a minimum (higher factors apply to some components). This proves the pipework will not burst. It is followed by a tightness test, usually at PS, held long enough to confirm no pressure drop."},
+{t:"I",q:"What is the purpose of evacuating a system before charging?",a:["To remove air (non-condensables) and boil off moisture","To remove oil from the pipework","To check the compressor runs","To cool the pipework down"],c:0,e:"Air causes high head pressures and inefficiency. Moisture reacts with POE oil and refrigerant to form acid, causes copper plating and freezes at the expansion device. A deep vacuum lowers the boiling point of water so it evaporates and is pumped out."},
+{t:"I",q:"To what vacuum level should a system be evacuated before charging?",a:["Below 500 microns (about 0.67 mbar), then held to check it does not rise","Below 29 inches on the manifold gauge","Below 1 bar","Below 5000 microns"],c:0,e:"Industry practice is to pull below 500 microns and hold. If the vacuum rises quickly there is a leak; if it creeps up slowly and stalls there is still moisture boiling off. A manifold compound gauge is not accurate enough."},
+{t:"I",q:"How should the vacuum in a system be measured?",a:["With an electronic micron (vacuum) gauge connected at the system, not at the pump","With the blue compound gauge on the manifold","By listening to the vacuum pump","With a tyre pressure gauge"],c:0,e:"A compound gauge cannot resolve the difference between 5000 and 500 microns. An electronic vacuum gauge fitted to the system, isolated from the pump, gives a true reading of what the system is holding."},
+{t:"I",q:"What is 'triple evacuation'?",a:["Evacuating, breaking the vacuum with OFN, and repeating so that three vacuums are pulled to flush out moisture","Running three vacuum pumps at once","Evacuating for three hours","Evacuating three separate ports"],c:0,e:"Breaking the vacuum with dry nitrogen absorbs residual moisture, which is then removed on the next evacuation. It is used on wet or contaminated systems where a single deep vacuum struggles."},
+{t:"I",q:"Why is a two-stage vacuum pump preferred, and why must its oil be changed regularly?",a:["It reaches a deeper vacuum, and its oil absorbs moisture which limits the vacuum it can pull","It is quieter, and the oil is a fire hazard","It is cheaper, and old oil smells","It can run on 110 V, and old oil goes solid"],c:0,e:"A two-stage pump pulls well below 500 microns. Moisture pumped out of the system condenses in the pump oil, which raises the ultimate vacuum, so change the oil often, ideally after each wet job."},
+{t:"I",q:"What is the correct order of commissioning tasks on a new split system?",a:["Strength and tightness test with OFN, evacuate, charge by weight, run and check superheat and subcooling","Charge, evacuate, pressure test, run","Evacuate, pressure test, charge, run","Run, charge, pressure test, evacuate"],c:0,e:"Pressure test first (leaks are found before the gas goes in), then evacuate to remove air and moisture, then weigh in the charge, then run the system and verify performance."},
+{t:"I",q:"How should the refrigerant charge be measured when charging a system?",a:["By weight, using electronic scales, with the nameplate charge plus any allowance for additional pipe length","By watching the sight glass only","By charging until the suction pressure reaches 5 bar","By counting the seconds the cylinder is open"],c:0,e:"Weighing is the accurate method. Manufacturers state the charge and an extra amount per metre of pipe beyond the pre-charged length. Sight glass and pressures are then used to confirm, not to set, the charge."},
+{t:"I",q:"What does a filter drier do?",a:["Removes moisture, acid and small particles from the refrigerant","Separates oil from the refrigerant","Reduces the GWP of the refrigerant","Controls the superheat"],c:0,e:"The drier's desiccant core absorbs moisture and acid, and its screen traps debris. It should be replaced whenever the system is opened."},
+{t:"I",q:"Why should Schrader valve caps always be refitted?",a:["The cap is the primary seal; the valve core alone is likely to weep refrigerant","To stop dust entering the gauge port","It is only cosmetic","To hold the core in place"],c:0,e:"Schrader cores are a service aid, not a long-term seal. The brass cap with its seal is what stops leaks. Missing caps are a very common cause of slow refrigerant loss."},
+{t:"I",q:"Which brazing rod can be used on copper-to-copper joints without flux?",a:["Silver-copper-phosphorus alloy (e.g. 2% to 15% silver)","High-silver solder with flux is always needed","Soft lead solder","Aluminium rod"],c:0,e:"Copper-phosphorus rods are self-fluxing on copper. Joining copper to brass or steel needs a high-silver alloy with a suitable flux, and the flux residue must be cleaned off afterwards."},
+{t:"I",q:"What are the effects of moisture in a refrigeration system?",a:["Acid formation, copper plating, sludge and ice blockage at the expansion device","Higher cooling capacity","Lower head pressure","Nothing, because the oil absorbs it"],c:0,e:"Water reacts with refrigerant and POE oil to produce acids, which attack windings and cause copper plating of bearings. Free water freezes at the expansion device and blocks it intermittently."},
+{t:"I",q:"Why is the suction line insulated?",a:["To stop condensation and to prevent the vapour picking up heat, which would raise superheat and compressor temperature","To make it look tidy","To reduce vibration","To stop the pipe being scratched"],c:0,e:"The suction line is cold. Uninsulated it sweats, drips and absorbs heat from the room, which adds superheat and raises discharge temperature, and reduces capacity."},
+{t:"I",q:"How should liquid refrigerant be added to a running system?",a:["Metered slowly into the suction side, never as a slug of liquid directly into the compressor","Opened fully into the compressor suction","Poured into the condenser","Only through the discharge port"],c:0,e:"Liquid entering the compressor causes slugging and damage. Charge liquid into the liquid line with the system off, or meter it carefully into the suction line (some manifolds have a throttling device) so it flashes to vapour before the compressor."},
+
+// System operation
+{t:"S",q:"In a refrigeration system, which component absorbs heat and makes the refrigerant cold?",a:["The evaporator, where low-pressure liquid boils and absorbs latent heat","The condenser","The compressor","The receiver"],c:0,e:"After the expansion device the refrigerant is a cold, low-pressure liquid. In the evaporator it boils, taking latent heat from the air or product. The condenser does the opposite, rejecting heat as the vapour turns back to liquid."},
+{t:"S",q:"What does the condenser do?",a:["Rejects heat so the high-pressure vapour condenses into a liquid","Absorbs heat from the room","Raises the pressure of the refrigerant","Meters refrigerant into the evaporator"],c:0,e:"Hot high-pressure vapour from the compressor gives up its heat (sensible first, then latent) to the outside air or water and condenses into a warm liquid."},
+{t:"S",q:"What does the compressor do?",a:["Raises the pressure and temperature of the refrigerant vapour and circulates it","Cools the refrigerant","Turns vapour into liquid","Reduces the pressure of the liquid"],c:0,e:"The compressor draws in low-pressure vapour from the evaporator and discharges it at high pressure and temperature so it can condense at ambient temperature. It is the pump of the system."},
+{t:"S",q:"What does the expansion device do?",a:["Drops the pressure of the liquid, which lowers its boiling point, and meters flow into the evaporator","Raises the pressure of the liquid","Separates oil from refrigerant","Stores excess refrigerant"],c:0,e:"The TEV, electronic valve or capillary creates the pressure drop between the high side and low side. The sudden drop in pressure means the liquid can now boil at a low temperature in the evaporator."},
+{t:"S",q:"What is superheat and where is it measured?",a:["The temperature of the vapour above its saturation temperature, measured at the evaporator outlet or suction line","The temperature of the compressor discharge","The liquid temperature below saturation at the condenser outlet","The difference between room and evaporator temperature"],c:0,e:"Superheat = actual suction line temperature minus the saturated evaporating temperature (found from the suction pressure on a PT chart). It proves all the liquid has boiled before the compressor. Typically 5 to 10 K."},
+{t:"S",q:"What is subcooling and where is it measured?",a:["The temperature of the liquid below its saturation temperature, measured at the condenser outlet or liquid line","The temperature of the suction line","The evaporator outlet temperature","The temperature drop across the drier"],c:0,e:"Subcooling = saturated condensing temperature (from the discharge pressure) minus the actual liquid line temperature. It confirms a solid column of liquid is reaching the expansion device. Typically 3 to 8 K."},
+{t:"S",q:"Which set of symptoms suggests a system is low on refrigerant?",a:["Low suction pressure, high superheat, low subcooling and bubbles in the sight glass","High head pressure and high subcooling","Low superheat and liquid returning to the compressor","High compressor current and high suction pressure"],c:0,e:"With too little refrigerant the evaporator is starved. Suction pressure drops, the vapour leaves the evaporator very superheated, there is little liquid to subcool and the sight glass shows bubbles. Find and fix the leak before topping up."},
+{t:"S",q:"Which symptoms suggest a system is overcharged?",a:["High head pressure, high subcooling, low superheat and high compressor current","Bubbles in the sight glass","Low suction pressure and high superheat","Frost on the condenser"],c:0,e:"Excess refrigerant backs up in the condenser, raising head pressure and subcooling. Liquid may reach the compressor (low superheat) and the motor works harder."},
+{t:"S",q:"What is the effect of air (non-condensables) in a system?",a:["High head pressure above the saturation pressure for the condensing temperature, and poor efficiency","Lower head pressure","Higher cooling capacity","Frost on the suction line"],c:0,e:"Air does not condense and collects in the condenser, taking up space and adding its own partial pressure. The condensing pressure reads higher than the PT chart predicts for the measured liquid temperature. Proper evacuation prevents it."},
+{t:"S",q:"What is latent heat?",a:["Heat added or removed during a change of state at constant temperature","Heat that changes the temperature of a substance","Heat produced by the compressor motor","Heat lost through pipe insulation"],c:0,e:"Latent heat is absorbed when a liquid boils and released when a vapour condenses, with no change in temperature. Sensible heat changes temperature. Refrigeration relies on latent heat because it moves far more energy per kilogram."},
+{t:"S",q:"When measuring superheat and subcooling on a zeotropic blend, which values do you use?",a:["Dew point for superheat and bubble point for subcooling","Bubble point for both","Dew point for both","The average of the two"],c:0,e:"Superheat is measured from the point where the last drop of liquid has evaporated (dew point). Subcooling is measured from the point where the first bubble of vapour would form (bubble point)."},
+{t:"S",q:"What does a thermostatic expansion valve (TEV) control?",a:["Evaporator superheat, by sensing the suction line temperature with its bulb","Condensing pressure","Compressor speed","The oil level"],c:0,e:"The TEV bulb on the evaporator outlet senses temperature. Rising superheat opens the valve to feed more refrigerant; falling superheat closes it. This keeps the evaporator fully used without flooding the compressor."},
+{t:"S",q:"On a gauge manifold, what do the blue and red gauges read?",a:["Blue is the low side compound gauge (vacuum and pressure); red is the high side pressure gauge","Blue is the high side; red is the low side","Both read the same pressure","Blue reads temperature; red reads pressure"],c:0,e:"The blue compound gauge connects to the suction side and reads vacuum to around 20 bar. The red gauge connects to the discharge or liquid side and reads higher pressures. Most have PT scales for common refrigerants."},
+{t:"S",q:"What protects the compressor against excessive discharge pressure?",a:["The high pressure (HP) cut-out switch","The low pressure (LP) cut-out","The filter drier","The sight glass"],c:0,e:"The HP switch stops the compressor if head pressure rises too high, for example from a blocked condenser or fan failure. The LP switch protects against loss of charge or a blocked liquid line."},
+{t:"S",q:"Which of these components are on the high side of the system?",a:["Condenser, receiver, liquid line, filter drier and sight glass","Evaporator and suction line","Suction accumulator","Compressor suction valve"],c:0,e:"The high side runs from the compressor discharge through the condenser, receiver, liquid line, drier and sight glass to the expansion device. After the expansion device everything is low side until the compressor suction."},
+{t:"S",q:"What does a reversing valve do in a heat pump?",a:["Swaps the roles of the indoor and outdoor coils so the system can heat or cool","Reverses the compressor rotation","Reverses the fan direction","Reverses the oil flow"],c:0,e:"The four-way reversing valve redirects the compressor discharge so that the indoor coil becomes the condenser in heating mode and the evaporator in cooling mode."},
+{t:"S",q:"Why is liquid refrigerant returning to the compressor a problem?",a:["Liquid cannot be compressed, so it causes slugging, washes oil from bearings and can break valves","It makes the compressor run too cold and stop","It raises head pressure","It has no effect on a scroll compressor"],c:0,e:"Compressors are designed for vapour. Liquid floodback damages valves and pistons and dilutes the oil. Correct superheat and a suction accumulator where needed prevent it."},
+{t:"S",q:"A sight glass showing a steady stream of bubbles with the system running normally most likely indicates:",a:["Low refrigerant charge (or a restriction upstream such as a blocked drier)","An overcharge","Too much oil","Normal operation on all systems"],c:0,e:"Bubbles mean flash gas in the liquid line, usually from insufficient charge or a pressure drop across a blocked drier. Confirm with subcooling before adding refrigerant, and look for the leak."},
+{t:"S",q:"What does a moisture indicator in a sight glass show?",a:["A colour change (often green to yellow) when the refrigerant contains moisture","The oil level","The refrigerant charge in kg","The superheat"],c:0,e:"The indicator element changes colour with moisture content. A wet reading means the drier should be changed and the system dried out."},
+
+// Health & safety
+{t:"H",q:"What is the main hazard of a large refrigerant leak in a plant room or cold store?",a:["Asphyxiation, because the vapour is heavier than air and displaces oxygen at low level","Fire from all refrigerants","Skin irritation","Electric shock"],c:0,e:"Most refrigerants are heavier than air and odourless. They collect in low areas and displace oxygen. Ventilate, use an oxygen monitor or fixed detection, and never enter a suspected leak area alone."},
+{t:"H",q:"What injury can liquid refrigerant cause on contact with skin or eyes?",a:["Frostbite (cold burns), because it boils at well below 0 degrees C","Chemical burns from acid","Sunburn","No injury, it is harmless"],c:0,e:"Liquid refrigerant flashes to vapour instantly and freezes tissue. Wear gloves and safety glasses when connecting hoses, charging or recovering."},
+{t:"H",q:"What is produced when an HFC refrigerant is exposed to a naked flame or very hot surface?",a:["Toxic decomposition products such as hydrogen fluoride","Harmless carbon dioxide and water","Pure fluorine gas, which is safe","Nothing, HFCs are inert"],c:0,e:"Heat breaks HFCs down into hydrogen fluoride and other toxic, corrosive gases. This is why you must never braze on a charged system, must recover and purge with OFN first, and must ventilate well."},
+{t:"H",q:"How may a refrigerant cylinder be warmed to speed up charging?",a:["With a purpose-made heater belt or warm water below 40 degrees C, never a naked flame","With a blowtorch","By placing it on a gas ring","By leaving it in the van exhaust"],c:0,e:"Direct heat can raise the pressure beyond the cylinder rating and cause rupture. Approved heater belts or a bucket of warm water are the only acceptable methods."},
+{t:"H",q:"Before brazing on a system that has contained refrigerant you should:",a:["Recover the refrigerant, purge with OFN, confirm no residual pressure, remove flammables and have an extinguisher and hot work permit in place","Open a window and start brazing","Leave a small charge in to show up leaks","Run the compressor to clear the pipe"],c:0,e:"Brazing a pressurised line can blow molten metal out of the joint and decompose the refrigerant into toxic gas. Recover, make safe, purge with OFN and follow hot work procedures."},
+{t:"H",q:"When working on an A2L (mildly flammable) refrigerant such as R32 you must:",a:["Remove ignition sources, ventilate, use tools and recovery equipment rated for flammable refrigerants and check for leaks before hot work","Treat it exactly like R410A","Use a halide torch to find leaks","Smoke only outside the plant room"],c:0,e:"A2L refrigerants need an ignition source and a concentrated leak to burn, but it can happen. Use spark-free equipment, a detector suitable for A2L, good ventilation and observe charge limits in EN 378."},
+{t:"H",q:"How should refrigerant cylinders be stored and transported?",a:["Upright, secured, with valve caps fitted, in a ventilated area out of direct sunlight and below 50 degrees C","Lying flat in the van cab","Anywhere, as they are not hazardous","Outside in full sun to keep the pressure up"],c:0,e:"Cylinders must be secured so they cannot fall, kept cool and ventilated so leaks cannot build up, and carried with the correct hazard labels and documentation under ADR rules."},
+{t:"H",q:"Under the Pressure Systems Safety Regulations 2000 (PSSR), which refrigeration systems normally require a written scheme of examination?",a:["Systems with a compressor motor power greater than 25 kW","All systems containing more than 3 kg","Only ammonia systems","None, refrigeration is exempt"],c:0,e:"PSSR exempts refrigeration systems where the installed compressor motor power is 25 kW or less. Larger systems need a written scheme of examination drawn up by a competent person and periodic inspection."},
+{t:"H",q:"Which properties make ammonia (R717) hazardous?",a:["It is toxic, mildly flammable (B2L) and attacks copper, but its strong smell gives early warning","It is odourless and heavier than air","It has a very high GWP","It is harmless but expensive"],c:0,e:"Ammonia is classified B2L. It is toxic at low concentrations but its pungent smell means leaks are noticed quickly. It cannot be used with copper pipe or windings, so ammonia systems use steel."},
+{t:"H",q:"What personal protective equipment is the minimum when charging or recovering refrigerant?",a:["Safety glasses or goggles and suitable gloves","A dust mask","Ear defenders","A high-visibility vest"],c:0,e:"Hoses and fittings can spray liquid refrigerant at the eyes and hands. Gloves must be suited to cold liquids. Other PPE depends on the site and the refrigerant."},
+{t:"H",q:"Where would you find the hazard information and first aid advice for a specific refrigerant?",a:["On its Safety Data Sheet (SDS), as required under COSHH","On the F-gas certificate","In the Building Regulations","On the cylinder's test date stamp"],c:0,e:"Every refrigerant has a safety data sheet from the supplier describing hazards, handling, storage, PPE and first aid. COSHH requires employers to assess and control these risks."},
+{t:"H",q:"Why must oxygen never be used to pressurise a system or blow out pipework?",a:["Oxygen reacts violently with oil and can cause an explosion","It is too expensive","It corrodes copper","It has a high GWP"],c:0,e:"Compressor oil and oil films in pipework will ignite or explode in a high-pressure oxygen atmosphere. Only oxygen-free nitrogen is used."},
+
+// Records & operator duties
+{t:"D",q:"How long must F-gas records for equipment be kept?",a:["At least 5 years, by both the operator and the contractor who did the work","1 year","3 months","Until the next leak check"],c:0,e:"Both the operator and the undertaking (contractor) must keep records for at least five years and make them available to the regulator on request."},
+{t:"D",q:"Which of the following must be recorded for equipment subject to leak checks?",a:["Type and quantity of F-gas installed, quantities added or recovered, whether gas was recycled or reclaimed, who did the work, dates and results of leak checks, and decommissioning measures","Only the date of installation","Only the refrigerant type","The customer's VAT number"],c:0,e:"The regulation lists these items. If recycled or reclaimed gas is used, the name and address of the facility must also be recorded. Records must be updated after every intervention."},
+{t:"D",q:"Records must be kept for equipment containing F-gas of:",a:["5 tonnes CO2e or more (the same threshold as mandatory leak checks)","Any quantity","3 kg or more","50 tonnes CO2e or more"],c:0,e:"Record keeping applies to equipment that is subject to leak checks, which starts at 5 tonnes CO2e (10 tonnes for labelled hermetic equipment). Keeping records for smaller systems is still good practice."},
+{t:"D",q:"How can an operator check that a contractor is legally allowed to work on their F-gas equipment?",a:["Ask to see the company certificate (e.g. REFCOM) and the engineer's personnel certificate or card","Check they have a van with a logo","Ask for a quote","Check they are VAT registered"],c:0,e:"The operator has a duty to use certified people. Both a company certificate and an individual personnel certificate of the right category should be checked and the details recorded."},
+{t:"D",q:"When refrigerant is added to a system on site, what must the engineer do to the equipment label?",a:["Update it with the new total charge in kg and CO2e","Nothing, the original label stays","Remove it","Write the date only"],c:0,e:"The label must reflect the actual quantity of F-gas in the equipment, so after adding gas the label (or an additional label) must be updated with the new charge."},
+{t:"D",q:"A hazardous waste consignment note for recovered refrigerant must be kept for at least:",a:["3 years","6 months","5 years","10 years"],c:0,e:"Hazardous waste consignment notes are kept for three years by the producer and consignee. Note the difference from F-gas records, which are kept for five years."},
+{t:"D",q:"Who must keep a copy of the F-gas record: the operator or the contractor?",a:["Both: the operator keeps the equipment record and the contractor keeps a copy of the work it has done","Only the operator","Only the contractor","Neither, the certification body keeps it"],c:0,e:"Operators must keep records of their equipment, and undertakings carrying out the work must keep copies of the same information for five years."},
+{t:"D",q:"What should be recorded when equipment is decommissioned?",a:["The measures taken to recover and dispose of the refrigerant, including the quantity recovered","Only the date","Nothing, records end when the equipment stops","The scrap value"],c:0,e:"Decommissioning must be recorded, showing the refrigerant was recovered by a certified person and sent for reclamation or destruction via a licensed waste route."}
+];
+Q.forEach((q,i)=>q.id=i);
+
+
+/* ---------- Glossary (tap a dotted word) ---------- */
+const GL = [
+{k:"Absolute pressure",alt:["bar absolute","bar a"],d:"Pressure measured from a perfect vacuum (zero). Absolute pressure = gauge pressure + atmospheric pressure (about 1.013 bar). Pressure-temperature charts and vacuum levels use absolute pressure, so a gauge reading of 0 bar is about 1 bar absolute."},
+{k:"Gauge pressure",alt:["bar gauge","bar g"],d:"Pressure measured relative to the atmosphere around you, which is what a normal manifold gauge shows. 0 bar gauge means the same as atmospheric pressure. Gauge pressure = absolute pressure minus about 1.013 bar."},
+{k:"Saturation temperature",alt:["saturated evaporating temperature","saturated condensing temperature","saturation pressure","saturated"],d:"The temperature at which a refrigerant boils or condenses at a given pressure. Fix the pressure and you fix the temperature. A PT chart lists this relationship for each refrigerant."},
+{k:"PT chart",alt:["pressure-temperature chart","pressure temperature"],d:"A pressure-temperature chart or slide rule showing the saturation temperature of each refrigerant at each pressure. Used to work out superheat and subcooling from gauge readings."},
+{k:"Superheat",alt:["superheated"],d:"How many degrees a vapour is above its saturation temperature. Measured at the evaporator outlet: actual suction line temperature minus the saturated evaporating temperature from the suction pressure. Proves all liquid has boiled off before the compressor. Typically 5 to 10 K."},
+{k:"Subcooling",alt:["subcool","subcooled"],d:"How many degrees a liquid is below its saturation temperature. Measured at the condenser outlet: saturated condensing temperature from the discharge pressure minus the actual liquid line temperature. Proves solid liquid is reaching the expansion device. Typically 3 to 8 K."},
+{k:"Latent heat",d:"Heat absorbed or released while a substance changes state (liquid to vapour or back) with no change in temperature. The evaporator absorbs latent heat as refrigerant boils; the condenser rejects it as vapour condenses."},
+{k:"Sensible heat",d:"Heat that changes the temperature of something without changing its state, such as warming air or cooling liquid refrigerant below saturation."},
+{k:"Flash gas",d:"Vapour formed when liquid refrigerant suddenly drops in pressure, for example in the expansion device or in a liquid line with too little subcooling. Bubbles in the sight glass are flash gas."},
+{k:"GWP",alt:["global warming potential"],d:"Global Warming Potential. How much heat 1 kg of a gas traps over 100 years compared with 1 kg of CO2, which is 1. The F-Gas Regulation uses the IPCC AR4 values: R32 = 675, R134a = 1430, R407C = 1774, R410A = 2088, R404A = 3922."},
+{k:"CO2 equivalent",alt:["CO2e","tonnes CO2e","CO2 equivalent"],d:"The charge of refrigerant expressed as the amount of CO2 with the same warming effect. kg of refrigerant x GWP = kg CO2e; divide by 1000 for tonnes. Leak check and record thresholds (5, 50 and 500 tonnes) use this figure."},
+{k:"ODP",alt:["ozone depletion potential","ozone depleting"],d:"Ozone Depletion Potential. How much a gas damages the ozone layer compared with R11 (CFC-11) at 1.0. Refrigerants containing chlorine or bromine (CFCs, HCFCs) have an ODP; HFCs and HFOs have an ODP of zero."},
+{k:"ODS",alt:["ozone depleting substance","ozone depleting substances"],d:"Ozone Depleting Substance. Refrigerants such as R22 (HCFC) and R12 (CFC) that contain chlorine. Controlled by the ODS Regulation, separate from the F-Gas Regulation."},
+{k:"F-gas",alt:["F-gases","fluorinated greenhouse gas","fluorinated greenhouse gases"],d:"Fluorinated greenhouse gas: HFCs, PFCs and SF6. They do not harm the ozone layer but have high GWPs. The F-Gas Regulation controls their use, leak checking, recovery and records."},
+{k:"HFC",alt:["HFCs","hydrofluorocarbon"],d:"Hydrofluorocarbon. Synthetic refrigerants containing hydrogen, fluorine and carbon but no chlorine, e.g. R134a, R32, R410A, R404A. Zero ODP but high GWP. These are the main F-gases."},
+{k:"HCFC",alt:["HCFCs","hydrochlorofluorocarbon"],d:"Hydrochlorofluorocarbon. Contains chlorine so it depletes ozone, e.g. R22. Banned for servicing since 2015 under the ODS Regulation."},
+{k:"CFC",alt:["CFCs","chlorofluorocarbon"],d:"Chlorofluorocarbon. The original refrigerants such as R12 and R11, with very high ODP and GWP. Long banned."},
+{k:"HFO",alt:["HFOs","hydrofluoro-olefin","hydrofluoro-olefins"],d:"Hydrofluoro-olefin. Newer synthetic refrigerants such as R1234yf and R1234ze with very low GWP (about 4 or less). Usually A2L, mildly flammable."},
+{k:"Natural refrigerant",alt:["natural refrigerants"],d:"Refrigerants that occur in nature: hydrocarbons like R290 (propane) and R600a (isobutane), R744 (CO2) and R717 (ammonia). Very low GWP but each has its own hazard: flammability, high pressure or toxicity."},
+{k:"Hermetically sealed",alt:["hermetic"],d:"A system where every refrigerant-containing part is joined by brazing, welding or a similar permanent joint, and the tested leak rate is below 3 g per year. Service ports and capped valves are allowed. When labelled as such, the leak check threshold rises from 5 to 10 tonnes CO2e."},
+{k:"Zeotropic",alt:["zeotrope"],d:"A blend whose components boil at different temperatures, so it has a temperature glide. Numbered in the R400 series (R407C, R410A, R404A). Must be charged as liquid so the mix stays correct."},
+{k:"Azeotropic",alt:["azeotrope"],d:"A blend that behaves like a single refrigerant, boiling and condensing at one temperature with no glide. Numbered in the R500 series (R507A, R502)."},
+{k:"Temperature glide",alt:["glide"],d:"The temperature range over which a zeotropic blend boils or condenses at a fixed pressure: the difference between its bubble point and dew point. R407C has a glide of about 5 to 7 K; R410A is under 0.2 K."},
+{k:"Bubble point",d:"For a blend at a given pressure, the temperature at which the first bubble of vapour forms when heating liquid. Use it when calculating subcooling."},
+{k:"Dew point",d:"For a blend at a given pressure, the temperature at which the last drop of liquid evaporates. Use it when calculating superheat."},
+{k:"A2L",d:"Safety class: A = lower toxicity, 2L = lower flammability with a slow burning velocity. Examples R32, R1234yf, R454B. Needs ignition sources removed and equipment rated for A2L."},
+{k:"A1",d:"Safety class: lower toxicity and no flame propagation. Examples R134a, R410A, R404A. Still an asphyxiation and frostbite hazard."},
+{k:"A3",d:"Safety class: lower toxicity but higher flammability. Hydrocarbons such as R290 (propane) and R600a (isobutane). Strict charge limits and spark-free equipment."},
+{k:"B2L",d:"Safety class: higher toxicity and lower flammability. Ammonia (R717)."},
+{k:"POE oil",alt:["POE","polyol ester"],d:"Polyol ester oil, used with HFC refrigerants. It is hygroscopic (absorbs moisture from the air), so keep containers sealed and systems open for as short a time as possible."},
+{k:"Mineral oil",d:"Traditional compressor oil used with CFC and HCFC refrigerants such as R22. Does not mix with HFCs, so HFC systems use POE oil."},
+{k:"Hygroscopic",d:"Absorbs moisture from the air. POE oil is strongly hygroscopic, which is why moisture control matters so much on HFC systems."},
+{k:"OFN",alt:["oxygen-free nitrogen","oxygen free nitrogen","dry nitrogen","nitrogen"],d:"Oxygen-Free Nitrogen. Dry, inert gas used for pressure testing, purging while brazing and breaking a vacuum. Always used through a regulator because the cylinder is at around 200 bar."},
+{k:"Maximum allowable pressure",alt:["PS"],d:"PS, the maximum pressure the system or component is designed and rated for, stated by the manufacturer. Strength tests are done at 1.1 x PS and tightness tests at PS."},
+{k:"Strength test",alt:["strength (pressure) test","pressure test"],d:"A test with OFN at 1.1 times the maximum allowable pressure to prove the pipework and joints will not burst. Done before the tightness test and before any refrigerant is added."},
+{k:"Tightness test",alt:["standing pressure test","standing pressure"],d:"A leak test with OFN, usually at the maximum allowable pressure, held long enough (often 24 hours) to show no pressure drop once temperature changes are allowed for."},
+{k:"Evacuation",alt:["evacuate","evacuating","evacuated","deep vacuum","vacuum"],d:"Pulling a vacuum on the system with a vacuum pump to remove air (non-condensables) and boil off moisture before charging. Target below 500 microns, then hold to check it does not rise."},
+{k:"Micron",alt:["microns"],d:"A unit of very low absolute pressure used for vacuum work. 1000 microns = 1 torr = 1.33 mbar. 500 microns is about 0.67 mbar absolute. Atmospheric pressure is about 760,000 microns."},
+{k:"Non-condensables",alt:["non-condensable"],d:"Gases such as air or nitrogen that will not condense in the condenser. They collect there, raise head pressure above the saturation pressure and reduce efficiency. Removed by proper evacuation."},
+{k:"Triple evacuation",d:"Pull a vacuum, break it with OFN, pull again, break again, pull a third time. The dry nitrogen absorbs residual moisture, which is removed on the next pull. Used on wet or contaminated systems."},
+{k:"Filter drier",alt:["drier","filter-drier"],d:"A component in the liquid line containing desiccant to absorb moisture and acid, with a screen to trap particles. Replace it whenever the system is opened."},
+{k:"Sight glass",d:"A small window in the liquid line. Clear glass means a full column of liquid; bubbles mean flash gas, usually from low charge or a restriction. Many include a moisture indicator that changes colour when wet."},
+{k:"Schrader valve",alt:["Schrader","Schrader core","Schrader cores","valve core"],d:"A spring-loaded service valve like a tyre valve, used at gauge ports. The core is for service access only; the screw-on cap with its seal is the primary leak seal."},
+{k:"TEV",alt:["thermostatic expansion valve","TXV"],d:"Thermostatic Expansion Valve. Meters liquid into the evaporator and controls superheat using a sensing bulb clamped to the evaporator outlet."},
+{k:"Expansion device",alt:["expansion valve","capillary"],d:"The component (TEV, electronic expansion valve or capillary tube) that drops the refrigerant pressure from the high side to the low side, so the liquid can boil at a low temperature in the evaporator."},
+{k:"Evaporator",d:"The heat exchanger where low-pressure liquid refrigerant boils and absorbs heat from the air, water or product. This is the cold coil, indoors on an air conditioner."},
+{k:"Condenser",d:"The heat exchanger where high-pressure vapour from the compressor gives up its heat and condenses to liquid. This is the hot coil, outdoors on an air conditioner."},
+{k:"Compressor",d:"The pump of the system. Draws in low-pressure vapour from the evaporator and discharges it at high pressure and temperature so it can condense."},
+{k:"Receiver",alt:["liquid receiver"],d:"A vessel after the condenser that stores liquid refrigerant and allows for changes in charge demand. Also used to hold the charge during pump-down."},
+{k:"Suction accumulator",alt:["accumulator"],d:"A vessel in the suction line that catches any liquid refrigerant before it reaches the compressor, letting it boil off safely."},
+{k:"Reversing valve",alt:["four-way valve"],d:"The four-way valve in a heat pump that redirects the compressor discharge so the indoor coil becomes the condenser (heating) or the evaporator (cooling)."},
+{k:"High side",d:"The high-pressure part of the circuit: compressor discharge, condenser, receiver, liquid line, drier and sight glass up to the expansion device. The red gauge reads it."},
+{k:"Low side",d:"The low-pressure part of the circuit: from the expansion device through the evaporator and suction line to the compressor inlet. The blue compound gauge reads it."},
+{k:"Head pressure",alt:["discharge pressure","condensing pressure"],d:"The pressure on the high side, between the compressor discharge and the expansion device. High head pressure points to a dirty condenser, fan failure, overcharge or non-condensables."},
+{k:"Suction pressure",alt:["evaporating pressure"],d:"The pressure on the low side, in the evaporator and suction line. Low suction pressure points to low charge, a restriction or a blocked evaporator."},
+{k:"Compound gauge",d:"The blue low-side gauge on a manifold. It reads both vacuum (below atmospheric) and pressure, hence compound. Not accurate enough to measure a deep vacuum."},
+{k:"HP cut-out",alt:["high pressure cut-out","high pressure (HP) cut-out"],d:"A pressure switch that stops the compressor when discharge pressure rises too high."},
+{k:"LP cut-out",alt:["low pressure cut-out","low pressure (LP) cut-out"],d:"A pressure switch that stops the compressor when suction pressure falls too low, protecting it on loss of charge or a blockage."},
+{k:"Floodback",alt:["liquid floodback","slugging","liquid return"],d:"Liquid refrigerant reaching the compressor. Liquid cannot be compressed, so it damages valves and pistons and washes oil off the bearings."},
+{k:"Copper plating",d:"Copper dissolved by acid in a wet system deposits itself on hot steel bearing surfaces inside the compressor, causing wear and seizure. A sign of moisture contamination."},
+{k:"Oxide scale",alt:["copper oxide scale","copper oxide"],d:"Black flaky copper oxide that forms inside pipe when it is brazed with air in it. It breaks off and blocks driers, strainers and expansion valves. Prevented by purging with OFN."},
+{k:"Brazing",alt:["braze","brazed"],d:"Joining copper pipe with a filler rod that melts above 450 degrees C (silver or copper-phosphorus alloy), using an oxy-acetylene or similar torch. Not soft soldering."},
+{k:"Flux",d:"A paste that cleans the joint and stops oxides forming so the filler alloy flows. Needed for copper to brass or steel; not needed with copper-phosphorus rods on copper to copper. Residue must be cleaned off."},
+{k:"Recovery",alt:["recover","recovered","recovering"],d:"Removing refrigerant from a system into a recovery cylinder using a recovery machine, so it is not released to atmosphere. Required before opening the circuit, decommissioning or scrapping."},
+{k:"Recycling",alt:["recycled","recycle"],d:"Basic cleaning of recovered refrigerant (oil separation, filtering, moisture removal) so it can be reused, normally in equipment belonging to the same owner."},
+{k:"Reclamation",alt:["reclaimed","reclaim"],d:"Reprocessing recovered refrigerant at a specialist facility to meet a virgin product standard (e.g. AHRI 700) so it can be sold and used anywhere."},
+{k:"Push-pull",alt:["push-pull method"],d:"A fast recovery method for large liquid charges. The recovery machine pulls vapour from the top of the cylinder and pushes it into the system, forcing liquid out of the system into the cylinder."},
+{k:"Recovery cylinder",alt:["recovery cylinders"],d:"A refillable pressure cylinder, grey with a yellow shoulder in the UK, dedicated to one refrigerant and in test date. Never filled beyond 80% by weight."},
+{k:"Operator",d:"Under the F-Gas Regulation, the person or company with actual control over the technical functioning of the equipment, normally the owner. Responsible for leak checks, records and using certified people."},
+{k:"Undertaking",d:"The regulation's word for a business or company. An undertaking carrying out F-gas work needs a company certificate, as well as certified engineers."},
+{k:"Company certificate",alt:["company certification","REFCOM"],d:"A certificate held by a business (not an individual) from an approved body such as REFCOM, Quidos or Bureau Veritas, confirming it has certified staff, the right tools and procedures. Required to carry out F-gas work."},
+{k:"Personnel certificate",alt:["personnel certificates"],d:"An individual's F-gas qualification, such as City and Guilds 2079-11 Category I. Shows the person is competent to do the activities covered by that category."},
+{k:"Phase-down",alt:["quota"],d:"The stepped reduction in the amount of HFC (in tonnes CO2e) that producers and importers may place on the market each year, enforced through quotas. It makes high-GWP gas scarce and expensive."},
+{k:"Leak detection system",alt:["fixed leak detection","leak detection systems"],d:"A fixed, calibrated device that monitors for refrigerant in the air or system and alerts the operator. Mandatory at 500 tonnes CO2e and above; where fitted it doubles the allowed leak check interval. Must be checked every 12 months."},
+{k:"Direct method",alt:["direct methods","direct leak"],d:"Leak checking the pipework itself: electronic detector, bubble solution, UV dye, or a nitrogen standing pressure test."},
+{k:"Indirect method",alt:["indirect methods","indirect leak"],d:"Leak checking by looking at system behaviour: pressures, temperatures, compressor current, oil and liquid levels, sight glass. A change suggests a leak which is then confirmed by a direct method."},
+{k:"Hazardous waste",d:"Waste that is harmful to people or the environment, which includes recovered refrigerant and used refrigeration oil. Must be moved by a registered carrier to a permitted site with a consignment note."},
+{k:"Consignment note",d:"The document that travels with hazardous waste from producer to carrier to disposal site. Copies are kept for three years."},
+{k:"ADR",d:"The European agreement on carrying dangerous goods by road. Refrigerant cylinders in a vehicle need correct labelling, securing, documents and in some cases driver training."},
+{k:"COSHH",d:"Control of Substances Hazardous to Health Regulations. Requires employers to assess and control the risks from chemicals, including refrigerants, using information from the safety data sheet."},
+{k:"Safety data sheet",alt:["SDS"],d:"The supplier's document for a substance giving its hazards, handling, storage, PPE, first aid and disposal information."},
+{k:"PSSR",alt:["Pressure Systems Safety Regulations"],d:"Pressure Systems Safety Regulations 2000. Refrigeration systems with compressor motor power above 25 kW need a written scheme of examination and periodic inspection by a competent person."},
+{k:"Written scheme of examination",d:"A document drawn up by a competent person listing which parts of a pressure system must be inspected, how and how often, as required by PSSR."},
+{k:"Hot work permit",alt:["hot work"],d:"A site authorisation for brazing, welding or grinding. Sets out precautions: removing flammables, extinguisher on hand, fire watch during and after the work."},
+{k:"Decommissioning",alt:["decommission","decommissioned"],d:"Taking equipment permanently out of service. The refrigerant must be recovered by a certified person and the recovery and disposal recorded."},
+{k:"EN 378",d:"The European standard for the safety and environmental requirements of refrigerating systems and heat pumps. Covers pressure testing, charge limits for flammable refrigerants and plant room requirements."},
+{k:"AR4",alt:["IPCC AR4"],d:"The IPCC Fourth Assessment Report (2007). Its 100-year GWP values are the ones written into the F-Gas Regulation and used for CO2e calculations."},
+{k:"Ambient",alt:["ambient temperature"],d:"The temperature of the surrounding air. Head pressure rises with ambient on an air-cooled condenser, and nitrogen test pressures change with it."},
+{k:"Asphyxiation",d:"Suffocation from lack of oxygen. Refrigerant vapour is heavier than air and odourless, so a leak in a plant room or pit displaces the oxygen at low level without warning."},
+{k:"Frostbite",alt:["cold burns"],d:"Freezing injury to skin or eyes caused by liquid refrigerant flashing off at well below 0 degrees C. Prevented by gloves and eye protection."},
+{k:"Hydrogen fluoride",d:"A highly toxic and corrosive gas produced when HFC refrigerants break down in a flame or on a very hot surface. The reason you never braze on a charged system."},
+{k:"Service ban",alt:["2020 service ban"],d:"Since 1 January 2020, virgin HFCs with a GWP of 2500 or more may not be used to service equipment with a charge of 40 tonnes CO2e or more. Recycled or reclaimed gas is allowed until 2030."},
+{k:"Virgin refrigerant",alt:["virgin"],d:"New, unused refrigerant straight from the manufacturer, as opposed to recovered, recycled or reclaimed gas."},
+{k:"Pump-down",alt:["pump down"],d:"Running the compressor with the liquid line valve closed to collect the charge in the receiver or condenser, so the low side can be opened for service without recovering the whole charge."}
+];
+const GLmap=new Map(); GL.forEach((g,i)=>{[g.k,...(g.alt||[])].forEach(a=>GLmap.set(a.toLowerCase(),i))});
+const GLre=new RegExp("(?<![\\\\w-])("+[...GLmap.keys()].sort((a,b)=>b.length-a.length).map(a=>a.replace(/[.*+?^${}()|[\\]\\\\]/g,"\\\\$&")).join("|")+")(?![\\\\w-])","gi");
+function mark(text){ return esc(text).replace(GLre,(m)=>`<span class="term" role="button" tabindex="0" data-g="${GLmap.get(m.toLowerCase())}">${m}</span>`); }
+function openTerm(i){
+  const g=GL[i]; let bg=document.getElementById("sheet-bg");
+  if(!bg){bg=document.createElement("div");bg.className="sheet-bg";bg.id="sheet-bg";document.body.appendChild(bg);bg.onclick=e=>{if(e.target===bg)bg.remove()};}
+  bg.innerHTML=`<div class="sheet" role="dialog" aria-label="${esc(g.k)}"><div class="h"><h3>${esc(g.k)}</h3><button type="button" class="x" aria-label="Close">&times;</button></div><p class="d">${mark(g.d)}</p><p class="see">Tap any dotted word for its meaning. Full list under Glossary.</p></div>`;
+  bg.querySelector(".x").onclick=()=>bg.remove(); bg.querySelector(".x").focus();
+}
+document.addEventListener("click",e=>{const t=e.target.closest(".term"); if(t)openTerm(+t.dataset.g)});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){const b=document.getElementById("sheet-bg"); if(b)b.remove()} const t=e.target.closest&&e.target.closest(".term"); if(t&&(e.key==="Enter"||e.key===" ")){e.preventDefault();openTerm(+t.dataset.g)}});
+
+/* ---------- State ---------- */
+const PASS=0.7, EXAM_N=30;
+let state={screen:"home",mode:"practice",topics:Object.keys(T),queue:[],idx:0,answers:{},chosen:null,checked:false};
+let stats=load();
+function load(){try{const s=JSON.parse(localStorage.getItem("fgas-stats")||"{}");return {attempts:s.attempts||0,correct:s.correct||0,perTopic:s.perTopic||{},wrong:s.wrong||{}}}catch(e){return {attempts:0,correct:0,perTopic:{},wrong:{}}}}
+function save(){try{localStorage.setItem("fgas-stats",JSON.stringify(stats))}catch(e){}}
+function record(q,ok){stats.attempts++; if(ok)stats.correct++; const pt=stats.perTopic[q.t]||{a:0,c:0}; pt.a++; if(ok)pt.c++; stats.perTopic[q.t]=pt; if(ok)delete stats.wrong[q.id]; else stats.wrong[q.id]=(stats.wrong[q.id]||0)+1; save();}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function pct(c,a){return a?Math.round(100*c/a):0}
+const app=document.getElementById("app");
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+
+/* ---------- Screens ---------- */
+function start(mode,ids){
+  state.mode=mode;
+  let pool = ids ? ids.map(i=>Q[i]) : Q.filter(q=>state.topics.includes(q.t));
+  pool=shuffle(pool);
+  if(mode==="exam") pool=pool.slice(0,EXAM_N);
+  state.queue=pool.map(q=>({q,order:shuffle([0,1,2,3])}));
+  state.idx=0; state.answers={}; state.chosen=null; state.checked=false; state.screen="quiz";
+  render(); window.scrollTo(0,0);
+}
+function renderHome(){
+  const wrongIds=Object.keys(stats.wrong).map(Number);
+  const poolN=Q.filter(q=>state.topics.includes(q.t)).length;
+  const weakest=Object.entries(stats.perTopic).filter(([,v])=>v.a>=3).sort((a,b)=>pct(a[1].c,a[1].a)-pct(b[1].c,b[1].a))[0];
+  app.innerHTML=`
+  <div class="stack">
+    <div>
+      <p class="label">City &amp; Guilds 2079-11 · Level 2 Award</p>
+      <h1>F-Gas &amp; ODS Category I practice</h1>
+      <p class="muted" style="margin-top:8px">Answer a question, get told straight away whether you were right, and read why. ${Q.length} questions across the syllabus.</p>
+    </div>
+    <div class="card stack">
+      <p class="label">Choose how to practise</p>
+      <div class="modes">
+        <button type="button" class="mode" id="mode-practice" aria-pressed="${state.mode==="practice"}"><span class="t">Practice</span><span class="d">Marked after every question, with the explanation. Pick the topics you want.</span></button>
+        <button type="button" class="mode exam" id="mode-exam" aria-pressed="${state.mode==="exam"}"><span class="t">Mock exam</span><span class="d">${EXAM_N} random questions from the chosen topics, marked at the end. Pass mark ${PASS*100}%.</span></button>
+      </div>
+      <p class="label">Topics</p>
+      <div class="chips" id="chips">${Object.entries(T).map(([k,v])=>`<button type="button" class="chip" data-t="${k}" aria-pressed="${state.topics.includes(k)}">${v}<span class="n">${Q.filter(q=>q.t===k).length}</span></button>`).join("")}</div>
+      <div class="footer-actions">
+        <span class="muted" id="pool-n">${poolN} questions selected</span>
+        <button type="button" class="btn ${state.mode==="exam"?"amber":"primary"}" id="start-btn" ${poolN?"":"disabled"}>${state.mode==="exam"?"Start mock exam":"Start practising"}</button>
+      </div>
+    </div>
+    <div class="card stack">
+      <p class="label">Your progress on this device</p>
+      ${stats.attempts?`
+      <div class="score">
+        <div class="tile"><div class="b">${stats.attempts}</div><div class="l">questions answered</div></div>
+        <div class="tile"><div class="b ${pct(stats.correct,stats.attempts)>=70?"pass":"fail"}">${pct(stats.correct,stats.attempts)}%</div><div class="l">correct overall</div></div>
+        <div class="tile"><div class="b">${wrongIds.length}</div><div class="l">still to get right</div></div>
+      </div>
+      ${weakest?`<p class="muted">Weakest topic so far: <strong>${T[weakest[0]]}</strong> at ${pct(weakest[1].c,weakest[1].a)}%.</p>`:""}
+      <div class="row">
+        <button type="button" class="btn" id="retry-btn" ${wrongIds.length?"":"disabled"}>Retry the ${wrongIds.length} you got wrong</button>
+        <button type="button" class="btn" id="reset-btn">Reset progress</button>
+      </div>`:`<p class="muted">Nothing answered yet. Scores and the questions you get wrong are remembered on this device so you can come back to them.</p>`}
+    </div>
+    <p class="note">Questions are written from the 2079-11 syllabus and the GB F-Gas and ODS Regulations, using the GWP values the regulation uses (IPCC AR4). This is revision material, not official City &amp; Guilds content. If anything here disagrees with the HSS workbook or the tutor, go with the workbook.</p>
+  </div>`;
+  document.getElementById("mode-practice").onclick=()=>{state.mode="practice";renderHome()};
+  document.getElementById("mode-exam").onclick=()=>{state.mode="exam";renderHome()};
+  document.querySelectorAll("#chips .chip").forEach(b=>b.onclick=()=>{const t=b.dataset.t; state.topics=state.topics.includes(t)?state.topics.filter(x=>x!==t):[...state.topics,t]; renderHome()});
+  document.getElementById("start-btn").onclick=()=>start(state.mode);
+  const r=document.getElementById("retry-btn"); if(r)r.onclick=()=>start("practice",wrongIds);
+  const rs=document.getElementById("reset-btn"); if(rs)rs.onclick=()=>{ if(rs.dataset.arm){stats={attempts:0,correct:0,perTopic:{},wrong:{}};save();renderHome()} else {rs.dataset.arm="1";rs.textContent="Tap again to confirm reset"} };
+}
+function renderQuiz(){
+  const item=state.queue[state.idx], q=item.q, n=state.queue.length, exam=state.mode==="exam";
+  const letters=["A","B","C","D"];
+  app.innerHTML=`
+  <div class="stack ${exam?"exam":""}">
+    <div class="qmeta"><span>${exam?"MOCK EXAM":"PRACTICE"} · Q ${state.idx+1} of ${n}</span><span>${exam?"":"Score "+Object.values(state.answers).filter(a=>a.ok).length+" / "+Object.keys(state.answers).length}</span></div>
+    <div class="progress"><i style="width:${100*state.idx/n}%"></i></div>
+    <div class="card stack">
+      <span class="topic">${T[q.t]}</span>
+      <p class="qtext">${mark(q.q)}</p>
+      <div class="opts" id="opts">${item.order.map((oi,k)=>`<button type="button" class="opt" data-o="${oi}" aria-pressed="${state.chosen===oi}"><span class="k">${letters[k]}</span><span>${esc(q.a[oi])}</span></button>`).join("")}</div>
+      <div id="fb"></div>
+      <div class="footer-actions">
+        <span class="kbd">Keys: A to D to answer, Enter to continue</span>
+        <div class="row">
+          <button type="button" class="btn" id="quit-btn">${exam?"Abandon":"Finish"}</button>
+          <button type="button" class="btn ${exam?"amber":"primary"}" id="next-btn" disabled>${exam?"Next":"Check answer"}</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+  const opts=[...document.querySelectorAll(".opt")], nextBtn=document.getElementById("next-btn"), fb=document.getElementById("fb");
+  function choose(oi){ if(state.checked)return; state.chosen=oi; opts.forEach(b=>b.setAttribute("aria-pressed",String(+b.dataset.o===oi))); nextBtn.disabled=false; }
+  function check(){
+    const ok=state.chosen===q.c; state.answers[q.id]={ok,chosen:state.chosen}; record(q,ok); state.checked=true;
+    opts.forEach(b=>{b.disabled=true; const o=+b.dataset.o; if(o===q.c)b.classList.add("right"); else if(o===state.chosen)b.classList.add("wrong");});
+    fb.innerHTML=`<div class="feedback ${ok?"ok":"no"}"><span class="v">${ok?"Correct":"Not quite"}</span><span class="why">${mark(q.e)}</span></div>`;
+    nextBtn.textContent=state.idx+1<n?"Next question":"See results"; nextBtn.focus();
+  }
+  function advance(){ state.idx++; state.chosen=null; state.checked=false; if(state.idx>=n){state.screen="results"} render(); window.scrollTo(0,0); }
+  opts.forEach(b=>b.onclick=()=>choose(+b.dataset.o));
+  nextBtn.onclick=()=>{ if(exam){ state.answers[q.id]={ok:state.chosen===q.c,chosen:state.chosen}; record(q,state.chosen===q.c); advance(); } else if(!state.checked) check(); else advance(); };
+  document.getElementById("quit-btn").onclick=()=>{ if(exam||!Object.keys(state.answers).length){state.screen="home"} else {state.screen="results"} render(); window.scrollTo(0,0); };
+  app.onkeydown=null;
+  document.onkeydown=e=>{ if(state.screen!=="quiz")return; const k=e.key.toUpperCase(); const i=letters.indexOf(k); if(i>-1&&i<opts.length){choose(+opts[i].dataset.o)} else if(e.key==="Enter"&&!nextBtn.disabled){nextBtn.click()} };
+}
+function renderResults(){
+  const items=state.queue.filter(it=>state.answers[it.q.id]!==undefined), n=items.length;
+  const correct=items.filter(it=>state.answers[it.q.id].ok).length, p=pct(correct,n), exam=state.mode==="exam";
+  const byT={}; items.forEach(it=>{const t=it.q.t; byT[t]=byT[t]||{a:0,c:0}; byT[t].a++; if(state.answers[it.q.id].ok)byT[t].c++;});
+  const missed=items.filter(it=>!state.answers[it.q.id].ok);
+  app.innerHTML=`
+  <div class="stack">
+    <div><p class="label">${exam?"Mock exam result":"Practice session"}</p><h1>${n?(p>=PASS*100?"That's a pass":"Not there yet"):"Nothing answered"}</h1></div>
+    <div class="card stack">
+      <div class="score">
+        <div class="tile"><div class="b ${p>=PASS*100?"pass":"fail"}">${p}%</div><div class="l">score (pass mark ${PASS*100}%)</div></div>
+        <div class="tile"><div class="b">${correct} / ${n}</div><div class="l">correct</div></div>
+        <div class="tile"><div class="b">${missed.length}</div><div class="l">to go over</div></div>
+      </div>
+      ${Object.keys(byT).length>1?`<div style="overflow-x:auto"><table><thead><tr><th>Topic</th><th></th><th style="text-align:right">Right</th></tr></thead><tbody>
+        ${Object.entries(byT).sort((a,b)=>pct(a[1].c,a[1].a)-pct(b[1].c,b[1].a)).map(([t,v])=>`<tr><td>${T[t]}</td><td><div class="bar"><i style="width:${pct(v.c,v.a)}%"></i></div></td><td class="num">${v.c}/${v.a}</td></tr>`).join("")}
+      </tbody></table></div>`:""}
+      <div class="row">
+        ${missed.length?`<button type="button" class="btn primary" id="retry-missed">Retry the ${missed.length} missed</button>`:""}
+        <button type="button" class="btn" id="again-btn">${exam?"Another mock exam":"Practise again"}</button>
+        <button type="button" class="btn" id="home2-btn">Home</button>
+      </div>
+    </div>
+    ${missed.length?`<div class="stack"><h2>Go over these</h2><div class="review">${missed.map(it=>{const q=it.q,a=state.answers[q.id];return `<div class="rv"><span class="topic">${T[q.t]}</span><span class="q">${mark(q.q)}</span><span class="you">Your answer: ${a.chosen===null?"not answered":esc(q.a[a.chosen])}</span><span class="ans">Correct: ${esc(q.a[q.c])}</span><span class="muted">${mark(q.e)}</span></div>`}).join("")}</div></div>`:(n?`<p class="muted">Every answer right. Try a mock exam across all topics.</p>`:"")}
+  </div>`;
+  const rm=document.getElementById("retry-missed"); if(rm)rm.onclick=()=>start("practice",missed.map(it=>it.q.id));
+  document.getElementById("again-btn").onclick=()=>start(state.mode);
+  document.getElementById("home2-btn").onclick=()=>{state.screen="home";render()};
+}
+
+function renderGlossary(){
+  app.innerHTML=`<div class="stack">
+    <div><p class="label">Jargon buster</p><h1>Glossary</h1><p class="muted" style="margin-top:8px">${GL.length} terms from the syllabus. These same words are dotted in the questions: tap one for its meaning.</p></div>
+    <input class="search" id="gl-search" type="search" placeholder="Search, e.g. absolute pressure" autocomplete="off">
+    <div class="card"><div class="gl" id="gl-list"></div></div>
+    <button type="button" class="btn" id="gl-back">${state.queue.length&&state.idx<state.queue.length?"Back to the question":"Back"}</button>
+  </div>`;
+  const list=document.getElementById("gl-list"), inp=document.getElementById("gl-search");
+  const sorted=GL.map((g,i)=>({g,i})).sort((a,b)=>a.g.k.localeCompare(b.g.k));
+  const draw=()=>{const f=inp.value.trim().toLowerCase(); const rows=sorted.filter(({g})=>!f||g.k.toLowerCase().includes(f)||(g.alt||[]).some(a=>a.toLowerCase().includes(f))||g.d.toLowerCase().includes(f));
+    list.innerHTML=rows.length?rows.map(({g,i})=>`<div class="g"><b>${esc(g.k)}${g.alt&&g.alt.length?` <span class="muted" style="font-family:var(--body);font-weight:400;font-size:14px">(${esc(g.alt.slice(0,2).join(", "))})</span>`:""}</b><span>${mark(g.d)}</span></div>`).join(""):`<p class="muted">No term matches that. Try a shorter word.</p>`};
+  inp.oninput=draw; draw();
+  document.getElementById("gl-back").onclick=()=>{state.screen=state.prev||"home";render()};
+}
+function render(){
+  document.getElementById("hdr-stat").textContent=stats.attempts?`${pct(stats.correct,stats.attempts)}% over ${stats.attempts} answered`:"";
+  if(state.screen==="home")renderHome(); else if(state.screen==="quiz")renderQuiz(); else if(state.screen==="glossary")renderGlossary(); else renderResults();
+}
+document.getElementById("home-btn").onclick=()=>{state.screen="home";render()};
+document.getElementById("gl-btn").onclick=()=>{ if(state.screen!=="glossary"){state.prev=state.screen; state.screen="glossary"; render(); window.scrollTo(0,0);} };
+window.claude?.hot?.snapshot?.(()=>state);
+const boot=d=>{ if(d&&d.screen&&d.queue){ state=d; state.queue=d.queue.map(it=>({q:Q[it.q.id]||it.q,order:it.order})); } render(); };
+window.claude?.hot?.ready ? window.claude.hot.ready(boot) : boot(window.claude?.hot?.data);
+</script>
+</body>
+</html>
