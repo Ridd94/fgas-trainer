@@ -27,7 +27,7 @@
   --good:#4cc081; --good-soft:#143826; --bad:#ef6b61; --bad-soft:#3f1d1a; color-scheme:dark }
 
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.5;
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:18px;line-height:1.55;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
 .wrap{max-width:720px;margin:0 auto}
@@ -46,9 +46,17 @@ p{margin:0}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px}
 .stack{display:flex;flex-direction:column;gap:16px}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
-button{font-family:inherit;font-size:16px;cursor:pointer}
-.btn{border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:11px 18px;border-radius:8px;font-weight:600}
+.label{font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+button{font-family:inherit;font-size:17px;cursor:pointer}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:13px 20px;border-radius:8px;font-weight:600;min-height:48px}
+.btn.big{width:100%;font-size:20px;padding:16px 20px;min-height:58px}
+.btn.quiet{border-color:transparent;background:transparent;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
+.hint{font-size:16px;color:var(--muted);background:var(--surface2);border-radius:8px;padding:10px 14px}
+details.card>summary{cursor:pointer;font-weight:600;font-size:18px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
+details.card>summary::-webkit-details-marker{display:none}
+details.card>summary::after{content:"Show";color:var(--accent);font-size:15px;font-weight:600}
+details.card[open]>summary::after{content:"Hide"}
+details.card[open]>summary{margin-bottom:14px}
 .btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 .btn.amber{background:var(--amber);color:#fff;border-color:var(--amber)}
 .btn:focus-visible,.opt:focus-visible,.term:focus-visible,.chip:focus-visible,.brand:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
@@ -60,18 +68,21 @@ button{font-family:inherit;font-size:16px;cursor:pointer}
 .mode .t{font-family:var(--display);font-size:20px;font-weight:700}
 .mode .d{font-size:14px;color:var(--muted)}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;padding:6px 12px;font-size:14px;font-weight:500}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;padding:10px 16px;font-size:16px;font-weight:500;min-height:44px}
+.chip::before{content:"";display:inline-block;width:12px;height:12px;border:2px solid var(--muted);border-radius:3px;margin-right:9px;vertical-align:-1px}
 .chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
-.chip .n{font-family:var(--mono);font-size:12px;opacity:.75;margin-left:4px}
+.chip[aria-pressed="true"]::before{content:"\2713";border-color:var(--accent-ink);background:var(--accent-ink);color:var(--accent);font-size:11px;line-height:12px;text-align:center;font-weight:700}
+.chip .n{font-family:var(--mono);font-size:13px;opacity:.75;margin-left:6px}
 .progress{height:6px;background:var(--surface2);border-radius:3px;overflow:hidden}
 .progress>i{display:block;height:100%;background:var(--accent);width:0;transition:width .25s}
 .exam .progress>i{background:var(--amber)}
-.qmeta{display:flex;justify-content:space-between;gap:10px;font-family:var(--mono);font-size:13px;color:var(--muted)}
-.topic{color:var(--accent);font-weight:600;font-family:var(--body);font-size:13px;letter-spacing:.06em;text-transform:uppercase}
-.qtext{font-size:21px;font-weight:500;line-height:1.35}
-.opts{display:flex;flex-direction:column;gap:10px}
-.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:8px;padding:12px 14px;font-size:17px;line-height:1.4;width:100%}
-.opt .k{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--muted);border:1px solid var(--line);border-radius:4px;min-width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;flex:none;margin-top:1px}
+.qmeta{display:flex;justify-content:space-between;gap:10px;font-size:16px;color:var(--muted);font-weight:500}
+.topic{color:var(--accent);font-weight:600;font-family:var(--body);font-size:14px;letter-spacing:.06em;text-transform:uppercase}
+.qtext{font-size:22px;font-weight:500;line-height:1.4}
+.opts{display:flex;flex-direction:column;gap:12px}
+.opt{display:flex;gap:14px;align-items:flex-start;text-align:left;border:2px solid var(--line);background:var(--surface);color:var(--fg);border-radius:10px;padding:14px 16px;font-size:18px;line-height:1.4;width:100%;min-height:56px}
+.opt:not(:disabled):hover{border-color:var(--accent)}
+.opt .k{font-family:var(--mono);font-size:15px;font-weight:500;color:var(--muted);border:1px solid var(--line);border-radius:6px;min-width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;flex:none;margin-top:-2px}
 .opt[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 2px var(--accent)}
 .opt[aria-pressed="true"] .k{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 .opt.right{border-color:var(--good);background:var(--good-soft)}
@@ -82,9 +93,9 @@ button{font-family:inherit;font-size:16px;cursor:pointer}
 .feedback{border-radius:8px;padding:14px 16px;border:1px solid;display:flex;flex-direction:column;gap:6px}
 .feedback.ok{border-color:var(--good);background:var(--good-soft)}
 .feedback.no{border-color:var(--bad);background:var(--bad-soft)}
-.feedback .v{font-family:var(--display);font-size:20px;font-weight:700}
+.feedback .v{font-family:var(--display);font-size:22px;font-weight:700}
 .feedback.ok .v{color:var(--good)} .feedback.no .v{color:var(--bad)}
-.feedback .why{font-size:16px}
+.feedback .why{font-size:17px}
 .score{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
 .tile{background:var(--surface2);border-radius:8px;padding:12px 14px;min-width:0}
 .tile .b{font-family:var(--display);font-size:32px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
@@ -102,7 +113,8 @@ td.num{text-align:right;font-family:var(--mono);font-size:14px}
 .rv .you{color:var(--bad)} .rv .ans{color:var(--good);font-weight:600}
 .note{font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
 .footer-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between;align-items:center}
-.kbd{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.quiz-actions{display:flex;flex-direction:column;gap:10px}
+.quiz-actions .btn.big{order:-1}
 .term{display:inline;cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:var(--accent);text-decoration-thickness:2px;text-underline-offset:3px;border-radius:2px}
 .term:hover{background:var(--surface2)}
 .sheet-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:20;display:flex;align-items:flex-end;justify-content:center}
@@ -119,17 +131,16 @@ td.num{text-align:right;font-family:var(--mono);font-size:14px}
 .gl .g b{font-family:var(--display);font-size:18px;font-weight:600}
 .gl .g span{font-size:15px}
 .hdr-actions{display:flex;align-items:center;gap:10px}
-.btn.small{padding:7px 12px;font-size:14px}
-@media (max-width:600px){ .kbd{display:none} }
-@media (max-width:480px){ h1{font-size:28px} .qtext{font-size:19px} .opt{font-size:16px} body{font-size:16px} .stat{display:none} }
+.btn.small{padding:9px 14px;font-size:15px;min-height:40px}
+@media (max-width:480px){ h1{font-size:28px} .qtext{font-size:20px} .opt{font-size:17px} body{font-size:17px} .stat{display:none} .row .btn{width:100%} .brand .tag{display:none} }
 @media (prefers-reduced-motion: reduce){ .progress>i{transition:none} }
 </style>
 </head>
 <body>
 
 <header><div class="wrap">
-  <button class="brand" id="home-btn" type="button">F-Gas Cat I Trainer <span class="tag">2079-11</span></button>
-  <div class="hdr-actions"><div class="stat" id="hdr-stat"></div><button type="button" class="btn small" id="gl-btn">Glossary</button></div>
+  <button class="brand" id="home-btn" type="button" title="Back to the start">F-Gas Cat I Trainer <span class="tag">2079-11</span></button>
+  <div class="hdr-actions"><div class="stat" id="hdr-stat"></div><button type="button" class="btn small" id="gl-btn">Word meanings</button></div>
 </div></header>
 
 <main class="wrap" id="app"></main>
@@ -388,7 +399,7 @@ function mark(text){ return esc(text).replace(GLre,(m)=>`<span class="term" role
 function openTerm(i){
   const g=GL[i]; let bg=document.getElementById("sheet-bg");
   if(!bg){bg=document.createElement("div");bg.className="sheet-bg";bg.id="sheet-bg";document.body.appendChild(bg);bg.onclick=e=>{if(e.target===bg)bg.remove()};}
-  bg.innerHTML=`<div class="sheet" role="dialog" aria-label="${esc(g.k)}"><div class="h"><h3>${esc(g.k)}</h3><button type="button" class="x" aria-label="Close">&times;</button></div><p class="d">${mark(g.d)}</p><p class="see">Tap any dotted word for its meaning. Full list under Glossary.</p></div>`;
+  bg.innerHTML=`<div class="sheet" role="dialog" aria-label="${esc(g.k)}"><div class="h"><h3>${esc(g.k)}</h3><button type="button" class="x" aria-label="Close">&times;</button></div><p class="d">${mark(g.d)}</p><p class="see">Tap any dotted word for its meaning. The full list is under "Word meanings" at the top.</p></div>`;
   bg.querySelector(".x").onclick=()=>bg.remove(); bg.querySelector(".x").focus();
 }
 document.addEventListener("click",e=>{const t=e.target.closest(".term"); if(t)openTerm(+t.dataset.g)});
@@ -425,21 +436,22 @@ function renderHome(){
     <div>
       <p class="label">City &amp; Guilds 2079-11 · Level 2 Award</p>
       <h1>F-Gas &amp; ODS Category I practice</h1>
-      <p class="muted" style="margin-top:8px">Answer a question, get told straight away whether you were right, and read why. ${Q.length} questions across the syllabus.</p>
+      <p class="muted" style="margin-top:8px">Tap the answer you think is right. You are told straight away whether you were right, and why. ${Q.length} questions in total.</p>
     </div>
     <div class="card stack">
-      <p class="label">Choose how to practise</p>
-      <div class="modes">
-        <button type="button" class="mode" id="mode-practice" aria-pressed="${state.mode==="practice"}"><span class="t">Practice</span><span class="d">Marked after every question, with the explanation. Pick the topics you want.</span></button>
-        <button type="button" class="mode exam" id="mode-exam" aria-pressed="${state.mode==="exam"}"><span class="t">Mock exam</span><span class="d">${EXAM_N} random questions from the chosen topics, marked at the end. Pass mark ${PASS*100}%.</span></button>
-      </div>
-      <p class="label">Topics</p>
-      <div class="chips" id="chips">${Object.entries(T).map(([k,v])=>`<button type="button" class="chip" data-t="${k}" aria-pressed="${state.topics.includes(k)}">${v}<span class="n">${Q.filter(q=>q.t===k).length}</span></button>`).join("")}</div>
-      <div class="footer-actions">
-        <span class="muted" id="pool-n">${poolN} questions selected</span>
-        <button type="button" class="btn ${state.mode==="exam"?"amber":"primary"}" id="start-btn" ${poolN?"":"disabled"}>${state.mode==="exam"?"Start mock exam":"Start practising"}</button>
-      </div>
+      <button type="button" class="btn primary big" id="start-btn" ${poolN?"":"disabled"}>Start practising</button>
+      <p class="muted">One question at a time, with the answer explained. Stop whenever you like.</p>
+      <button type="button" class="btn amber big" id="exam-btn" ${poolN?"":"disabled"}>Take a mock exam</button>
+      <p class="muted">${EXAM_N} questions, marked at the end like the real test. Pass mark ${PASS*100}%.</p>
     </div>
+    <details class="card" ${state.topics.length<Object.keys(T).length?"open":""}>
+      <summary>Choose topics <span class="muted" style="font-weight:400;font-size:16px">(optional)</span></summary>
+      <div class="stack">
+        <p class="muted">All topics are included unless you untick some. ${poolN} questions selected.</p>
+        <div class="chips" id="chips">${Object.entries(T).map(([k,v])=>`<button type="button" class="chip" data-t="${k}" aria-pressed="${state.topics.includes(k)}">${v}<span class="n">${Q.filter(q=>q.t===k).length}</span></button>`).join("")}</div>
+        ${poolN?"":`<p class="hint">Tick at least one topic to be able to start.</p>`}
+      </div>
+    </details>
     <div class="card stack">
       <p class="label">Your progress on this device</p>
       ${stats.attempts?`
@@ -450,54 +462,57 @@ function renderHome(){
       </div>
       ${weakest?`<p class="muted">Weakest topic so far: <strong>${T[weakest[0]]}</strong> at ${pct(weakest[1].c,weakest[1].a)}%.</p>`:""}
       <div class="row">
-        <button type="button" class="btn" id="retry-btn" ${wrongIds.length?"":"disabled"}>Retry the ${wrongIds.length} you got wrong</button>
-        <button type="button" class="btn" id="reset-btn">Reset progress</button>
-      </div>`:`<p class="muted">Nothing answered yet. Scores and the questions you get wrong are remembered on this device so you can come back to them.</p>`}
+        ${wrongIds.length?`<button type="button" class="btn" id="retry-btn">Go over the ${wrongIds.length} you got wrong</button>`:""}
+        <button type="button" class="btn quiet" id="reset-btn">Start again from scratch</button>
+      </div>`:`<p class="muted">Nothing answered yet. Your scores are saved on this device, so you can close the page and carry on later.</p>`}
     </div>
     <p class="note">Questions are written from the 2079-11 syllabus and the GB F-Gas and ODS Regulations, using the GWP values the regulation uses (IPCC AR4). This is revision material, not official City &amp; Guilds content. If anything here disagrees with the HSS workbook or the tutor, go with the workbook.</p>
   </div>`;
-  document.getElementById("mode-practice").onclick=()=>{state.mode="practice";renderHome()};
-  document.getElementById("mode-exam").onclick=()=>{state.mode="exam";renderHome()};
   document.querySelectorAll("#chips .chip").forEach(b=>b.onclick=()=>{const t=b.dataset.t; state.topics=state.topics.includes(t)?state.topics.filter(x=>x!==t):[...state.topics,t]; renderHome()});
-  document.getElementById("start-btn").onclick=()=>start(state.mode);
+  document.getElementById("start-btn").onclick=()=>start("practice");
+  document.getElementById("exam-btn").onclick=()=>start("exam");
   const r=document.getElementById("retry-btn"); if(r)r.onclick=()=>start("practice",wrongIds);
-  const rs=document.getElementById("reset-btn"); if(rs)rs.onclick=()=>{ if(rs.dataset.arm){stats={attempts:0,correct:0,perTopic:{},wrong:{}};save();renderHome()} else {rs.dataset.arm="1";rs.textContent="Tap again to confirm reset"} };
+  const rs=document.getElementById("reset-btn"); if(rs)rs.onclick=()=>{ if(rs.dataset.arm){stats={attempts:0,correct:0,perTopic:{},wrong:{}};save();renderHome()} else {rs.dataset.arm="1";rs.textContent="Tap again to wipe your scores"} };
 }
 function renderQuiz(){
   const item=state.queue[state.idx], q=item.q, n=state.queue.length, exam=state.mode==="exam";
   const letters=["A","B","C","D"];
+    const answered=Object.keys(state.answers).length, right=Object.values(state.answers).filter(a=>a.ok).length;
+    const quitLabel=exam?"Quit the exam":(answered?"Stop and see my score":"Back to the start");
   app.innerHTML=`
   <div class="stack ${exam?"exam":""}">
-    <div class="qmeta"><span>${exam?"MOCK EXAM":"PRACTICE"} · Q ${state.idx+1} of ${n}</span><span>${exam?"":"Score "+Object.values(state.answers).filter(a=>a.ok).length+" / "+Object.keys(state.answers).length}</span></div>
+    <div class="qmeta"><span>${exam?"Mock exam · ":""}Question ${state.idx+1} of ${n}</span><span>${exam||!answered?"":right+" of "+answered+" right so far"}</span></div>
     <div class="progress"><i style="width:${100*state.idx/n}%"></i></div>
     <div class="card stack">
       <span class="topic">${T[q.t]}</span>
       <p class="qtext">${mark(q.q)}</p>
+      ${state.idx===0?`<p class="hint">${exam?"Tap your answer, then tap Next. You get your marks at the end.":"Tap the answer you think is right. Words with a dotted line under them can be tapped for a plain-English meaning."}</p>`:""}
       <div class="opts" id="opts">${item.order.map((oi,k)=>`<button type="button" class="opt" data-o="${oi}" aria-pressed="${state.chosen===oi}"><span class="k">${letters[k]}</span><span>${esc(q.a[oi])}</span></button>`).join("")}</div>
       <div id="fb"></div>
-      <div class="footer-actions">
-        <span class="kbd">Keys: A to D to answer, Enter to continue</span>
-        <div class="row">
-          <button type="button" class="btn" id="quit-btn">${exam?"Abandon":"Finish"}</button>
-          <button type="button" class="btn ${exam?"amber":"primary"}" id="next-btn" disabled>${exam?"Next":"Check answer"}</button>
-        </div>
+      <div class="quiz-actions">
+        <button type="button" class="btn big ${exam?"amber":"primary"}" id="next-btn" ${exam?"disabled":"hidden"}>${exam?"Next":"Next question"}</button>
+        <button type="button" class="btn quiet" id="quit-btn">${quitLabel}</button>
       </div>
     </div>
   </div>`;
-  const opts=[...document.querySelectorAll(".opt")], nextBtn=document.getElementById("next-btn"), fb=document.getElementById("fb");
-  function choose(oi){ if(state.checked)return; state.chosen=oi; opts.forEach(b=>b.setAttribute("aria-pressed",String(+b.dataset.o===oi))); nextBtn.disabled=false; }
+  const opts=[...document.querySelectorAll(".opt")], nextBtn=document.getElementById("next-btn"), fb=document.getElementById("fb"), quitBtn=document.getElementById("quit-btn");
+  function choose(oi){ if(state.checked)return; state.chosen=oi; opts.forEach(b=>b.setAttribute("aria-pressed",String(+b.dataset.o===oi))); if(exam) nextBtn.disabled=false; else check(); }
   function check(){
     const ok=state.chosen===q.c; state.answers[q.id]={ok,chosen:state.chosen}; record(q,ok); state.checked=true;
     opts.forEach(b=>{b.disabled=true; const o=+b.dataset.o; if(o===q.c)b.classList.add("right"); else if(o===state.chosen)b.classList.add("wrong");});
     fb.innerHTML=`<div class="feedback ${ok?"ok":"no"}"><span class="v">${ok?"Correct":"Not quite"}</span><span class="why">${mark(q.e)}</span></div>`;
-    nextBtn.textContent=state.idx+1<n?"Next question":"See results"; nextBtn.focus();
+    nextBtn.hidden=false; nextBtn.textContent=state.idx+1<n?"Next question":"See my score"; nextBtn.focus({preventScroll:true});
+    quitBtn.textContent="Stop and see my score";
+    fb.scrollIntoView({behavior:"smooth",block:"nearest"});
   }
   function advance(){ state.idx++; state.chosen=null; state.checked=false; if(state.idx>=n){state.screen="results"} render(); window.scrollTo(0,0); }
   opts.forEach(b=>b.onclick=()=>choose(+b.dataset.o));
-  nextBtn.onclick=()=>{ if(exam){ state.answers[q.id]={ok:state.chosen===q.c,chosen:state.chosen}; record(q,state.chosen===q.c); advance(); } else if(!state.checked) check(); else advance(); };
-  document.getElementById("quit-btn").onclick=()=>{ if(exam||!Object.keys(state.answers).length){state.screen="home"} else {state.screen="results"} render(); window.scrollTo(0,0); };
+  nextBtn.onclick=()=>{ if(exam){ state.answers[q.id]={ok:state.chosen===q.c,chosen:state.chosen}; record(q,state.chosen===q.c); advance(); } else if(state.checked) advance(); };
+  quitBtn.onclick=()=>{
+    if(exam&&!quitBtn.dataset.arm){ quitBtn.dataset.arm="1"; quitBtn.textContent="Tap again to quit. Your answers so far will not be marked."; return; }
+    if(exam||!Object.keys(state.answers).length){state.screen="home"} else {state.screen="results"} render(); window.scrollTo(0,0); };
   app.onkeydown=null;
-  document.onkeydown=e=>{ if(state.screen!=="quiz")return; const k=e.key.toUpperCase(); const i=letters.indexOf(k); if(i>-1&&i<opts.length){choose(+opts[i].dataset.o)} else if(e.key==="Enter"&&!nextBtn.disabled){nextBtn.click()} };
+  document.onkeydown=e=>{ if(state.screen!=="quiz")return; const k=e.key.toUpperCase(); const i=letters.indexOf(k); if(i>-1&&i<opts.length){choose(+opts[i].dataset.o)} else if(e.key==="Enter"&&!nextBtn.disabled&&!nextBtn.hidden){nextBtn.click()} };
 }
 function renderResults(){
   const items=state.queue.filter(it=>state.answers[it.q.id]!==undefined), n=items.length;
@@ -517,12 +532,12 @@ function renderResults(){
         ${Object.entries(byT).sort((a,b)=>pct(a[1].c,a[1].a)-pct(b[1].c,b[1].a)).map(([t,v])=>`<tr><td>${T[t]}</td><td><div class="bar"><i style="width:${pct(v.c,v.a)}%"></i></div></td><td class="num">${v.c}/${v.a}</td></tr>`).join("")}
       </tbody></table></div>`:""}
       <div class="row">
-        ${missed.length?`<button type="button" class="btn primary" id="retry-missed">Retry the ${missed.length} missed</button>`:""}
-        <button type="button" class="btn" id="again-btn">${exam?"Another mock exam":"Practise again"}</button>
-        <button type="button" class="btn" id="home2-btn">Home</button>
+        ${missed.length?`<button type="button" class="btn primary" id="retry-missed">Try the ${missed.length} I got wrong again</button>`:""}
+        <button type="button" class="btn" id="again-btn">${exam?"Another mock exam":"More practice"}</button>
+        <button type="button" class="btn" id="home2-btn">Back to the start</button>
       </div>
     </div>
-    ${missed.length?`<div class="stack"><h2>Go over these</h2><div class="review">${missed.map(it=>{const q=it.q,a=state.answers[q.id];return `<div class="rv"><span class="topic">${T[q.t]}</span><span class="q">${mark(q.q)}</span><span class="you">Your answer: ${a.chosen===null?"not answered":esc(q.a[a.chosen])}</span><span class="ans">Correct: ${esc(q.a[q.c])}</span><span class="muted">${mark(q.e)}</span></div>`}).join("")}</div></div>`:(n?`<p class="muted">Every answer right. Try a mock exam across all topics.</p>`:"")}
+    ${missed.length?`<div class="stack"><h2>The ones you got wrong, with the right answer</h2><div class="review">${missed.map(it=>{const q=it.q,a=state.answers[q.id];return `<div class="rv"><span class="topic">${T[q.t]}</span><span class="q">${mark(q.q)}</span><span class="you">Your answer: ${a.chosen===null?"not answered":esc(q.a[a.chosen])}</span><span class="ans">Correct: ${esc(q.a[q.c])}</span><span class="muted">${mark(q.e)}</span></div>`}).join("")}</div></div>`:(n?`<p class="muted">Every answer right. Try a mock exam across all topics.</p>`:"")}
   </div>`;
   const rm=document.getElementById("retry-missed"); if(rm)rm.onclick=()=>start("practice",missed.map(it=>it.q.id));
   document.getElementById("again-btn").onclick=()=>start(state.mode);
@@ -531,8 +546,8 @@ function renderResults(){
 
 function renderGlossary(){
   app.innerHTML=`<div class="stack">
-    <div><p class="label">Jargon buster</p><h1>Glossary</h1><p class="muted" style="margin-top:8px">${GL.length} terms from the syllabus. These same words are dotted in the questions: tap one for its meaning.</p></div>
-    <input class="search" id="gl-search" type="search" placeholder="Search, e.g. absolute pressure" autocomplete="off">
+    <div><p class="label">Jargon buster</p><h1>Word meanings</h1><p class="muted" style="margin-top:8px">${GL.length} terms from the course explained in plain English. In the questions, these words have a dotted line under them: tap one for its meaning.</p></div>
+    <input class="search" id="gl-search" type="search" placeholder="Type a word to find it, e.g. GWP" autocomplete="off">
     <div class="card"><div class="gl" id="gl-list"></div></div>
     <button type="button" class="btn" id="gl-back">${state.queue.length&&state.idx<state.queue.length?"Back to the question":"Back"}</button>
   </div>`;
@@ -544,7 +559,7 @@ function renderGlossary(){
   document.getElementById("gl-back").onclick=()=>{state.screen=state.prev||"home";render()};
 }
 function render(){
-  document.getElementById("hdr-stat").textContent=stats.attempts?`${pct(stats.correct,stats.attempts)}% over ${stats.attempts} answered`:"";
+  document.getElementById("hdr-stat").textContent=stats.attempts?`${stats.attempts} answered · ${pct(stats.correct,stats.attempts)}% right`:"";
   if(state.screen==="home")renderHome(); else if(state.screen==="quiz")renderQuiz(); else if(state.screen==="glossary")renderGlossary(); else renderResults();
 }
 document.getElementById("home-btn").onclick=()=>{state.screen="home";render()};
