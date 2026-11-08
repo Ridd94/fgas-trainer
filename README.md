@@ -18,3 +18,12 @@ Any static host works. Point the host at the repo root and serve `index.html`.
 - **Locally:** open `index.html` in a browser.
 
 The questions are revision material written from the syllabus and the GB F-Gas and ODS Regulations. They are not official City & Guilds content.
+
+## Study guide
+
+`guide/` holds the illustrated PDF study guide that goes with the app.
+
+- `guide/content.js` chapter text, `guide/figures.js` inline SVG diagrams, `guide/style.css` print styles.
+- `guide/build.js` pulls the question bank and glossary out of `index.html` so guide and app stay in step, writes `guide/guide.html`, and prints `guide/F-Gas-Cat-I-Study-Guide.pdf` with Playwright's Chromium.
+
+Rebuild with `node guide/build.js` (needs Node and Playwright with Chromium).

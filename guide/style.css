@@ -1,0 +1,56 @@
+:root{--ink:#15232b;--mute:#5b6b75;--line:#cdd6db;--soft:#eef2f4;--cold:#0b6e8f;--hot:#c4511d;--amber:#b85f05}
+*{box-sizing:border-box}
+body{font-family:"Barlow","Inter","Carlito",Arial,sans-serif;color:var(--ink);font-size:11pt;line-height:1.45;margin:0}
+h1,h2,h3{font-family:"Barlow Semi Condensed","Inter Display","Barlow",Arial,sans-serif;line-height:1.1;margin:0}
+p{margin:0 0 8pt}
+ul,ol{margin:0 0 8pt 18pt;padding:0}
+li{margin-bottom:3pt}
+strong{font-weight:700}
+.page{page-break-before:always}
+.cover{height:257mm;display:flex;flex-direction:column;justify-content:center;gap:18pt;page-break-after:always}
+.cover .eyebrow{font-size:9.5pt;letter-spacing:.12em;text-transform:uppercase;color:var(--cold);font-weight:700}
+.cover h1{font-size:48pt;font-weight:700}
+.cover .sub{font-size:13pt;color:var(--mute);max-width:150mm}
+.coverfig{border:1px solid var(--line);border-radius:10pt;padding:10pt;background:#fff}
+.coverfig svg{width:100%;height:auto;display:block}
+.cover .edition{font-size:9pt;color:var(--mute);margin-top:auto}
+.toc h2{font-size:28pt;margin-bottom:10pt}
+.toc ol{list-style:none;margin:0 0 14pt;padding:0}
+.toc li{display:grid;grid-template-columns:28pt 1fr;gap:0 10pt;padding:5pt 0;border-bottom:1px solid var(--line)}
+.toc .n{font-family:"JetBrains Mono",monospace;font-size:11pt;color:var(--cold);font-weight:700;grid-row:span 2}
+.toc .t{font-weight:700;font-size:12.5pt}
+.toc .d{color:var(--mute);font-size:9.5pt}
+.small{font-size:8.5pt;color:var(--mute)}
+.chap-head{display:flex;gap:14pt;align-items:flex-start;border-bottom:3px solid var(--cold);padding-bottom:10pt;margin-bottom:14pt}
+.chapnum{font-family:"Barlow Semi Condensed",Arial,sans-serif;font-size:40pt;font-weight:700;color:var(--cold);line-height:1;min-width:34pt}
+.chapter h2{font-size:26pt}
+.intro{color:var(--mute);font-size:11pt;margin:4pt 0 0}
+.sec{margin-bottom:12pt}
+.sec h3{break-after:avoid}
+.sec h3{font-size:14.5pt;margin:0 0 5pt;color:var(--ink)}
+figure{margin:4pt 0 8pt;border:1px solid var(--line);border-radius:6pt;padding:8pt;background:#fff;break-inside:avoid}
+figure svg{width:100%;height:auto;display:block;font-family:"Barlow",Arial,sans-serif}
+table{border-collapse:collapse;width:100%;font-size:9.5pt;margin:0 0 8pt;break-inside:avoid}
+th,td{text-align:left;vertical-align:top;padding:4pt 6pt;border-bottom:1px solid var(--line)}
+thead th{font-size:8.5pt;text-transform:uppercase;letter-spacing:.05em;color:var(--mute);border-bottom:2px solid var(--line)}
+tbody th{font-weight:700;white-space:nowrap}
+table.nums td:nth-child(3){font-family:"JetBrains Mono",monospace;font-weight:500}
+.callout{background:var(--soft);border-left:4px solid var(--amber);padding:8pt 10pt;border-radius:0 6pt 6pt 0;margin:6pt 0 10pt;font-size:10.5pt}
+.qs{list-style:none;margin:0;padding:0;counter-reset:q;columns:2;column-gap:18pt}
+.qs>li{break-inside:avoid;margin-bottom:10pt;counter-increment:q;font-size:9.5pt}
+.qs .qt{font-weight:600;margin-bottom:4pt}
+.qs .qt::before{content:counter(q) ". ";color:var(--cold);font-family:"JetBrains Mono",monospace}
+.qs .topic{display:block;font-size:7.5pt;text-transform:uppercase;letter-spacing:.06em;color:var(--mute);font-weight:600}
+.qs .opts{list-style:none;margin:0;padding:0}
+.qs .opts li{display:flex;gap:6pt;margin-bottom:2pt}
+.qs .k,.ans .k{font-family:"JetBrains Mono",monospace;font-size:8.5pt;color:var(--mute);border:1px solid var(--line);border-radius:3pt;min-width:16pt;height:16pt;display:inline-flex;align-items:center;justify-content:center;flex:none}
+.answers{columns:2;column-gap:18pt;font-size:9pt}
+.ans{display:flex;gap:8pt;margin-bottom:8pt;break-inside:avoid}
+.ans p{margin:2pt 0 0;color:var(--mute)}
+table.numbers th{font-family:"JetBrains Mono",monospace;font-size:10pt;color:var(--cold);width:38%}
+table.numbers td{font-size:10pt}
+.gl{columns:2;column-gap:18pt;font-size:9pt;margin:0}
+.gl dt{font-weight:700;font-size:10pt;break-after:avoid;margin-top:6pt}
+.gl dt span{font-weight:400;color:var(--mute);font-size:8.5pt}
+.gl dd{margin:1pt 0 0;color:var(--ink)}
+.back{display:flex;flex-direction:column;justify-content:flex-end;height:250mm;color:var(--mute);font-size:9pt}
