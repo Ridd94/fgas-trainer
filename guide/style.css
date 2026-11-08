@@ -30,7 +30,9 @@ strong{font-weight:700}
 .sec h3{font-size:14.5pt;margin:0 0 5pt;color:var(--ink)}
 figure{margin:4pt 0 8pt;border:1px solid var(--line);border-radius:6pt;padding:8pt;background:#fff;break-inside:avoid}
 figure svg{width:100%;height:auto;display:block;font-family:"Barlow",Arial,sans-serif}
-table{border-collapse:collapse;width:100%;font-size:9.5pt;margin:0 0 8pt;break-inside:avoid}
+table{border-collapse:collapse;width:100%;font-size:9.5pt;margin:0 0 8pt}
+tr{break-inside:avoid}
+thead{display:table-header-group}
 th,td{text-align:left;vertical-align:top;padding:4pt 6pt;border-bottom:1px solid var(--line)}
 thead th{font-size:8.5pt;text-transform:uppercase;letter-spacing:.05em;color:var(--mute);border-bottom:2px solid var(--line)}
 tbody th{font-weight:700;white-space:nowrap}

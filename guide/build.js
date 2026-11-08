@@ -49,7 +49,7 @@ html += `<li><span class="n">11</span><span class="t">Practice questions</span><
 chapters.forEach(c => {
   html += `<section class="page chapter"><div class="chap-head"><span class="chapnum">${c.n}</span><div><h2>${esc(c.title)}</h2><p class="intro">${esc(c.intro)}</p></div></div>`;
   c.sections.forEach(s => {
-    html += `<div class="sec"><h3>${esc(s.h)}</h3>${s.fig?`<figure>${figures[s.fig]}</figure>`:""}${s.body}</div>`;
+    html += `<div class="sec"><h3>${esc(s.h)}</h3>${s.fig?`<figure>${figures[s.fig]}</figure>`:""}${s.body.replace("FIGCOMMISSION",figures.commission)}</div>`;
   });
   html += `</section>`;
 });
