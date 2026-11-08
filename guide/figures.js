@@ -319,6 +319,105 @@ record: `<svg viewBox="0 0 640 260" xmlns="http://www.w3.org/2000/svg">
 ${[["Equipment","Cold room pack, plant room 2"],["Refrigerant / charge","R404A · 30 kg · 117.7 t CO2e"],["Leak check interval","6 months (no fixed detection)"],["Date · result · engineer","08/11/2026 · no leak · J. Smith, Cat I, Acme Ltd (REFCOM)"],["Gas added","0 kg (last top‑up 2.0 kg reclaimed, 03/2026, from X Reclaim Ltd)"],["Gas recovered","—"],["Decommissioning","—"]].map((r,i)=>`<text x="80" y="${78+i*24}" font-size="11" fill="${C.mute}">${r[0]}</text><text x="250" y="${78+i*24}" font-size="11" fill="${C.ink}">${r[1]}</text><line x1="80" y1="${84+i*24}" x2="560" y2="${84+i*24}" stroke="${C.line}" stroke-dasharray="2 3"/>`).join("")}
 </svg>`,
 
+
+liquidline: `<svg viewBox="0 0 640 200" xmlns="http://www.w3.org/2000/svg">${arrowDefs}
+<path d="M20,100 L620,100" stroke="${C.hot}" stroke-width="6"/>
+${box(60,60,110,80,"Receiver","stores liquid","#fff",C.ink)}
+${box(230,60,110,80,"Filter drier","moisture, acid, dirt","#fff",C.ink)}
+<circle cx="420" cy="100" r="36" fill="#fff" stroke="${C.ink}" stroke-width="2"/><circle cx="420" cy="100" r="24" fill="#e1f0f6"/><circle cx="412" cy="92" r="3" fill="#fff" stroke="${C.cold}"/><circle cx="426" cy="106" r="3" fill="#fff" stroke="${C.cold}"/>
+<text x="420" y="160" text-anchor="middle" font-size="12" font-weight="700" fill="${C.ink}">Sight glass</text><text x="420" y="175" text-anchor="middle" font-size="11" fill="${C.mute}">clear = full liquid</text>
+<path d="M530,70 L560,100 L530,130 Z M590,70 L560,100 L590,130 Z" fill="#f2c200" stroke="${C.ink}" stroke-width="2"/><rect x="552" y="40" width="16" height="30" fill="${C.ink}"/>
+<text x="560" y="160" text-anchor="middle" font-size="12" font-weight="700" fill="${C.ink}">Expansion valve</text><text x="560" y="175" text-anchor="middle" font-size="11" fill="${C.mute}">pressure drops here</text>
+<text x="20" y="30" font-size="12" fill="${C.hot}" font-weight="700">Liquid line, from condenser →</text>
+</svg>`,
+
+heatpump: `<svg viewBox="0 0 640 220" xmlns="http://www.w3.org/2000/svg">${arrowDefs}
+${box(30,70,150,80,"Indoor coil","","#fff",C.ink)}
+${box(460,70,150,80,"Outdoor coil","","#fff",C.ink)}
+<rect x="270" y="80" width="100" height="60" rx="8" fill="#f2c200" stroke="${C.ink}" stroke-width="2"/><text x="320" y="106" text-anchor="middle" font-size="11" font-weight="700" fill="${C.ink}">4‑way</text><text x="320" y="122" text-anchor="middle" font-size="11" font-weight="700" fill="${C.ink}">valve</text>
+<path d="M180,95 L262,95" stroke="${C.hot}" stroke-width="5" marker-end="url(#ahh)"/><path d="M378,125 L452,125" stroke="${C.cold}" stroke-width="5" marker-end="url(#ahc)"/>
+<text x="105" y="40" text-anchor="middle" font-size="12" font-weight="700" fill="${C.hot}">WINTER: condenser, heats the room</text>
+<text x="105" y="190" text-anchor="middle" font-size="12" font-weight="700" fill="${C.cold}">SUMMER: evaporator, cools the room</text>
+<text x="535" y="40" text-anchor="middle" font-size="12" font-weight="700" fill="${C.cold}">WINTER: evaporator, takes heat from outside air</text>
+<text x="535" y="190" text-anchor="middle" font-size="12" font-weight="700" fill="${C.hot}">SUMMER: condenser, dumps heat outside</text>
+<text x="320" y="40" text-anchor="middle" font-size="11" fill="${C.mute}">the valve swaps which coil gets the hot gas</text>
+<text x="320" y="190" text-anchor="middle" font-size="11" fill="${C.mute}">compressor and expansion device stay the same</text>
+</svg>`,
+
+gwpbars: `<svg viewBox="0 0 640 250" xmlns="http://www.w3.org/2000/svg">
+${[["R744 CO2",1,C.good],["R290",3,C.good],["R1234yf",4,C.good],["R32",675,C.amber],["R134a",1430,C.amber],["R407C",1774,C.hot],["R22",1810,C.hot],["R410A",2088,C.hot],["R404A",3922,C.bad]].map((r,i)=>{const y=20+i*25;const w=Math.max(3,r[1]/3922*430);return `<text x="95" y="${y+15}" text-anchor="end" font-size="12" font-weight="600" fill="${C.ink}">${r[0]}</text><rect x="105" y="${y}" width="${w}" height="19" rx="3" fill="${r[2]}" opacity=".8"/><text x="${115+w}" y="${y+15}" font-size="12" font-family="monospace" fill="${C.ink}">${r[1]}</text>`}).join("")}
+<line x1="105" y1="15" x2="105" y2="245" stroke="${C.line}"/>
+<line x1="${105+2500/3922*430}" y1="15" x2="${105+2500/3922*430}" y2="245" stroke="${C.bad}" stroke-dasharray="5 4"/><text x="${110+2500/3922*430}" y="245" font-size="10" fill="${C.bad}">GWP 2500 ban line</text>
+<line x1="${105+750/3922*430}" y1="15" x2="${105+750/3922*430}" y2="245" stroke="${C.amber}" stroke-dasharray="5 4"/><text x="${110+750/3922*430}" y="245" font-size="10" fill="${C.amber}">750 split AC line</text>
+</svg>`,
+
+rrr: `<svg viewBox="0 0 640 200" xmlns="http://www.w3.org/2000/svg">${arrowDefs}
+${box(20,40,180,90,"RECOVERED","taken out of the system","#fff",C.ink)}
+${box(230,40,180,90,"RECYCLED","filtered, oil and water removed","#e1f0f6",C.cold)}
+${box(440,40,180,90,"RECLAIMED","reprocessed to virgin spec","#e4f3ea",C.good)}
+<path d="M200,85 L222,85 M410,85 L432,85" stroke="${C.ink}" stroke-width="3" marker-end="url(#ah)"/>
+<text x="110" y="160" text-anchor="middle" font-size="11" fill="${C.mute}">in a cylinder, nothing else done</text>
+<text x="320" y="160" text-anchor="middle" font-size="11" fill="${C.mute}">reuse only in the same owner's kit</text>
+<text x="530" y="160" text-anchor="middle" font-size="11" fill="${C.mute}">can be sold and used anywhere</text>
+<text x="320" y="190" text-anchor="middle" font-size="12" font-weight="700" fill="${C.bad}">MIXED refrigerants cannot be reclaimed: destruction, at your cost</text>
+</svg>`,
+
+tworegs: `<svg viewBox="0 0 640 220" xmlns="http://www.w3.org/2000/svg">
+<path d="M160,20 L260,45 L250,140 Q160,200 70,140 L60,45 Z" fill="#e1f0f6" stroke="${C.cold}" stroke-width="3"/>
+<path d="M480,20 L580,45 L570,140 Q480,200 390,140 L380,45 Z" fill="#fbe9e0" stroke="${C.hot}" stroke-width="3"/>
+<text x="160" y="80" text-anchor="middle" font-size="18" font-weight="700" fill="${C.cold}">F‑GAS</text>
+<text x="160" y="102" text-anchor="middle" font-size="11" fill="${C.ink}">GB version of EU 517/2014</text>
+<text x="160" y="120" text-anchor="middle" font-size="11" fill="${C.ink}">HFCs: R134a, R32, R410A, R404A</text>
+<text x="160" y="138" text-anchor="middle" font-size="11" fill="${C.ink}">cuts greenhouse gas emissions</text>
+<text x="480" y="80" text-anchor="middle" font-size="18" font-weight="700" fill="${C.hot}">ODS</text>
+<text x="480" y="102" text-anchor="middle" font-size="11" fill="${C.ink}">GB version of EC 1005/2009</text>
+<text x="480" y="120" text-anchor="middle" font-size="11" fill="${C.ink}">CFCs and HCFCs: R12, R22</text>
+<text x="480" y="138" text-anchor="middle" font-size="11" fill="${C.ink}">protects the ozone layer</text>
+<text x="320" y="212" text-anchor="middle" font-size="12" fill="${C.mute}">Enforced in GB by the Environment Agency, Natural Resources Wales and SEPA</text>
+</svg>`,
+
+duties: `<svg viewBox="0 0 640 220" xmlns="http://www.w3.org/2000/svg">${arrowDefs}
+${box(30,60,200,100,"OPERATOR","owner or occupier","#fff3e0",C.amber)}
+${box(410,60,200,100,"CONTRACTOR","the undertaking","#e1f0f6",C.cold)}
+<path d="M230,95 L402,95" stroke="${C.ink}" stroke-width="3" marker-end="url(#ah)"/><text x="320" y="88" text-anchor="middle" font-size="11" fill="${C.ink}">checks both certificates</text>
+<path d="M410,125 L238,125" stroke="${C.ink}" stroke-width="3" marker-end="url(#ah)"/><text x="320" y="145" text-anchor="middle" font-size="11" fill="${C.ink}">does the work, hands over records</text>
+<text x="130" y="185" text-anchor="middle" font-size="11" fill="${C.mute}">legally responsible for leak checks,</text><text x="130" y="200" text-anchor="middle" font-size="11" fill="${C.mute}">records, repairs, certified people</text>
+<text x="510" y="185" text-anchor="middle" font-size="11" fill="${C.mute}">company certificate (REFCOM etc.)</text><text x="510" y="200" text-anchor="middle" font-size="11" fill="${C.mute}">+ engineer's personnel certificate</text>
+</svg>`,
+
+n2test: `<svg viewBox="0 0 640 220" xmlns="http://www.w3.org/2000/svg">${arrowDefs}
+<rect x="40" y="50" width="60" height="150" rx="14" fill="#444" stroke="${C.ink}" stroke-width="2"/><rect x="62" y="32" width="16" height="20" fill="${C.ink}"/><text x="70" y="130" text-anchor="middle" font-size="11" fill="#fff" font-weight="700">OFN</text>
+<circle cx="130" cy="60" r="16" fill="#fff" stroke="${C.ink}" stroke-width="2"/><text x="130" y="95" text-anchor="middle" font-size="10" fill="${C.mute}">regulator</text>
+<path d="M78,45 L114,55" stroke="${C.ink}" stroke-width="3"/>
+<path d="M146,60 L260,60 L260,110" stroke="#f2c200" stroke-width="4" fill="none"/>
+<circle cx="260" cy="130" r="22" fill="#fff" stroke="${C.bad}" stroke-width="4"/><path d="M260,130 L270,116" stroke="${C.ink}" stroke-width="2"/><text x="260" y="175" text-anchor="middle" font-size="10" fill="${C.mute}">gauge</text>
+<path d="M282,130 L340,130" stroke="#f2c200" stroke-width="4"/>
+${box(340,80,260,100,"System","pipework and coils, no refrigerant","#e1f0f6",C.cold)}
+<text x="470" y="210" text-anchor="middle" font-size="12" fill="${C.ink}" font-weight="600">Pressurise, note pressure and temperature, wait, compare.</text>
+</svg>`,
+
+sightglass: `<svg viewBox="0 0 640 200" xmlns="http://www.w3.org/2000/svg">
+${[["CLEAR","full column of liquid: good","#e1f0f6",C.good,0],["BUBBLES","flash gas: low charge or restriction","#e1f0f6",C.bad,6],["WET","indicator changed colour: change the drier","#fff3c4",C.amber,0]].map((g,i)=>{const cx=110+i*210;return `<circle cx="${cx}" cy="80" r="50" fill="#fff" stroke="${C.ink}" stroke-width="3"/><circle cx="${cx}" cy="80" r="36" fill="${g[2]}"/>${Array.from({length:g[4]},(_,k)=>`<circle cx="${cx-20+(k%3)*18}" cy="${68+Math.floor(k/3)*20}" r="4" fill="#fff" stroke="${C.cold}"/>`).join("")}${i===2?`<circle cx="${cx}" cy="80" r="10" fill="#f2c200"/>`:""}<text x="${cx}" y="155" text-anchor="middle" font-size="14" font-weight="700" fill="${g[3]}">${g[0]}</text><text x="${cx}" y="175" text-anchor="middle" font-size="11" fill="${C.mute}">${g[1]}</text>`}).join("")}
+</svg>`,
+
+hotwork: `<svg viewBox="0 0 640 200" xmlns="http://www.w3.org/2000/svg">${arrowDefs}
+<path d="M60,120 L300,120" stroke="#d9a46e" stroke-width="14"/>
+<path d="M180,40 L180,100" stroke="${C.hot}" stroke-width="5" marker-end="url(#ahh)"/><path d="M165,45 Q180,10 195,45" fill="${C.hot}" opacity=".7"/>
+<text x="60" y="170" font-size="12" fill="${C.ink}" font-weight="600">Pipe still holding refrigerant</text>
+<text x="330" y="60" font-size="13" font-weight="700" fill="${C.bad}">HEAT + HFC = HYDROGEN FLUORIDE</text>
+<text x="330" y="82" font-size="11" fill="${C.ink}">toxic, corrosive gas; plus molten metal blown out of the joint</text>
+<text x="330" y="115" font-size="12" font-weight="700" fill="${C.good}">BEFORE ANY FLAME</text>
+<text x="330" y="135" font-size="11" fill="${C.ink}">recover · purge with OFN · prove zero pressure</text>
+<text x="330" y="153" font-size="11" fill="${C.ink}">clear flammables · extinguisher · hot work permit</text>
+<text x="330" y="171" font-size="11" fill="${C.ink}">fire watch after you finish</text>
+</svg>`,
+
+a2l: `<svg viewBox="0 0 640 200" xmlns="http://www.w3.org/2000/svg">
+<path d="M80,160 Q60,110 100,80 Q90,120 120,120 Q130,90 150,70 Q150,120 180,110 Q200,140 160,160 Z" fill="${C.amber}" opacity=".85"/><path d="M110,160 Q100,130 125,115 Q130,140 150,135 Q160,150 140,160 Z" fill="#f2c200"/>
+<text x="130" y="190" text-anchor="middle" font-size="12" font-weight="700" fill="${C.ink}">R32 · R1234yf · R454B</text>
+${["Needs a rich leak AND a spark to burn","Slow flame, but it does burn","No ignition sources in the work area","Spark‑free tools, rated recovery unit and detector","Charge limits by room size: EN 378","Ventilate before and during work"].map((t,i)=>`<text x="230" y="${45+i*26}" font-size="12" fill="${C.ink}">• ${t}</text>`).join("")}
+</svg>`,
+
 co2e: `<svg viewBox="0 0 640 150" xmlns="http://www.w3.org/2000/svg">
 <rect x="20" y="30" width="600" height="60" rx="8" fill="${C.soft}" stroke="${C.line}"/>
 <text x="320" y="68" text-anchor="middle" font-size="22" font-weight="700" fill="${C.ink}">kg of refrigerant  ×  GWP  ÷  1000  =  tonnes CO2e</text>

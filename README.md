@@ -21,9 +21,9 @@ The questions are revision material written from the syllabus and the GB F-Gas a
 
 ## Study guide
 
-`guide/` holds the illustrated PDF study guide that goes with the app.
+`guide/` holds "F-Gas Category I in Pictures", the illustrated PDF that goes with the app: one topic per page with a drawing, four key-point boxes and a takeaway line, plus practice questions, a numbers page and the glossary.
 
-- `guide/content.js` chapter text, `guide/figures.js` inline SVG diagrams, `guide/style.css` print styles.
-- `guide/build.js` pulls the question bank and glossary out of `index.html` so guide and app stay in step, writes `guide/guide.html`, and prints `guide/F-Gas-Cat-I-Study-Guide.pdf` with Playwright's Chromium.
+- `guide/topics.js` page content, `guide/figures.js` inline SVG drawings, `guide/icons/` line icons (Lucide, ISC licence), `guide/style.css` print styles.
+- `guide/build.js` pulls the question bank and glossary out of `index.html` so guide and app stay in step, writes `guide/guide.html`, and prints `guide/F-Gas-Cat-I-in-Pictures.pdf` with Playwright's Chromium.
 
 Rebuild with `node guide/build.js` (needs Node and Playwright with Chromium).
