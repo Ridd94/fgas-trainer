@@ -1,7 +1,7 @@
 // Generates the study-guide illustrations from guide/IMAGE-PROMPTS.md with the
 // local ComfyUI server (Qwen-Image-Edit-2511 used as text-to-image).
 //
-//   node guide/generate-images.js                 all 38 pages
+//   node guide/generate-images.js                 every page
 //   node guide/generate-images.js slug1 slug2     just these pages
 //   node guide/generate-images.js --seed 7 slug   fixed seed (default: random)
 //   node guide/generate-images.js --extra "..."   extra words appended to the prompt
@@ -90,7 +90,8 @@ async function run(wf) {
       .replace(/soft pastel palette \(light blue[^)]*\)/, 'coloured in soft pastel light blue, light orange, pale yellow and mint green')
       .replace('educational infographic illustration', 'educational illustration');
   }
-  if (pages.length !== 38) console.warn(`warning: parsed ${pages.length} prompts, expected 38`);
+  const nTopics = require('./topics').length;
+  if (pages.length !== nTopics) console.warn(`warning: parsed ${pages.length} prompts, expected ${nTopics}`);
   const todo = slugs.length ? pages.filter(p => slugs.includes(p.slug)) : pages;
   const missing = slugs.filter(s => !pages.some(p => p.slug === s));
   if (missing.length) throw new Error('unknown slug(s): ' + missing.join(', '));

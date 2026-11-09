@@ -43,6 +43,67 @@ const numbers = [
  ["1 / 0","GWP of CO2 / ODP of all HFCs and HFOs"],
 ];
 
+// Refrigerant directory: [name, what it is, family, GWP (AR4), safety class, where you meet it / status]
+const directory = [
+ ["R12","Dichlorodifluoromethane","CFC","10900","A1","Old fridges and car air con. Ozone depleting; long banned."],
+ ["R22","Chlorodifluoromethane","HCFC","1810","A1","Older air con and refrigeration. No top-ups of any kind since 2015."],
+ ["R134a","Single HFC","HFC","1430","A1","Domestic fridges, chillers, older car air con."],
+ ["R32","Single HFC","HFC","675","A2L","Most new split air con and heat pumps. Replaces R410A."],
+ ["R404A","Zeotropic blend","HFC","3922","A1","Commercial and low-temperature refrigeration. Hit by the 2020 GWP 2500 bans."],
+ ["R407C","Zeotropic blend, large glide","HFC","1774","A1","Air con and heat pumps. Was the main R22 replacement."],
+ ["R410A","Near-azeotropic blend","HFC","2088","A1","Split air con and heat pumps. Not allowed in new single splits under 3 kg from 2025."],
+ ["R507A","Azeotropic blend","HFC","3985","A1","Low-temperature commercial refrigeration. Hit by the 2020 GWP 2500 bans."],
+ ["R448A","Zeotropic blend","HFC/HFO","1387","A1","Supermarket refrigeration. A lower-GWP replacement for R404A."],
+ ["R454B","Zeotropic blend","HFC/HFO","466","A2L","New air con and heat pumps. A replacement for R410A."],
+ ["R1234yf","Single HFO","HFO","4","A2L","Car air con, some chillers."],
+ ["R1234ze","Single HFO","HFO","7","A2L","Chillers and heat pumps."],
+ ["R290","Propane","Hydrocarbon","3","A3","Plug-in display fridges, small heat pumps. Highly flammable."],
+ ["R600a","Isobutane","Hydrocarbon","3","A3","Almost every new domestic fridge. Highly flammable, tiny charges."],
+ ["R744","Carbon dioxide (CO2)","Natural","1","A1","Supermarket packs and heat pumps. Very high pressures."],
+ ["R717","Ammonia","Natural","0","B2L","Large industrial plant. Toxic and mildly flammable, strong smell."],
+];
+// Every short form used in the book or the app
+const abbreviations = [
+ ["A1, A2L, A3, B2L","Safety classes. Letter: A lower, B higher toxicity. Number: 1 no flame, 2L mildly, 2 flammable, 3 highly flammable"],
+ ["ADR","The agreement on carrying dangerous goods by road"],
+ ["AHRI 700","The purity standard reclaimed refrigerant must meet"],
+ ["AR4","The IPCC Fourth Assessment Report: the GWP values the regulation uses"],
+ ["CFC","Chlorofluorocarbon: ozone depleting, e.g. R12"],
+ ["CO2","Carbon dioxide (refrigerant R744)"],
+ ["CO2e","CO2 equivalent: kg × GWP ÷ 1000 = tonnes CO2e"],
+ ["COSHH","Control of Substances Hazardous to Health Regulations"],
+ ["EC / EU","European Community / European Union, as in EC 1005/2009 and EU 517/2014"],
+ ["EN 378","The safety standard for refrigeration systems and heat pumps"],
+ ["F-gas","Fluorinated greenhouse gas: HFCs, PFCs and SF6"],
+ ["GB","Great Britain: England, Scotland and Wales, where the GB rules apply"],
+ ["GWP","Global warming potential, compared with CO2 = 1"],
+ ["HC","Hydrocarbon, e.g. R290 propane, R600a isobutane"],
+ ["HCFC","Hydrochlorofluorocarbon: ozone depleting, e.g. R22"],
+ ["HFC","Hydrofluorocarbon: the main F-gases, e.g. R32, R134a, R410A"],
+ ["HFO","Hydrofluoro-olefin: very low GWP, e.g. R1234yf"],
+ ["HP / LP","High pressure / low pressure, as in HP and LP cut-outs"],
+ ["HSE","Health and Safety Executive"],
+ ["IPCC","Intergovernmental Panel on Climate Change"],
+ ["K","Kelvin: temperature difference, same size as 1 °C"],
+ ["LPG","Liquefied petroleum gas (bottled propane or butane)"],
+ ["ODP","Ozone depletion potential"],
+ ["ODS","Ozone depleting substance"],
+ ["OFN","Oxygen-free nitrogen"],
+ ["PFC","Perfluorocarbon, a group of F-gases"],
+ ["POE","Polyol ester oil, used with HFCs"],
+ ["PPE","Personal protective equipment"],
+ ["PS","Maximum allowable pressure of a system"],
+ ["PSSR","Pressure Systems Safety Regulations 2000"],
+ ["PT chart","Pressure-temperature chart"],
+ ["R","Refrigerant, as in R32 or R410A"],
+ ["REFCOM","A certification body for F-gas company certificates"],
+ ["SDS","Safety data sheet"],
+ ["SEPA","Scottish Environment Protection Agency"],
+ ["SF6","Sulphur hexafluoride, an F-gas used in switchgear"],
+ ["TEV","Thermostatic expansion valve"],
+ ["UV","Ultraviolet, as in UV leak-detection dye"],
+];
+
 const style = fs.readFileSync(path.join(__dirname,"style.css"),"utf8");
 const decos = ["snowflake","sun","droplets","wrench","thermometer","fan"];
 const decoHtml = (seed) => decos.map((d,i)=>{ const left = i%2===0; const top = 75 + ((i*53+seed*17)%150); return `<div class="deco" style="${left?"left:-9mm":"right:-9mm"};top:${top}mm">${icon(d)}</div>`; }).join("");
@@ -65,8 +126,8 @@ const parts = []; topics.forEach((t,i)=>{ let p = parts.find(x=>x.name===t.part)
 html += `<section class="sheet toc"><h2>Contents</h2><div class="parts">`;
 parts.forEach(p => { html += `<div class="part"><b>${esc(p.name)}</b>${p.items.map(it=>`<span><i>${it.page}</i>${esc(it.t.title)}</span>`).join("")}</div>`; });
 const backStart = topics.length + 3;
-html += `<div class="part"><b>XI · PRACTICE</b><span><i>${backStart}</i>30 practice questions</span><span><i>${backStart+2}</i>Answers and explanations</span></div>
-<div class="part"><b>XII · REFERENCE</b><span><i>${backStart+4}</i>Numbers to memorise</span><span><i>${backStart+5}</i>Glossary</span></div></div>
+html += `<div class="part"><b>XI · PRACTICE</b><span><i>${backStart}</i>30 practice questions</span><span><i>${backStart+3}</i>Answers and explanations</span></div>
+<div class="part"><b>XII · REFERENCE</b><span><i>${backStart+5}</i>Numbers to memorise</span><span><i>${backStart+6}</i>Refrigerant directory</span><span><i>${backStart+7}</i>Abbreviations</span><span><i>${backStart+8}</i>Glossary</span></div></div>
 <p class="small" style="margin-top:10pt">Companion practice app: <strong>fgas-trainer.vercel.app</strong>. The questions and glossary in this book are the same ones the app uses, so they always agree. Tap any dotted word in the app for the glossary entry printed here.</p>
 <p class="small">Independent revision material written from the published 2079-11 syllabus and the GB F-Gas and ODS Regulations, using the GWP values the regulation uses (IPCC AR4). Not official City &amp; Guilds content and not affiliated with City &amp; Guilds or any training provider. Where your course workbook or tutor differs, follow them.</p>${pn()}</section>`;
 
@@ -88,6 +149,9 @@ html += `<section class="flow chapter"><div class="chap-head"><span class="chapn
 practice.forEach(p => html += `<div class="ans"><span class="k">${p.n}</span><div><strong>${p.ans}.</strong> ${esc(p.q.a[p.q.c])}<p>${esc(p.q.e)}</p></div></div>`);
 html += `</div></section>`;
 html += `<section class="flow chapter"><div class="chap-head"><span class="chapnum">XII</span><div><h2>Numbers to memorise</h2><p class="intro">If you learn one page, learn this one.</p></div></div><table class="numbers"><tbody>${numbers.map(n=>`<tr><th>${esc(n[0])}</th><td>${esc(n[1])}</td></tr>`).join("")}</tbody></table></section>`;
+html += `<section class="flow chapter"><div class="chap-head"><span class="chapnum">XII</span><div><h2>Refrigerant directory</h2><p class="intro">The gases you will meet, what family each belongs to, and where. GWP values are the AR4 figures the regulation uses.</p></div></div><table class="dir"><thead><tr><th>Name</th><th>What it is</th><th>Family</th><th>GWP</th><th>Class</th><th>Where you meet it</th></tr></thead><tbody>${directory.map(r=>`<tr><th>${esc(r[0])}</th><td>${esc(r[1])}</td><td>${esc(r[2])}</td><td class="num">${esc(r[3])}</td><td>${esc(r[4])}</td><td>${esc(r[5])}</td></tr>`).join("")}</tbody></table>
+<p class="small">Reading the names: see “Reading a refrigerant name” in Part III. HFC/HFO blends count as F-gases. CFCs and HCFCs come under the ODS Regulation, not the F-Gas Regulation.</p></section>`;
+html += `<section class="flow chapter"><div class="chap-head"><span class="chapnum">XII</span><div><h2>Abbreviations</h2><p class="intro">Every short form used in this book and the practice app. Fuller explanations are in the glossary.</p></div></div><dl class="abbr">${abbreviations.map(a=>`<div><dt>${esc(a[0])}</dt><dd>${esc(a[1])}</dd></div>`).join("")}</dl></section>`;
 html += `<section class="flow chapter"><div class="chap-head"><span class="chapnum">XII</span><div><h2>Glossary</h2><p class="intro">The trade's words in plain English. The same ${GL.length} terms are tappable in the practice app.</p></div></div><dl class="gl">${GL.slice().sort((a,b)=>a.k.localeCompare(b.k)).map(g=>`<dt>${esc(g.k)}${g.alt&&g.alt.length?` <span>(${esc(g.alt.slice(0,2).join(", "))})</span>`:""}</dt><dd>${esc(g.d)}</dd>`).join("")}</dl>
 <p class="small" style="margin-top:14pt">F-Gas Category I in Pictures. Independent revision material for the City &amp; Guilds 2079-11 syllabus. Not affiliated with City &amp; Guilds, HSS Training or any awarding body. Regulations change: check the current GB F-Gas and ODS Regulations before relying on a date or threshold at work. Practice app: fgas-trainer.vercel.app</p></section>`;
 html += `</body></html>`;
