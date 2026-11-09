@@ -62,6 +62,23 @@ const directory = [
  ["R744","Carbon dioxide (CO2)","Natural","1","A1","Supermarket packs and heat pumps. Very high pressures."],
  ["R717","Ammonia","Natural","0","B2L","Large industrial plant. Toxic and mildly flammable, strong smell."],
 ];
+// The book in one table: [part, the things to remember]
+const summary = [
+ ["The exam","Theory (multiple choice) plus a practical on a rig. GB rules, not EU 2024/573."],
+ ["Basics","Heat flows hot to cold. Pressure sets the boiling point. bar g = gauge, bar a = absolute (about 1 bar higher). Differences in K."],
+ ["The cycle","Compression, condensation, expansion, evaporation. Compressor to expansion device = high side (red). Back again = low side (blue)."],
+ ["Measuring","Superheat 5 to 10 K proves dry vapour to the compressor. Subcooling 3 to 8 K proves solid liquid to the expansion device."],
+ ["Refrigerants","CFC/HCFC deplete ozone (ODS Regulation). HFCs are the F-gases. HFOs and naturals have tiny GWPs. Blends charged as liquid."],
+ ["Safety classes","A lower toxicity, B higher. 1 no flame, 2L mildly flammable, 3 highly flammable. R32 is A2L, R290 is A3, ammonia B2L."],
+ ["The law","Category I: everything, any charge. Operator keeps records 5 years. Company and personnel certificates both needed. No venting."],
+ ["Leak checks","kg × GWP ÷ 1000 = t CO2e. 5 t: 12 months, 50 t: 6, 500 t: 3 (double with detection; detection compulsory at 500 t)."],
+ ["Recovery","Recovery cylinder grey with yellow shoulder, 80% by weight, one refrigerant only. Finish below atmospheric pressure."],
+ ["Installation","Cut, deburr facing down, nut on, flare, torque. Braze with OFN flowing. Strength 1.1 × PS, tightness at PS, OFN only."],
+ ["Vacuum and charge","Below 500 microns on a micron gauge, then a rise test. Charge by weight; prove with superheat and subcooling."],
+ ["Diagnosis","Simple things first: power, settings, airflow. Low charge and restriction both have high superheat; subcooling splits them."],
+ ["Safety","Refrigerant sinks and displaces oxygen. Never a flame on a charged line (hydrogen fluoride). Cylinders upright, cool, secured."],
+ ["Records","Gas added and recovered, who, when, leak checks, reclaim facility. 5 years. Consignment notes 3 years."],
+];
 // Every short form used in the book or the app
 const abbreviations = [
  ["A1, A2L, A3, B2L","Safety classes. Letter: A lower, B higher toxicity. Number: 1 no flame, 2L mildly, 2 flammable, 3 highly flammable"],
@@ -127,7 +144,7 @@ html += `<section class="sheet toc"><h2>Contents</h2><div class="parts">`;
 parts.forEach(p => { html += `<div class="part"><b>${esc(p.name)}</b>${p.items.map(it=>`<span><i>${it.page}</i>${esc(it.t.title)}</span>`).join("")}</div>`; });
 const backStart = topics.length + 3;
 html += `<div class="part"><b>XI · PRACTICE</b><span><i>${backStart}</i>30 practice questions</span><span><i>${backStart+3}</i>Answers and explanations</span></div>
-<div class="part"><b>XII · REFERENCE</b><span><i>${backStart+5}</i>Numbers to memorise</span><span><i>${backStart+6}</i>Refrigerant directory</span><span><i>${backStart+7}</i>Abbreviations</span><span><i>${backStart+8}</i>Glossary</span></div></div>
+<div class="part"><b>XII · REFERENCE</b><span><i>${backStart+5}</i>Numbers to memorise</span><span><i>${backStart+6}</i>The book in one table</span><span><i>${backStart+7}</i>Refrigerant directory</span><span><i>${backStart+8}</i>Abbreviations</span><span><i>${backStart+9}</i>Glossary</span></div></div>
 <p class="small" style="margin-top:10pt">Companion practice app: <strong>fgas-trainer.vercel.app</strong>. The questions and glossary in this book are the same ones the app uses, so they always agree. Tap any dotted word in the app for the glossary entry printed here.</p>
 <p class="small">Independent revision material written from the published 2079-11 syllabus and the GB F-Gas and ODS Regulations, using the GWP values the regulation uses (IPCC AR4). Not official City &amp; Guilds content and not affiliated with City &amp; Guilds or any training provider. Where your course workbook or tutor differs, follow them.</p>${pn()}</section>`;
 
@@ -149,6 +166,7 @@ html += `<section class="flow chapter"><div class="chap-head"><span class="chapn
 practice.forEach(p => html += `<div class="ans"><span class="k">${p.n}</span><div><strong>${p.ans}.</strong> ${esc(p.q.a[p.q.c])}<p>${esc(p.q.e)}</p></div></div>`);
 html += `</div></section>`;
 html += `<section class="flow chapter"><div class="chap-head"><span class="chapnum">XII</span><div><h2>Numbers to memorise</h2><p class="intro">If you learn one page, learn this one.</p></div></div><table class="numbers"><tbody>${numbers.map(n=>`<tr><th>${esc(n[0])}</th><td>${esc(n[1])}</td></tr>`).join("")}</tbody></table></section>`;
+html += `<section class="flow chapter"><div class="chap-head"><span class="chapnum">XII</span><div><h2>The book in one table</h2><p class="intro">The night before the exam, read this page.</p></div></div><table class="numbers summary"><tbody>${summary.map(n=>`<tr><th>${esc(n[0])}</th><td>${esc(n[1])}</td></tr>`).join("")}</tbody></table></section>`;
 html += `<section class="flow chapter"><div class="chap-head"><span class="chapnum">XII</span><div><h2>Refrigerant directory</h2><p class="intro">The gases you will meet, what family each belongs to, and where. GWP values are the AR4 figures the regulation uses.</p></div></div><table class="dir"><thead><tr><th>Name</th><th>What it is</th><th>Family</th><th>GWP</th><th>Class</th><th>Where you meet it</th></tr></thead><tbody>${directory.map(r=>`<tr><th>${esc(r[0])}</th><td>${esc(r[1])}</td><td>${esc(r[2])}</td><td class="num">${esc(r[3])}</td><td>${esc(r[4])}</td><td>${esc(r[5])}</td></tr>`).join("")}</tbody></table>
 <p class="small">Reading the names: see “Reading a refrigerant name” in Part III. HFC/HFO blends count as F-gases. CFCs and HCFCs come under the ODS Regulation, not the F-Gas Regulation.</p></section>`;
 html += `<section class="flow chapter"><div class="chap-head"><span class="chapnum">XII</span><div><h2>Abbreviations</h2><p class="intro">Every short form used in this book and the practice app. Fuller explanations are in the glossary.</p></div></div><dl class="abbr">${abbreviations.map(a=>`<div><dt>${esc(a[0])}</dt><dd>${esc(a[1])}</dd></div>`).join("")}</dl></section>`;

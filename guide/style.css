@@ -75,6 +75,8 @@ table{border-collapse:collapse;width:100%;font-size:9.5pt;margin:0 0 8pt}
 th,td{text-align:left;vertical-align:top;padding:4pt 6pt;border-bottom:1px solid var(--line)}
 table.numbers th{font-family:"JetBrains Mono",monospace;font-size:10pt;color:var(--cold);width:40%;font-weight:600}
 table.numbers td{font-size:10pt}
+table.summary th{font-family:"Barlow Semi Condensed",Arial,sans-serif;font-size:11pt;width:24%;text-transform:uppercase;letter-spacing:.03em}
+table.summary td{font-size:10.5pt;padding-top:6pt;padding-bottom:6pt}
 table.dir{font-size:8.6pt}
 table.dir thead th{font-size:8pt;text-transform:uppercase;letter-spacing:.05em;color:var(--mute);border-bottom:2px solid var(--navy)}
 table.dir tbody th{font-family:"JetBrains Mono",monospace;color:var(--cold);white-space:nowrap}

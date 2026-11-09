@@ -203,6 +203,86 @@ A ring-bound logbook open on top of a condensing unit, pen resting on it, with b
 
 A technician's gloved hand holding a large magnifying glass over the plain blank shoulder of a refrigerant cylinder; behind it a row of four different cylinders: a plain single-colour cylinder, a cylinder with a cutaway window showing two swirling liquids mixed, a small slim propane-style cylinder, and a heavy industrial cylinder; no text, no letters, no numbers anywhere.
 
+### 40. Preparing for the exam
+`guide/images/preparing-for-the-exam.png`
+
+A refrigeration trainee studying at a kitchen table in the evening with an open illustrated study book, a smartphone showing a quiz screen of blank coloured answer buttons, a mug of tea and a small manifold gauge set beside the book; a calm, focused mood; no text, no letters, no numbers.
+
+### 41. Heat, temperature and pressure
+`guide/images/heat-temperature-and-pressure.png`
+
+Three simple side-by-side science scenes: a copper bar heated by a small orange flame at one end with orange heat arrows flowing along it to the blue cold end; a sealed pot with a lid and a plain pressure gauge, liquid boiling inside; a piston pressing down on a cylinder of blue gas; cutaway style; no text, no letters, no numbers.
+
+### 42. The technician's units
+`guide/images/the-technicians-units.png`
+
+A tidy workbench flat-lay of measuring instruments: a blue and a red pressure gauge with blank faces, a clamp-on pipe thermometer, an electronic vacuum gauge with a blank screen, and a digital weighing scale with a refrigerant cylinder on it; every dial and screen blank; no text, no letters, no numbers.
+
+### 43. The compressor
+`guide/images/the-compressor.png`
+
+Four refrigeration compressors in a row on a white floor, each partly cut away: a small black rotary compressor, a taller scroll compressor with spiral scrolls visible inside, a semi-hermetic piston compressor with bolted heads, and a large screw compressor with twin rotors visible; copper suction pipe drawn blue, discharge pipe drawn orange; no text.
+
+### 44. Condenser and evaporator
+`guide/images/condenser-and-evaporator.png`
+
+Two finned copper heat exchanger coils side by side: on the left an outdoor condenser coil with a fan blowing warm orange air out and orange arrows, on the right an indoor evaporator coil with a fan blowing cool blue air out, droplets of condensate dripping into a tray below it; cutaway showing refrigerant inside the tubes; no text.
+
+### 45. Valves and service ports
+`guide/images/valves-and-service-ports.png`
+
+Close-up of the two brass service valves on the side of an outdoor air conditioning unit, with copper pipes attached by flare nuts, one valve with its cap removed showing a hex key socket, a Schrader service port with its brass cap lying beside it, and a gloved hand holding a hex key; no text.
+
+### 46. Opening the valves and starting up
+`guide/images/opening-the-valves-and-starting-up.png`
+
+A technician kneeling at a newly installed outdoor air conditioning unit, turning a service valve with a hex key while a blue and red manifold gauge set hangs from the unit with blue, yellow and red hoses; the indoor unit visible through a window blowing cool blue air; no text.
+
+### 47. Not cooling: where to look
+`guide/images/not-cooling-where-to-look.png`
+
+A warm room with a wall-mounted air conditioner whose indoor coil is covered in white ice behind a clogged grey dusty filter, a technician on a step ladder pulling the filter out, and outside the window an outdoor unit with leaves blocking its fan grille; no text.
+
+### 48. If an accident happens
+`guide/images/if-an-accident-happens.png`
+
+A first-aid scene in a plant room doorway: one technician helping a colleague hold his hand under a running cold-water tap, a green first-aid kit open on the floor, an eye-wash bottle on the wall and an open door letting in fresh air; calm, not graphic; no text.
+
+### 49. The technician's tools
+`guide/images/the-technicians-tools.png`
+
+A neat flat-lay of refrigeration tools on a grey workshop mat: manifold gauge set with blue, yellow and red hoses, a small vacuum pump, a recovery machine, a pipe cutter, a deburring tool, a flaring tool, a pipe bender, a torque wrench, a leak detector and a clamp thermometer; all dials blank; no text.
+
+### 50. Siting the indoor and outdoor units
+`guide/images/siting-the-indoor-and-outdoor-units.png`
+
+A cutaway of a house wall: a wall-mounted indoor unit high on the inside wall, insulated copper pipes and a condensate pipe passing through a hole sloping slightly down to the outside, and an outdoor unit on wall brackets with rubber anti-vibration mounts, with clear space around it; blue cool air indoors; no text.
+
+### 51. Copper pipe and insulation
+`guide/images/copper-pipe-and-insulation.png`
+
+A coil of clean copper refrigeration pipe with red plastic end caps, two straight copper pipes each in black foam insulation lying side by side, a hand-held pipe bender forming a smooth bend, and pipe clips; no text.
+
+### 52. Cutting and flaring
+`guide/images/cutting-and-flaring.png`
+
+Close-up hands working on copper pipe: a small pipe cutter clamped on the pipe, a deburring tool with the pipe pointing downwards and tiny copper shavings falling out, a brass flare nut already on the pipe, and an eccentric flaring tool clamped on a shiny new flare; no text.
+
+### 53. Tightening flare nuts
+`guide/images/tightening-flare-nuts.png`
+
+Close-up of two hands tightening a brass flare nut on a copper pipe at an outdoor unit's service valve: one hand on a torque wrench with an open-ended head, the other holding a back-up spanner on the valve body; no text, no numbers on the wrench.
+
+### 54. Cleaning and filters
+`guide/images/cleaning-and-filters.png`
+
+A technician cleaning an air conditioner: a dusty mesh filter being rinsed under a tap, a spray bottle of coil cleaner foaming on an indoor coil, and a condensate tray being wiped; a clean filter drying beside it; no text.
+
+### 55. Protective equipment
+`guide/images/protective-equipment.png`
+
+A refrigeration engineer standing facing forward wearing overalls, safety boots, safety glasses, insulated gloves and a small personal gas monitor clipped to his chest; beside him on a bench leather brazing gloves and shaded brazing goggles; no text.
+
 ## Checklist for whoever generates them
 
 - No text, letters or numbers in any image; the page carries the words.
