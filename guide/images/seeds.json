@@ -281,5 +281,10 @@
         "prompt": "Remove the wall calendar completely, leaving plain wall where it was. Keep everything else exactly the same."
       }
     ]
+  },
+  "reading-a-refrigerant-name": {
+    "seed": 2050412012,
+    "steps": 24,
+    "cfg": 4
   }
 }

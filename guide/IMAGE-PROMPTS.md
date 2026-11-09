@@ -198,6 +198,11 @@ A technician in a ventilated room working on an R32-type wall split unit with a 
 
 A ring-bound logbook open on top of a condensing unit, pen resting on it, with blank ruled lines and a stamped box; beside it a tablet showing a blank form; a calendar on the wall with five years of pages fanned out; no readable text.
 
+### 39. Reading a refrigerant name
+`guide/images/reading-a-refrigerant-name.png`
+
+A technician's gloved hand holding a large magnifying glass over the plain blank shoulder of a refrigerant cylinder; behind it a row of four different cylinders: a plain single-colour cylinder, a cylinder with a cutaway window showing two swirling liquids mixed, a small slim propane-style cylinder, and a heavy industrial cylinder; no text, no letters, no numbers anywhere.
+
 ## Checklist for whoever generates them
 
 - No text, letters or numbers in any image; the page carries the words.

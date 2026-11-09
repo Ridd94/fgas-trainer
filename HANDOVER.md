@@ -9,10 +9,10 @@ HSS Training course. Two deliverables share one content source:
 1. **The practice app** (`index.html`): a single-file web app. Multiple-choice
    questions marked instantly with an explanation, practice and mock exam modes,
    and a tap-to-define glossary. Live on Vercel at fgas-trainer.vercel.app.
-2. **The study guide** (`guide/`): "F-Gas Category I in Pictures", a 50-page A4
+2. **The study guide** (`guide/`): "F-Gas Category I in Pictures", a 54-page A4
    PDF. One topic per page: title, subtitle, a drawing, four icon boxes and a
    takeaway bar. Then 30 practice questions with answers, a numbers-to-memorise
-   page and the glossary.
+   page, a refrigerant directory, an abbreviations page and the glossary.
 
 Everything is written to **Great Britain** rules: the GB F-Gas Regulation
 (retained EU 517/2014) and the GB ODS Regulation. The newer EU 2024/573 applies
@@ -27,8 +27,8 @@ vercel.json             static hosting config
 README.md               short public readme
 HANDOVER.md             this file
 guide/
-  topics.js             38 topic pages: part, tag, slug, title, sub, fig, 4 tiles, foot
-  figures.js            38 inline SVG schematic drawings, keyed by name
+  topics.js             39 topic pages: part, tag, slug, title, sub, fig, 4 tiles, foot
+  figures.js            inline SVG schematic drawings, keyed by name
   icons/                Lucide line icons (ISC licence), one SVG per tile icon
   images/               drop generated illustrations here as <slug>.png (empty so far)
   IMAGE-PROMPTS.md      style line plus one written prompt per page, with filenames
@@ -73,10 +73,18 @@ reports once Analytics is enabled in the Vercel project dashboard.
 ## State of play
 
 Done:
-- App: 124 questions across 8 topics, 94 glossary terms, practice and mock modes,
+- App: 124 questions across 8 topics, 109 glossary terms, practice and mock modes,
   progress in localStorage, mobile layout verified at 390 px.
-- Guide: 38 topic pages with schematic drawings, questions, numbers, glossary.
-  Layout verified page by page.
+- Guide: 39 topic pages, all illustrated, then questions, numbers, refrigerant
+  directory, abbreviations and glossary. Layout verified page by page.
+- Abbreviations pass (2026-11-09): every abbreviation is spelled out on the
+  topic page where it first matters, a "Reading a refrigerant name" page sits
+  after "The refrigerant families", and the `directory` and `abbreviations`
+  arrays in `build.js` feed the two new reference pages. 15 terms were added
+  to the end of `GL` in `index.html`.
+- The back-matter page numbers on the contents page are fixed offsets in
+  `build.js` (practice questions take 3 pages, answers 2, glossary 5). If the
+  questions or glossary grow, check them against the PDF.
 
 Not done:
 - **Illustrations.** In progress on branch `guide-illustrations`; see the next
