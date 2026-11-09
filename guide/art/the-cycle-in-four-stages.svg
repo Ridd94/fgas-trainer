@@ -1,0 +1,70 @@
+<svg viewBox="0 0 1600 900" width="1600" height="900" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <path id="chev" d="M-12,-13 L6,0 L-12,13" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  </defs>
+  <rect width="1600" height="900" fill="#fff"/>
+  <!-- room (inside) and outside -->
+  <rect x="40" y="60" width="740" height="760" rx="30" fill="#d6ecf7" opacity=".6"/>
+  <rect x="830" y="60" width="730" height="760" rx="30" fill="#fde3cf" opacity=".55"/>
+  <circle cx="1440" cy="170" r="60" fill="#fff1c2" stroke="#1f2d36" stroke-width="5"/>
+  <!-- wall -->
+  <rect x="780" y="40" width="50" height="800" fill="#eef2f4" stroke="#1f2d36" stroke-width="5"/>
+  <!-- ground outside -->
+  <path d="M830,770 H1560" stroke="#1f2d36" stroke-width="5"/>
+  <rect x="980" y="770" width="460" height="18" fill="#cfd8dd" stroke="#1f2d36" stroke-width="4"/>
+
+  <!-- pipes: suction (thick, low side, blue chevrons) and liquid (thin) -->
+  <g fill="none" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M560,270 H1070 V400" stroke="#1f2d36" stroke-width="22"/>
+    <path d="M560,270 H1070 V400" stroke="#d98b52" stroke-width="12"/>
+    <path d="M560,320 H1020 V400" stroke="#1f2d36" stroke-width="34"/>
+    <path d="M560,320 H1020 V400" stroke="#d98b52" stroke-width="22"/>
+  </g>
+  <g stroke="#0b6e8f">
+    <use href="#chev" transform="translate(620 240) rotate(180)"/>
+    <use href="#chev" transform="translate(660 355)"/><use href="#chev" transform="translate(900 355)"/>
+    <use href="#chev" transform="translate(985 370) rotate(90)"/>
+  </g>
+  <g stroke="#c4511d">
+    <use href="#chev" transform="translate(780 240) rotate(180)"/><use href="#chev" transform="translate(940 240) rotate(180)"/>
+    <use href="#chev" transform="translate(1105 350) rotate(-90)"/>
+  </g>
+
+  <!-- brass expansion valve on liquid line -->
+  <rect x="680" y="246" width="54" height="48" rx="8" fill="#e0b552" stroke="#1f2d36" stroke-width="5"/>
+  <rect x="692" y="200" width="30" height="48" rx="6" fill="#e0b552" stroke="#1f2d36" stroke-width="5"/>
+  <ellipse cx="707" cy="196" rx="34" ry="14" fill="#e0b552" stroke="#1f2d36" stroke-width="5"/>
+
+  <!-- indoor wall unit -->
+  <rect x="110" y="180" width="460" height="170" rx="40" fill="#fff" stroke="#1f2d36" stroke-width="6"/>
+  <path d="M140,300 H540" stroke="#9fb0b9" stroke-width="4"/>
+  <rect x="150" y="314" width="380" height="20" rx="10" fill="#d6ecf7" stroke="#1f2d36" stroke-width="4"/>
+  <circle cx="510" cy="230" r="9" fill="#a5dcbf" stroke="#1f2d36" stroke-width="3"/>
+  <!-- cool air -->
+  <g fill="none" stroke="#5aa6cc" stroke-width="10" stroke-linecap="round">
+    <path d="M200,390 q30,40 0,80 t0,80"/><path d="M320,390 q30,40 0,80 t0,80 t0,80"/><path d="M440,390 q30,40 0,80 t0,80"/>
+  </g>
+  <!-- person-free cosy hint: sofa -->
+  <rect x="140" y="700" width="380" height="80" rx="24" fill="#d8f1e3" stroke="#1f2d36" stroke-width="5"/>
+  <rect x="170" y="650" width="320" height="70" rx="20" fill="#d8f1e3" stroke="#1f2d36" stroke-width="5"/>
+
+  <!-- outdoor unit with cutaway compressor (left) and fan (right) -->
+  <rect x="960" y="400" width="500" height="370" rx="22" fill="#eef2f4" stroke="#1f2d36" stroke-width="6"/>
+  <rect x="980" y="420" width="160" height="330" rx="12" fill="#fff" stroke="#1f2d36" stroke-width="4"/>
+  <g fill="none" stroke-linejoin="round">
+    <path d="M1020,400 V560" stroke="#1f2d36" stroke-width="20"/><path d="M1020,400 V560" stroke="#d98b52" stroke-width="10"/>
+    <path d="M1070,400 V470 H1200" stroke="#1f2d36" stroke-width="16"/><path d="M1070,400 V470 H1200" stroke="#d98b52" stroke-width="7"/>
+    <path d="M1080,650 H1200" stroke="#1f2d36" stroke-width="16"/><path d="M1080,650 H1200" stroke="#d98b52" stroke-width="7"/>
+  </g>
+  <rect x="975" y="560" width="110" height="160" rx="50" fill="#2b3a44" stroke="#1f2d36" stroke-width="5"/>
+  <rect x="995" y="580" width="16" height="110" rx="8" fill="#fff" opacity=".25"/>
+  <path d="M1110,665 l16,-15 l-16,-15" fill="none" stroke="#c4511d" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="1300" cy="585" r="140" fill="#fff" stroke="#1f2d36" stroke-width="6"/>
+  <g fill="none" stroke="#9fb0b9" stroke-width="4"><circle cx="1300" cy="585" r="110"/><circle cx="1300" cy="585" r="75"/></g>
+  <path d="M1300,585 C1275,520 1320,490 1335,530 Z M1300,585 C1365,560 1395,600 1355,615 Z M1300,585 C1325,650 1280,680 1265,640 Z M1300,585 C1235,610 1205,570 1245,555 Z" fill="#fde3cf" stroke="#1f2d36" stroke-width="4"/>
+  <circle cx="1300" cy="585" r="18" fill="#9fb0b9" stroke="#1f2d36" stroke-width="4"/>
+  <!-- warm air -->
+  <g fill="none" stroke="#e8894f" stroke-width="10" stroke-linecap="round">
+    <path d="M1480,480 q40,-25 80,0"/><path d="M1480,585 q40,-25 80,0"/><path d="M1480,690 q40,-25 80,0"/>
+  </g>
+</svg>
