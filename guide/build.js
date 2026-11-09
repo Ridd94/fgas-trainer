@@ -101,6 +101,20 @@ console.log("guide.html:", (html.length/1024).toFixed(0), "KB,", topics.length, 
   const b = await chromium.launch(); const p = await b.newPage();
   await p.goto("file://" + path.join(__dirname,"guide.html"), { waitUntil: "networkidle" });
   await p.evaluate(() => document.fonts.ready);
+  // The source PNGs are ~1.8 MB each, which made the PDF ~72 MB. Embed JPEG
+  // copies (quality 0.85, full resolution) in the PDF and guide.html instead;
+  // the PNGs in guide/images/ stay untouched.
+  const nJpeg = await p.evaluate(async () => {
+    const imgs = [...document.querySelectorAll("img.art")].filter(i => i.src.startsWith("data:image/png"));
+    for (const img of imgs) {
+      await img.decode();
+      const c = document.createElement("canvas"); c.width = img.naturalWidth; c.height = img.naturalHeight;
+      const g = c.getContext("2d"); g.fillStyle = "#fff"; g.fillRect(0, 0, c.width, c.height); g.drawImage(img, 0, 0);
+      img.src = c.toDataURL("image/jpeg", 0.85); await img.decode();
+    }
+    return imgs.length;
+  });
+  if (nJpeg) { fs.writeFileSync(path.join(__dirname,"guide.html"), "<!doctype html>" + (await p.evaluate(() => document.documentElement.outerHTML))); console.log("embedded as JPEG:", nJpeg, "images; guide.html", (fs.statSync(path.join(__dirname,"guide.html")).size/1024).toFixed(0), "KB"); }
   const out = path.join(__dirname, "F-Gas-Cat-I-in-Pictures.pdf");
   await p.pdf({ path: out, format: "A4", printBackground: true, preferCSSPageSize: true, margin:{top:"12mm",bottom:"14mm",left:"14mm",right:"14mm"},
     displayHeaderFooter: true, headerTemplate: `<div></div>`,

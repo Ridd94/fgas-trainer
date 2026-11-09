@@ -1,0 +1,71 @@
+<svg viewBox="0 0 1600 900" width="1600" height="900" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="body"><path d="M640,330 Q640,205 800,198 Q960,205 960,330 L960,722 Q960,750 932,750 L668,750 Q640,750 640,722 Z"/></clipPath>
+    <clipPath id="win"><rect x="770" y="360" width="130" height="350" rx="22"/></clipPath>
+  </defs>
+  <rect width="1600" height="900" fill="#fff"/>
+  <!-- backdrop -->
+  <circle cx="800" cy="470" r="400" fill="#d8f1e3" opacity=".55"/>
+  <circle cx="1330" cy="250" r="120" fill="#fff1c2" opacity=".8"/>
+  <circle cx="260" cy="300" r="90" fill="#d6ecf7" opacity=".9"/>
+  <!-- floor -->
+  <rect x="0" y="806" width="1600" height="94" fill="#eef2f4"/>
+  <line x1="0" y1="806" x2="1600" y2="806" stroke="#1f2d36" stroke-width="5"/>
+
+  <!-- scale -->
+  <rect x="540" y="772" width="520" height="40" rx="10" fill="#cfd8dd" stroke="#1f2d36" stroke-width="5"/>
+  <rect x="566" y="752" width="468" height="26" rx="6" fill="#eef2f4" stroke="#1f2d36" stroke-width="5"/>
+  <rect x="560" y="810" width="40" height="10" rx="3" fill="#1f2d36"/>
+  <rect x="1000" y="810" width="40" height="10" rx="3" fill="#1f2d36"/>
+  <!-- scale cable and display pod -->
+  <path d="M1058,795 C1110,800 1110,770 1160,770" fill="none" stroke="#1f2d36" stroke-width="6" stroke-linecap="round"/>
+  <rect x="1150" y="690" width="210" height="116" rx="18" fill="#fff1c2" stroke="#1f2d36" stroke-width="5"/>
+  <rect x="1172" y="708" width="166" height="52" rx="8" fill="#d8f1e3" stroke="#1f2d36" stroke-width="4"/>
+  <circle cx="1200" cy="782" r="11" fill="#fde3cf" stroke="#1f2d36" stroke-width="4"/>
+  <circle cx="1240" cy="782" r="11" fill="#d6ecf7" stroke="#1f2d36" stroke-width="4"/>
+  <circle cx="1280" cy="782" r="11" fill="#fff" stroke="#1f2d36" stroke-width="4"/>
+
+  <!-- cylinder body (grey) with yellow shoulder -->
+  <g clip-path="url(#body)">
+    <rect x="600" y="180" width="400" height="600" fill="#b9c4cb"/>
+    <rect x="600" y="180" width="400" height="148" fill="#ffd34d"/>
+    <line x1="600" y1="328" x2="1000" y2="328" stroke="#1f2d36" stroke-width="5"/>
+    <rect x="672" y="350" width="30" height="370" rx="15" fill="#fff" opacity=".35"/>
+    <path d="M690,240 Q720,215 770,210" fill="none" stroke="#fff" stroke-width="14" stroke-linecap="round" opacity=".55"/>
+  </g>
+  <path d="M640,330 Q640,205 800,198 Q960,205 960,330 L960,722 Q960,750 932,750 L668,750 Q640,750 640,722 Z" fill="none" stroke="#1f2d36" stroke-width="6"/>
+
+  <!-- cutaway window showing liquid -->
+  <rect x="770" y="360" width="130" height="350" rx="22" fill="#f4f9fc"/>
+  <g clip-path="url(#win)">
+    <path d="M760,440 Q790,428 820,440 T880,440 T940,440 L940,720 L760,720 Z" fill="#9fd0ea"/>
+    <path d="M760,440 Q790,428 820,440 T880,440 T940,440" fill="none" stroke="#5aa6cc" stroke-width="5"/>
+    <circle cx="805" cy="520" r="7" fill="#fff" opacity=".7"/><circle cx="850" cy="590" r="5" fill="#fff" opacity=".7"/><circle cx="820" cy="650" r="6" fill="#fff" opacity=".7"/>
+  </g>
+  <rect x="770" y="360" width="130" height="350" rx="22" fill="none" stroke="#1f2d36" stroke-width="5"/>
+  <!-- 80% fill line -->
+  <line x1="648" y1="412" x2="952" y2="412" stroke="#1f2d36" stroke-width="6" stroke-dasharray="22 14"/>
+  <path d="M600,412 l-30,-18 v36 z" fill="#1f2d36"/>
+
+  <!-- foot ring -->
+  <rect x="664" y="738" width="272" height="22" rx="6" fill="#8e9ba3" stroke="#1f2d36" stroke-width="5"/>
+
+  <!-- valve: brass body with blue (vapour) and red (liquid) handwheels -->
+  <rect x="772" y="140" width="56" height="70" rx="8" fill="#e0b552" stroke="#1f2d36" stroke-width="5"/>
+  <rect x="728" y="148" width="144" height="32" rx="10" fill="#e0b552" stroke="#1f2d36" stroke-width="5"/>
+  <g stroke="#1f2d36" stroke-width="5">
+    <circle cx="742" cy="126" r="30" fill="#7fbfe3"/>
+    <line x1="742" y1="98" x2="742" y2="154"/><line x1="714" y1="126" x2="770" y2="126"/>
+    <circle cx="742" cy="126" r="9" fill="#e0b552"/>
+    <circle cx="858" cy="126" r="30" fill="#f2907e"/>
+    <line x1="858" y1="98" x2="858" y2="154"/><line x1="830" y1="126" x2="886" y2="126"/>
+    <circle cx="858" cy="126" r="9" fill="#e0b552"/>
+  </g>
+  <!-- guard collar -->
+  <path d="M690,215 L690,180 Q690,166 706,166 L730,166 L730,200 L870,200 L870,166 L894,166 Q910,166 910,180 L910,215 Z" fill="#ffd34d" stroke="#1f2d36" stroke-width="5" stroke-linejoin="round"/>
+
+  <!-- yellow hose from liquid port -->
+  <rect x="884" y="150" width="34" height="26" rx="6" fill="#e0b552" stroke="#1f2d36" stroke-width="5"/>
+  <path d="M916,163 C1030,120 1150,170 1240,330 S1420,620 1620,580" fill="none" stroke="#1f2d36" stroke-width="28" stroke-linecap="round"/>
+  <path d="M916,163 C1030,120 1150,170 1240,330 S1420,620 1620,580" fill="none" stroke="#ffd34d" stroke-width="17" stroke-linecap="round"/>
+</svg>

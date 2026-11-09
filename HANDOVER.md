@@ -79,13 +79,76 @@ Done:
   Layout verified page by page.
 
 Not done:
-- **Illustrations.** The schematics are clear but flat. The target look is the
-  friendly flat-vector training-poster style described in `guide/IMAGE-PROMPTS.md`.
-  Generate one image per prompt, save under the given filename, rebuild, check.
-  Partial batches are fine: pages without an image keep their schematic.
+- **Illustrations.** In progress on branch `guide-illustrations`; see the next
+  section.
 - **Sales page and checkout**, if Luke decides to sell it. Would need a landing
   page with real company details, a Stripe Payment Link or Gumroad product that
   delivers the PDF, and a price. Nothing built yet.
+
+## Illustrations: done (2026-11-09, second session)
+
+All 38 pages now have a generated illustration in `guide/images/<slug>.png`
+(1664x928), replacing the three hand-drawn pilots. `node guide/build.js`
+reports 38 of 38; every hero renders at the same 172x96 mm with nothing cropped.
+
+- Generator: the local ComfyUI on the SWCC PC (127.0.0.1:8188, no key), running
+  Qwen-Image-Edit-2511 Q8 as text-to-image: 24 steps, CFG 4, with a negative
+  prompt against text. Script: `node guide/generate-images.js [slug ...]`
+  (`--extra "..."` adds a correction, `--seed n` fixes the seed).
+- The style line is reworded for generation (agreed with Luke): the hex codes
+  became plain colour words and "infographic" was dropped, because the model
+  painted them as fake signs and callout boxes. `--verbatim-style` uses the
+  original line.
+- Every image was checked against the checklist below. Failures were regenerated
+  with a per-image correction. Ten stubborn ones were then fixed with targeted
+  Qwen image edits (`C:\Users\Luke\Documents\comfyui-mcp\photo-edit\qwen_edit2.py`).
+  One faint heading was painted out by hand. `guide/images/seeds.json` records
+  each image's seed, correction and edits.
+- "The equipment record" shows a shelf of five ring binders instead of a
+  calendar, because every calendar came out with dates on it (OK'd by Luke).
+- The PNGs are about 1.8 MB each. `build.js` re-encodes them as JPEG (quality
+  0.85, full resolution) inside the PDF and `guide.html` only, so the PDF is
+  about 7 MB and `guide.html` about 8 MB; the PNG sources are untouched.
+
+## Illustrations: how it got here (first session, 2026-11-09)
+
+Branch: `guide-illustrations`. Goal: one image per topic page, in the style and
+with the filenames given in `guide/IMAGE-PROMPTS.md`.
+
+Done so far:
+- 3 of 38 pages have a hand-drawn SVG illustration (no image generator was
+  available on LukeHomePC): `the-cycle-in-four-stages`, `the-manifold-gauge-set`,
+  `the-recovery-cylinder`. The sources are in `guide/art/<slug>.svg` and the
+  rendered PNGs are in `guide/images/`. The PDF was rebuilt and those pages
+  checked: no cropping, and the checklist below passes.
+- `guide/render-art.js` renders `guide/art/*.svg` to `guide/images/*.png`
+  at 1600x900 (`node guide/render-art.js [slug ...]`).
+- `node_modules` added to `.gitignore` (Playwright is installed locally for
+  the build, not saved to package.json).
+
+Decision: Luke wants the images made with the image generator that the SWCC
+assistant uses on the SWCC server, not hand-drawn. Generate **all 38**,
+including the three pilots, so the style matches. Generated files with the
+same name overwrite the pilot PNGs. `build.js` uses whatever is in
+`guide/images/`.
+
+Next steps for the session on the SWCC machine:
+1. `git fetch && git switch guide-illustrations`, then `npm i --no-save playwright`
+   and `npx playwright install chromium`.
+2. Find out from Luke what the generator is (ComfyUI, Automatic1111,
+   OpenAI-style API, etc.) and its address. Any key goes in an env var or
+   `.env` (already git-ignored), never in chat or in a committed file.
+3. Write a small script that, for each `### n. Title` + `` `guide/images/<slug>.png` ``
+   block in `IMAGE-PROMPTS.md`, sends the style line + the prompt, and saves the
+   result at that path (landscape, at least 1600x900). Start with 2 or 3 pages,
+   show Luke, then do the rest.
+4. Check every image against the checklist below. Image models often add
+   fake text or labels; regenerate any image that has them.
+5. `node guide/build.js` should print "illustrations found: 38 of 38". Skim the
+   pages for cropping, then commit and open a PR into `main`.
+
+Fallback if the generator does not work out: carry on hand-drawing SVGs in
+`guide/art/` in the same style as the three pilots, then run `render-art.js`.
 
 ## Checks before accepting generated images
 
