@@ -4,6 +4,7 @@ const fs = require("fs"), path = require("path");
 const topics = require("./topics");
 const figures = require("./figures");
 const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const heroFor = t => { for (const ext of ["png","webp","jpg","jpeg"]) { const f = path.join(__dirname,"images",t.slug+"."+ext); if (fs.existsSync(f)) { const mime = ext==="jpg"?"jpeg":ext; return `<img class="art" src="data:image/${mime};base64,${fs.readFileSync(f).toString("base64")}" alt="">`; } } return figures[t.fig]; };
 const icon = n => { try { return fs.readFileSync(path.join(__dirname,"icons",n+".svg"),"utf8").replace(/<svg /,'<svg aria-hidden="true" ') } catch(e){ return "" } };
 
 const app = fs.readFileSync(path.join(__dirname,"..","index.html"),"utf8");
@@ -74,7 +75,7 @@ topics.forEach((t,i) => {
   html += `<section class="sheet topic">${decoHtml(i)}
   <div class="band"><span class="part">${esc(t.part)}</span><span class="tag">${esc(t.tag)}</span></div>
   <h1>${esc(t.title)}</h1><p class="sub">${esc(t.sub)}</p>
-  <div class="hero">${figures[t.fig]}</div>
+  <div class="hero">${heroFor(t)}</div>
   <div class="tiles">${t.tiles.map((tl,k)=>`<div class="tile c${k+1}"><div class="ic">${icon(tl.i)}</div><div><h3>${esc(tl.h)}</h3><p>${esc(tl.t)}</p></div></div>`).join("")}</div>
   <div class="foot"><h3>${esc(t.foot.h)}</h3><p>${esc(t.foot.t)}</p></div>${pn()}</section>`;
 });
@@ -91,6 +92,8 @@ html += `<section class="flow chapter"><div class="chap-head"><span class="chapn
 <p class="small" style="margin-top:14pt">F-Gas Category I in Pictures. Independent revision material for the City &amp; Guilds 2079-11 syllabus. Not affiliated with City &amp; Guilds, HSS Training or any awarding body. Regulations change: check the current GB F-Gas and ODS Regulations before relying on a date or threshold at work. Practice app: fgas-trainer.vercel.app</p></section>`;
 html += `</body></html>`;
 fs.writeFileSync(path.join(__dirname,"guide.html"), html);
+const nImg = topics.filter(t=>["png","webp","jpg","jpeg"].some(e=>fs.existsSync(path.join(__dirname,"images",t.slug+"."+e)))).length;
+console.log("illustrations found:", nImg, "of", topics.length);
 console.log("guide.html:", (html.length/1024).toFixed(0), "KB,", topics.length, "topics,", practice.length, "questions,", GL.length, "terms");
 
 (async () => {

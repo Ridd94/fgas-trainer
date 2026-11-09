@@ -27,3 +27,7 @@ The questions are revision material written from the syllabus and the GB F-Gas a
 - `guide/build.js` pulls the question bank and glossary out of `index.html` so guide and app stay in step, writes `guide/guide.html`, and prints `guide/F-Gas-Cat-I-in-Pictures.pdf` with Playwright's Chromium.
 
 Rebuild with `node guide/build.js` (needs Node and Playwright with Chromium).
+
+### Illustrations
+
+Each topic page has an image slot. Drop a picture at `guide/images/<slug>.png` (slugs and a ready-made prompt for each page are in `guide/IMAGE-PROMPTS.md`), rebuild, and that page uses the picture instead of its schematic drawing. Pages without a picture keep the drawing.
