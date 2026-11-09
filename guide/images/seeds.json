@@ -286,5 +286,100 @@
     "seed": 2050412012,
     "steps": 24,
     "cfg": 4
+  },
+  "preparing-for-the-exam": {
+    "seed": 349353912,
+    "steps": 24,
+    "cfg": 4,
+    "extra": "The open book pages show only simple pictures and plain grey lines, absolutely no words or lettering on the book or its cover."
+  },
+  "heat-temperature-and-pressure": {
+    "seed": 1732201422,
+    "steps": 24,
+    "cfg": 4,
+    "extra": "Use plain white background panels; the flame end of the bar is orange and hot, the far end pale blue and cold; the gauge face is plain white with a needle only."
+  },
+  "the-technicians-units": {
+    "seed": 1970440851,
+    "steps": 24,
+    "cfg": 4,
+    "extra": "Show only one manifold gauge set (blue gauge left, red gauge right, blue, yellow and red hoses), a clamp-on pipe thermometer with no screen, and a refrigerant cylinder on a plain flat scale with no display; no multimeter, no electronic screens.",
+    "edits": [
+      {
+        "tool": "qwen_edit2.py (Qwen-Image-Edit-2511 Q8, 8 steps, seed 1)",
+        "region": "200,120,620,520",
+        "prompt": "blank the blue gauge face"
+      }
+    ],
+    "manual": "probe labels and screen painted plain: boxes 205,692-262,732; 815,726-918,762; 748,736-814,774"
+  },
+  "the-compressor": {
+    "seed": 1317832452,
+    "steps": 24,
+    "cfg": 4
+  },
+  "condenser-and-evaporator": {
+    "seed": 1673670885,
+    "steps": 24,
+    "cfg": 4
+  },
+  "valves-and-service-ports": {
+    "seed": 767855617,
+    "steps": 24,
+    "cfg": 4
+  },
+  "opening-the-valves-and-starting-up": {
+    "seed": 287252158,
+    "steps": 24,
+    "cfg": 4
+  },
+  "not-cooling-where-to-look": {
+    "seed": 1853248165,
+    "steps": 24,
+    "cfg": 4
+  },
+  "if-an-accident-happens": {
+    "seed": 375435218,
+    "steps": 24,
+    "cfg": 4
+  },
+  "the-technicians-tools": {
+    "seed": 1128047124,
+    "steps": 24,
+    "cfg": 4,
+    "extra": "Exactly one manifold gauge set: one blue gauge on the left and one red gauge on the right, with one blue, one yellow and one red hose. No other gauges, no screens.",
+    "manual": "second gauge recoloured blue to red (box 470,270-725,500); tiny face marks painted out"
+  },
+  "siting-the-indoor-and-outdoor-units": {
+    "seed": 1258483997,
+    "steps": 24,
+    "cfg": 4,
+    "extra": "The indoor unit is on the inside of the wall in a living room, the outdoor unit is fixed on brackets on the outside face of the same wall in the garden, connected by pipes through the wall; no water, no gauges."
+  },
+  "copper-pipe-and-insulation": {
+    "seed": 981979142,
+    "steps": 24,
+    "cfg": 4,
+    "extra": "No gauges, no dials, no instruments anywhere."
+  },
+  "cutting-and-flaring": {
+    "seed": 77454416,
+    "steps": 24,
+    "cfg": 4
+  },
+  "tightening-flare-nuts": {
+    "seed": 2076048434,
+    "steps": 24,
+    "cfg": 4
+  },
+  "cleaning-and-filters": {
+    "seed": 316670427,
+    "steps": 24,
+    "cfg": 4
+  },
+  "protective-equipment": {
+    "seed": 35179478,
+    "steps": 24,
+    "cfg": 4
   }
 }

@@ -9,7 +9,7 @@ HSS Training course. Two deliverables share one content source:
 1. **The practice app** (`index.html`): a single-file web app. Multiple-choice
    questions marked instantly with an explanation, practice and mock exam modes,
    and a tap-to-define glossary. Live on Vercel at fgas-trainer.vercel.app.
-2. **The study guide** (`guide/`): "F-Gas Category I in Pictures", a 54-page A4
+2. **The study guide** (`guide/`): "F-Gas Category I in Pictures", a 71-page A4
    PDF. One topic per page: title, subtitle, a drawing, four icon boxes and a
    takeaway bar. Then 30 practice questions with answers, a numbers-to-memorise
    page, a refrigerant directory, an abbreviations page and the glossary.
@@ -27,7 +27,7 @@ vercel.json             static hosting config
 README.md               short public readme
 HANDOVER.md             this file
 guide/
-  topics.js             39 topic pages: part, tag, slug, title, sub, fig, 4 tiles, foot
+  topics.js             55 topic pages: part, tag, slug, title, sub, fig, 4 tiles, foot
   figures.js            inline SVG schematic drawings, keyed by name
   icons/                Lucide line icons (ISC licence), one SVG per tile icon
   images/               drop generated illustrations here as <slug>.png (empty so far)
@@ -75,15 +75,25 @@ reports once Analytics is enabled in the Vercel project dashboard.
 Done:
 - App: 124 questions across 8 topics, 109 glossary terms, practice and mock modes,
   progress in localStorage, mobile layout verified at 390 px.
-- Guide: 39 topic pages, all illustrated, then questions, numbers, refrigerant
-  directory, abbreviations and glossary. Layout verified page by page.
+- Guide: 55 topic pages, all illustrated, then questions, numbers, "the book in
+  one table", refrigerant directory, abbreviations and glossary (71 pages).
+  Layout verified page by page.
+- Coverage pass (2026-11-09): Luke compared the guide with a competing product,
+  Studio Clare's "Refrigeration Tech in Pictures" (studioclearebook.com/gb/refrigeration).
+  Its topic list was used as a checklist only, and 16 GB-relevant topics we
+  lacked were added in our own words: preparing for the exam, basics and units,
+  compressor, condenser and evaporator, valves and service ports, tools, siting,
+  copper pipe, cutting and flaring, flare nuts, opening valves and start-up,
+  cleaning, not cooling, PPE, accidents, plus the one-table summary. That
+  product teaches EU 2024/573 (and Greek registers), which is wrong for the GB
+  exam: do not follow it on the law. Do not copy its text, drawings or layout.
 - Abbreviations pass (2026-11-09): every abbreviation is spelled out on the
   topic page where it first matters, a "Reading a refrigerant name" page sits
   after "The refrigerant families", and the `directory` and `abbreviations`
   arrays in `build.js` feed the two new reference pages. 15 terms were added
   to the end of `GL` in `index.html`.
 - The back-matter page numbers on the contents page are fixed offsets in
-  `build.js` (practice questions take 3 pages, answers 2, glossary 5). If the
+  `build.js` (practice questions take 3 pages, answers 2, glossary 5; page 2 contents is full). If the
   questions or glossary grow, check them against the PDF.
 
 Not done:

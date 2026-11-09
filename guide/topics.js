@@ -8,6 +8,27 @@ const topics = [
  {i:"badge-check",h:"CATEGORY I",t:"The full ticket: every activity on any charge size. Categories II, III and IV are limited versions."}],
  foot:{h:"GREAT BRITAIN RULES",t:"Great Britain (GB) kept EU Regulation 517/2014 as its own F-Gas Regulation. The newer EU 2024/573 applies in Northern Ireland, not here."}},
 
+{part:"I · THE EXAM", tag:"START HERE", slug:"preparing-for-the-exam", title:"Preparing for the exam", sub:"Most marks come from a small set of numbers, words and steps. Learn those first.", fig:"exam",
+ tiles:[{i:"hash",h:"LEARN THE NUMBER PAGE",t:"Thresholds, intervals, dates and GWPs are where most theory marks are won or lost. Learn them until they are automatic."},
+ {i:"list-checks",h:"PRACTISE IN MOCK MODE",t:"Use the practice app until you score well every time, then read the explanation for every one you get wrong."},
+ {i:"wrench",h:"REHEARSE THE PRACTICAL",t:"Say the steps out loud: PPE, leak check, recover, pressure test, evacuate, charge, record. Order matters."},
+ {i:"eye",h:"ON THE DAY",t:"Read every option before you choose. Watch for EU dates and words like always, never and only."}],
+ foot:{h:"GB, NOT EU",t:"Your exam follows the GB rules in this book. Material written for the EU 2024/573 Regulation has different dates and categories."}},
+
+{part:"II · THE REFRIGERATION CYCLE", tag:"BASICS", slug:"heat-temperature-and-pressure", title:"Heat, temperature and pressure", sub:"Three ideas everything else is built on.", fig:"latent",
+ tiles:[{i:"thermometer",h:"TEMPERATURE",t:"How hot something is, measured in degrees C. It says nothing about how much heat is stored."},
+ {i:"arrow-right-left",h:"HEAT MOVES HOT TO COLD",t:"Always, by conduction through metal, convection in air or liquid, and radiation. A fridge just moves it the other way, using work."},
+ {i:"gauge",h:"PRESSURE",t:"Force on an area, in bar. The air around us is about 1 bar. Gauges read from there; absolute pressure reads from a perfect vacuum."},
+ {i:"droplets",h:"PRESSURE SETS BOILING",t:"Raise the pressure and a liquid boils hotter; lower it and it boils colder. Water boils at 100 degrees C at sea level, far lower in a vacuum."}],
+ foot:{h:"WHY IT MATTERS",t:"The whole cycle is a pressure trick: boil refrigerant at low pressure to take in heat, condense it at high pressure to give it out."}},
+
+{part:"II · THE REFRIGERATION CYCLE", tag:"BASICS", slug:"the-technicians-units", title:"The technician's units", sub:"The units on your gauges, scales and paperwork, and how they relate.", fig:"manifold",
+ tiles:[{i:"gauge",h:"PRESSURE",t:"bar is the everyday unit. 1 bar = 100 kPa = about 14.5 psi. bar g is gauge pressure; bar a (absolute) is about 1 bar higher."},
+ {i:"thermometer",h:"TEMPERATURE",t:"Degrees C for a reading, kelvin (K) for a difference. Superheat, subcooling and glide are always given in K."},
+ {i:"circle-gauge",h:"VACUUM",t:"Measured in microns. 1000 microns is about 1.3 mbar. The target is below 500 microns, read on an electronic gauge."},
+ {i:"weight",h:"CHARGE AND CO2e",t:"Refrigerant is weighed in kg. Multiply by GWP and divide by 1000 for tonnes CO2e, the unit the law uses."}],
+ foot:{h:"DO NOT MIX THEM",t:"Check whether a gauge or chart is in bar g, bar a or psi before you compare a reading with a PT chart."}},
+
 // ---- II THE CYCLE
 {part:"II · THE REFRIGERATION CYCLE", tag:"THE CYCLE", slug:"the-cycle-in-four-stages", title:"The cycle in four stages", sub:"One refrigerant round a closed loop, carrying heat from inside to outside.", fig:"cycle",
  tiles:[{i:"zap",h:"1. COMPRESSION",t:"The compressor draws in cool vapour and sends it out hot and at high pressure."},
@@ -15,6 +36,20 @@ const topics = [
  {i:"arrow-down",h:"3. EXPANSION",t:"At the expansion device the liquid loses pressure and becomes very cold."},
  {i:"snowflake",h:"4. EVAPORATION",t:"In the evaporator the cold liquid boils, taking heat from the room, and returns as vapour."}],
  foot:{h:"TWO SIDES, TWO PRESSURES",t:"Compressor outlet to expansion device is the high side (red gauge). Expansion device to compressor inlet is the low side (blue gauge)."}},
+
+{part:"II · THE REFRIGERATION CYCLE", tag:"COMPONENTS", slug:"the-compressor", title:"The compressor", sub:"The pump of the system: it raises the pressure so the heat can be dumped outside.", fig:"cycle",
+ tiles:[{i:"refresh-cw",h:"ROTARY AND SCROLL",t:"Rotary compressors are in most small splits; scroll compressors in larger air con and heat pumps. Both are quiet and efficient."},
+ {i:"settings",h:"RECIPROCATING AND SCREW",t:"Piston compressors in commercial refrigeration; screw compressors in big chillers and industrial plant."},
+ {i:"lock",h:"HERMETIC OR NOT",t:"Hermetic: motor sealed inside a welded shell. Semi-hermetic: bolted and repairable. Open: shaft seal, a common leak point."},
+ {i:"zap",h:"INVERTER",t:"An inverter drive changes the compressor speed to match the load instead of switching on and off."}],
+ foot:{h:"VAPOUR ONLY",t:"A compressor is built to pump vapour. Liquid reaching it breaks valves and washes off the oil, which is why superheat matters."}},
+
+{part:"II · THE REFRIGERATION CYCLE", tag:"COMPONENTS", slug:"condenser-and-evaporator", title:"Condenser and evaporator", sub:"Two heat exchangers: one gives heat away, the other takes it in.", fig:"cycle",
+ tiles:[{i:"sun",h:"THE CONDENSER",t:"Hot vapour from the compressor is cooled, condenses to liquid and is subcooled a little. The heat goes to outside air or water."},
+ {i:"snowflake",h:"THE EVAPORATOR",t:"Cold liquid from the expansion device boils, taking heat from the room or cabinet, and leaves as superheated vapour."},
+ {i:"fan",h:"AIRFLOW IS EVERYTHING",t:"Both coils need clean fins and a working fan. Poor airflow raises head pressure on one and freezes up the other."},
+ {i:"droplets",h:"CONDENSATE",t:"Air cooled by the evaporator drops its moisture on the coil. It must drain away through a tray and pipe."}],
+ foot:{h:"DIRTY COIL SYMPTOMS",t:"Dirty condenser: high head pressure and current. Dirty evaporator or filter: low suction pressure and ice on the coil."}},
 
 {part:"II · THE REFRIGERATION CYCLE", tag:"THE CYCLE", slug:"why-it-gets-cold", title:"Why it gets cold", sub:"Latent heat: the energy that changes state without changing temperature.", fig:"latent",
  tiles:[{i:"thermometer",h:"SENSIBLE HEAT",t:"Changes the temperature of something. Warming liquid, warming vapour. You can feel it on a thermometer."},
@@ -43,6 +78,13 @@ const topics = [
  {i:"eye",h:"SIGHT GLASS",t:"Clear means full liquid. Bubbles mean flash gas. Many have a moisture indicator that changes colour when wet."},
  {i:"tag",h:"SCHRADER CAPS",t:"The valve core is a service aid. The brass cap and its seal are what stop leaks. Always refit caps."}],
  foot:{h:"ALSO ON THE SYSTEM",t:"A suction accumulator catches liquid before the compressor. High-pressure (HP) and low-pressure (LP) cut-outs stop it on high head pressure or loss of charge."}},
+
+{part:"II · THE REFRIGERATION CYCLE", tag:"COMPONENTS", slug:"valves-and-service-ports", title:"Valves and service ports", sub:"Where you connect, and what keeps the gas in when you are not there.", fig:"liquidline",
+ tiles:[{i:"settings",h:"SERVICE VALVES",t:"A split outdoor unit has a liquid valve and a gas valve, opened and closed with a hex key. The gas valve usually has the service port."},
+ {i:"tag",h:"SCHRADER PORTS",t:"A spring-loaded core like a tyre valve. The core is not the seal: the cap with its O-ring or copper washer is."},
+ {i:"circle-dot",h:"BALL AND SOLENOID VALVES",t:"Ball valves isolate sections quickly. A solenoid valve opens and shuts electrically, for example for pump-down."},
+ {i:"wrench",h:"CORE TOOL",t:"A valve core removal tool lets you take the core out under pressure for faster evacuation and charging."}],
+ foot:{h:"CAPS ON, ALWAYS",t:"Every service port and valve stem must have its cap refitted and tightened before you leave. It is part of the leak-tight seal."}},
 
 {part:"II · THE REFRIGERATION CYCLE", tag:"COMPONENTS", slug:"the-heat-pump-and-the-4-way-valve", title:"The heat pump and the 4-way valve", sub:"The same circuit that cools in summer heats in winter.", fig:"heatpump",
  tiles:[{i:"refresh-cw",h:"THE REVERSING VALVE",t:"A four-way valve redirects the compressor discharge so either coil can receive the hot gas."},
@@ -196,6 +238,41 @@ const topics = [
  foot:{h:"RECORD IT",t:"The quantity recovered and what happened to it goes in the equipment record, including at decommissioning."}},
 
 // ---- VII INSTALLATION
+{part:"VII · INSTALLATION", tag:"INSTALLATION", slug:"the-technicians-tools", title:"The technician's tools", sub:"The kit for a Category I job, and what each piece is for.", fig:"manifold",
+ tiles:[{i:"circle-gauge",h:"MEASURE",t:"Manifold or digital manifold, electronic micron gauge, clamp thermometers, charging scales and a leak detector."},
+ {i:"wind",h:"MOVE GAS",t:"Recovery unit, recovery cylinder, two-stage vacuum pump and hoses with low-loss fittings."},
+ {i:"wrench",h:"WORK THE PIPE",t:"Pipe cutter, deburring tool, flaring tool, pipe bender, torque wrenches and a back-up spanner."},
+ {i:"flame",h:"JOIN AND TEST",t:"Brazing torch, OFN cylinder with regulator, heat mat and fire extinguisher."}],
+ foot:{h:"RATED AND IN DATE",t:"Tools for A2L and A3 gases must be rated for them. Leak detectors are checked every 12 months."}},
+
+{part:"VII · INSTALLATION", tag:"INSTALLATION", slug:"siting-the-indoor-and-outdoor-units", title:"Siting the indoor and outdoor units", sub:"Where the units go decides how well the system works for years.", fig:"heatpump",
+ tiles:[{i:"building-2",h:"INDOOR UNIT",t:"High on a solid wall, clear airflow, away from heat sources, with room for the condensate pipe to fall."},
+ {i:"fan",h:"OUTDOOR UNIT",t:"Firm level base or brackets on anti-vibration mounts, the manufacturer's clearances, sheltered from drifting snow."},
+ {i:"arrow-down",h:"HOLE AND LINE",t:"The wall hole falls slightly to the outside. Keep within the maximum pipe length and height difference."},
+ {i:"droplets",h:"CONDENSATE",t:"A steady fall all the way, no dips. Heat pumps drain outdoors in winter too, so keep it off paths where it can freeze."}],
+ foot:{h:"ACCESS FOR SERVICE",t:"Leave room to reach the service valves and joints. They need leak checking for the life of the system."}},
+
+{part:"VII · INSTALLATION", tag:"INSTALLATION", slug:"copper-pipe-and-insulation", title:"Copper pipe and insulation", sub:"Clean, dry pipe in, insulated and supported, with the ends capped.", fig:"liquidline",
+ tiles:[{i:"package",h:"REFRIGERATION GRADE",t:"Cleaned, dried and capped copper made for refrigeration. Sizes are in inches. Plumbing copper is not clean or dry enough."},
+ {i:"git-branch",h:"COILS AND LENGTHS",t:"Soft coils bend by hand or with a bender. Never kink a pipe: it restricts flow."},
+ {i:"lock",h:"CAP THE ENDS",t:"Keep every end capped or taped until it is joined, so no dirt or moisture gets in."},
+ {i:"snowflake",h:"INSULATE BOTH LINES",t:"On splits and heat pumps both lines get cold, so each is insulated separately. Seal the joins to stop condensation."}],
+ foot:{h:"SUPPORT IT",t:"Clip the pipe at regular intervals and protect it where it passes through walls, so it cannot rub through and leak."}},
+
+{part:"VII · INSTALLATION", tag:"INSTALLATION", slug:"cutting-and-flaring", title:"Cutting and flaring", sub:"A good flare is cut square, deburred, smooth and the right size.", fig:"braze",
+ tiles:[{i:"circle-x",h:"CUT, DO NOT SAW",t:"A pipe cutter gives a square cut with no swarf. Turn it slowly so the pipe is not squashed."},
+ {i:"arrow-down",h:"DEBURR FACING DOWN",t:"Remove the burr with the pipe pointing down so the shavings fall out, not into the system."},
+ {i:"tag",h:"NUT ON FIRST",t:"Slide the flare nut on before you flare. It is the classic mistake, and it cannot be fixed afterwards."},
+ {i:"eye",h:"INSPECT THE FLARE",t:"Even, smooth and shiny all round, no cracks or splits, and the right diameter to sit fully in the nut."}],
+ foot:{h:"NEVER REUSE A FLARE",t:"If a joint is undone, cut the old flare off and make a new one."}},
+
+{part:"VII · INSTALLATION", tag:"INSTALLATION", slug:"tightening-flare-nuts", title:"Tightening flare nuts", sub:"The commonest leak on a split is a flare nut done up wrong.", fig:"leakspots",
+ tiles:[{i:"ruler",h:"TORQUE WRENCH",t:"Tighten to the manufacturer's torque for that pipe size. Feel is not good enough: too loose leaks, too tight cracks."},
+ {i:"wrench",h:"TWO SPANNERS",t:"Hold the union with a back-up spanner so you do not twist the pipe or the unit's connection."},
+ {i:"droplets",h:"A DROP OF OIL",t:"Where the manufacturer allows, a little refrigerant oil on the back of the flare helps it seat without galling."},
+ {i:"square-check",h:"LINE IT UP",t:"Start the nut by hand, square to the union. A cross-threaded nut never seals."}],
+ foot:{h:"LEAK TEST IT",t:"Every flare you make is checked under nitrogen pressure and again with refrigerant in. Mechanical joints must stay accessible."}},
+
 {part:"VII · INSTALLATION", tag:"INSTALLATION", slug:"brazing-with-nitrogen", title:"Brazing with nitrogen", sub:"A clean joint on the outside can still be ruining the system on the inside.", fig:"braze",
  tiles:[{i:"wind",h:"NITROGEN INSIDE THE PIPE",t:"A gentle OFN flow displaces the air so no black copper-oxide scale forms in the bore."},
  {i:"triangle-alert",h:"WHY IT MATTERS",t:"Scale breaks off and blocks driers, strainers and expansion valves, sometimes months later."},
@@ -217,6 +294,13 @@ const topics = [
  {i:"refresh-cw",h:"TRIPLE EVACUATION",t:"Wet system? Pull, break with OFN, pull, break, pull. The nitrogen soaks up the last moisture."}],
  foot:{h:"NEVER START THE COMPRESSOR UNDER VACUUM",t:"The motor windings can arc and fail with no gas to insulate and cool them. Charge first."}},
 
+{part:"VII · INSTALLATION", tag:"INSTALLATION", slug:"opening-the-valves-and-starting-up", title:"Opening the valves and starting up", sub:"The vacuum held. Now release the charge and prove the system works.", fig:"commission",
+ tiles:[{i:"refresh-cw",h:"OPEN THE VALVES",t:"On a pre-charged split, open the liquid valve then the gas valve fully with a hex key. Refit and tighten the caps."},
+ {i:"search",h:"LEAK CHECK",t:"Check every joint you made with a detector or bubble solution while the system is under pressure."},
+ {i:"plug",h:"ELECTRICS",t:"Power and interconnecting cables by a competent person to the wiring diagram, with safe isolation and a sound earth."},
+ {i:"activity",h:"RUN AND MEASURE",t:"Run in cooling, then check pressures, superheat, air temperatures and that condensate drains."}],
+ foot:{h:"FINISH THE PAPERWORK",t:"Extra charge added for long pipe runs goes on the label and into the equipment record, with the date and your name."}},
+
 {part:"VII · INSTALLATION", tag:"INSTALLATION", slug:"charging-by-weight", title:"Charging by weight", sub:"The nameplate tells you the charge. The scales tell you when you have reached it.", fig:"charge",
  tiles:[{i:"weight",h:"BY WEIGHT",t:"Nameplate charge plus the manufacturer's allowance per metre of extra pipe. Scales, not guesswork."},
  {i:"droplets",h:"BLENDS AS LIQUID",t:"Zeotropic blends come out of the cylinder as liquid, via the dip tube or by inverting it."},
@@ -232,21 +316,42 @@ const topics = [
  foot:{h:"WHY THIS ORDER",t:"Leaks are found before gas goes in. Air and water are removed before gas goes in. Everything after that is proof."}},
 
 // ---- VIII DIAGNOSIS
-{part:"VIII · DIAGNOSIS", tag:"DIAGNOSIS", slug:"four-fault-fingerprints", title:"Four fault fingerprints", sub:"Read suction, head, superheat and subcooling together, not one at a time.", fig:"faults",
+{part:"VIII · MAINTENANCE AND DIAGNOSIS", tag:"MAINTENANCE", slug:"cleaning-and-filters", title:"Cleaning and filters", sub:"Regular cleaning keeps the system efficient and finds problems early.", fig:"faults",
+ tiles:[{i:"wind",h:"AIR FILTERS",t:"Indoor filters are cleaned or replaced every few weeks in heavy use. A blocked filter can freeze the coil."},
+ {i:"spray-can",h:"COILS",t:"Clean indoor and outdoor coils with a suitable coil cleaner and a soft brush. Straighten bent fins."},
+ {i:"droplets",h:"DRAIN AND TRAY",t:"Clear the condensate tray and pipe. A blocked drain leaks water indoors and grows mould."},
+ {i:"search",h:"LOOK AND LISTEN",t:"Oil stains, rubbing pipes, loose panels, noisy fans and missing caps. Note anything for a leak check."}],
+ foot:{h:"ISOLATE FIRST",t:"Switch off and isolate the power before you open a unit or touch the fans."}},
+
+{part:"VIII · MAINTENANCE AND DIAGNOSIS", tag:"DIAGNOSIS", slug:"four-fault-fingerprints", title:"Four fault fingerprints", sub:"Read suction, head, superheat and subcooling together, not one at a time.", fig:"faults",
  tiles:[{i:"arrow-down",h:"LOW CHARGE",t:"Low suction, low head, high superheat, low subcooling, bubbles in the glass. Find the leak before adding gas."},
  {i:"arrow-up",h:"OVERCHARGE",t:"High head, high subcooling, low superheat, high current. Liquid may flood back to the compressor."},
  {i:"cloud",h:"AIR IN THE SYSTEM",t:"Head pressure higher than the PT chart predicts for the liquid temperature. Poor evacuation."},
  {i:"ban",h:"RESTRICTION",t:"Low suction, high superheat, normal subcooling, a temperature drop across the blocked drier or valve."}],
  foot:{h:"LOW CHARGE OR RESTRICTION?",t:"They look alike on the gauges. Subcooling splits them: low for low charge, normal for a restriction."}},
 
-{part:"VIII · DIAGNOSIS", tag:"DIAGNOSIS", slug:"reading-the-sight-glass", title:"Reading the sight glass", sub:"A small window that answers two questions: is it full, and is it dry?", fig:"sightglass",
+{part:"VIII · MAINTENANCE AND DIAGNOSIS", tag:"DIAGNOSIS", slug:"reading-the-sight-glass", title:"Reading the sight glass", sub:"A small window that answers two questions: is it full, and is it dry?", fig:"sightglass",
  tiles:[{i:"eye",h:"CLEAR",t:"A full column of liquid reaching the expansion device. Confirm with subcooling."},
  {i:"droplets",h:"BUBBLES",t:"Flash gas in the liquid line: low charge, or a pressure drop across a blocked drier."},
  {i:"thermometer",h:"CHECK THE DRIER",t:"A drier colder on its outlet than its inlet is blocked and acting as an expansion device."},
  {i:"triangle-alert",h:"WET INDICATOR",t:"Colour change means moisture. New drier, proper evacuation, find the entry point."}],
  foot:{h:"THE WET SYSTEM",t:"Intermittent cooling as ice forms and clears at the expansion device, acidic oil, and eventually a dead compressor."}},
 
+{part:"VIII · MAINTENANCE AND DIAGNOSIS", tag:"DIAGNOSIS", slug:"not-cooling-where-to-look", title:"Not cooling: where to look", sub:"Start with the simple things. Most call-outs are not refrigerant faults.", fig:"faults",
+ tiles:[{i:"zap",h:"POWER AND SETTINGS",t:"Supply, isolator, remote control mode and set point, and any error code on the display."},
+ {i:"wind",h:"AIRFLOW",t:"Blocked filters, dirty coils, a failed fan or a blocked outdoor unit. Ice on the indoor coil often means poor airflow."},
+ {i:"settings",h:"IS THE COMPRESSOR RUNNING?",t:"Listen and check the current. If not: contactor, capacitor, protection trip or inverter board."},
+ {i:"circle-gauge",h:"THEN THE GAUGES",t:"Only now connect gauges and read suction, head, superheat and subcooling together."}],
+ foot:{h:"DO NOT JUST ADD GAS",t:"Low charge means a leak. Find it, repair it and record it. Topping up a known leaker is an offence."}},
+
 // ---- IX SAFETY
+{part:"IX · SAFETY", tag:"SAFETY", slug:"protective-equipment", title:"Protective equipment", sub:"The right PPE for refrigerant, pressure, heat and the site.", fig:"heavy",
+ tiles:[{i:"hand",h:"GLOVES",t:"Insulated, impervious gloves against liquid refrigerant and frostbite. Leather gloves for brazing."},
+ {i:"glasses",h:"EYES",t:"Safety glasses or goggles for every connection. A shaded visor or goggles for brazing."},
+ {i:"hard-hat",h:"BODY AND FEET",t:"Overalls, safety boots, and a hard hat or hi-vis where the site requires them."},
+ {i:"siren",h:"MONITORS",t:"A personal oxygen monitor or gas detector in plant rooms, pits and anywhere refrigerant can collect."}],
+ foot:{h:"CHECK THE SDS",t:"The safety data sheet and your employer's risk assessment say what PPE each refrigerant and job needs."}},
+
 {part:"IX · SAFETY", tag:"SAFETY", slug:"heavier-than-air", title:"Heavier than air", sub:"Refrigerant has no smell and sinks. The danger is the oxygen it pushes out.", fig:"heavy",
  tiles:[{i:"wind-arrow-down",h:"IT POOLS LOW",t:"Floors, pits, cold stores and plant rooms. Ventilate before entering."},
  {i:"siren",h:"NO WARNING",t:"Odourless and colourless. Use an oxygen monitor or fixed detection. Never alone in a suspected leak."},
@@ -274,6 +379,13 @@ const topics = [
  {i:"settings",h:"RATED EQUIPMENT",t:"Recovery unit, vacuum pump and leak detector rated for A2L. Spark-free tools."},
  {i:"ruler",h:"CHARGE LIMITS",t:"EN 378 limits the charge by room size so a leak cannot reach a flammable concentration."}],
  foot:{h:"VENTILATE",t:"Before and during work, and check for leaks before any hot work."}},
+
+{part:"IX · SAFETY", tag:"SAFETY", slug:"if-an-accident-happens", title:"If an accident happens", sub:"Know what to do before you need it. Make yourself safe first.", fig:"heavy",
+ tiles:[{i:"thermometer-snowflake",h:"FROSTBITE",t:"Lukewarm water, not hot, and no rubbing. Remove anything tight. Get medical help for anything more than minor."},
+ {i:"eye",h:"IN THE EYES",t:"Flush with clean water for at least 15 minutes, holding the eye open, then get medical help."},
+ {i:"wind",h:"BREATHED IN",t:"Move the person to fresh air if you can do so safely. Unconscious: recovery position, call 999. Never go into a gas-filled pit alone."},
+ {i:"flame",h:"FIRE",t:"Raise the alarm, get out, call 999. Fight it only if it is small and you have the right extinguisher."}],
+ foot:{h:"REPORT IT",t:"Tell your employer and record it. Serious injuries and dangerous occurrences must be reported to the HSE under RIDDOR."}},
 
 // ---- X RECORDS
 {part:"X · RECORDS", tag:"RECORDS", slug:"the-equipment-record", title:"The equipment record", sub:"Five years, both parties, and exactly these items.", fig:"record",
