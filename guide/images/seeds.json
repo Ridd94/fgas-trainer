@@ -1,0 +1,285 @@
+{
+  "the-cycle-in-four-stages": {
+    "seed": 1642964804,
+    "steps": 24,
+    "cfg": 4,
+    "extra": "Two copper pipes clearly run from the indoor unit to the outdoor unit forming a loop; the black compressor sits on the pipe next to the outdoor unit and the brass expansion valve on the other pipe. The warm air from the outdoor unit is drawn as soft wavy light orange breeze lines, never fire or flames."
+  },
+  "the-manifold-gauge-set": {
+    "seed": 1345246771,
+    "steps": 24,
+    "cfg": 4
+  },
+  "the-recovery-cylinder": {
+    "seed": 1846166090,
+    "steps": 24,
+    "cfg": 4,
+    "extra": "The dashed fill line is drawn high up the grey body, just below the yellow shoulder, at about four fifths of the height. Plain workshop wall with no posters."
+  },
+  "how-the-exam-works": {
+    "seed": 1283933262,
+    "steps": 24,
+    "cfg": 4,
+    "extra": "The answer sheet shows only rows of small empty circles with no heading and no words. The recovery cylinder is grey with a yellow shoulder. An assessor holds a clipboard.",
+    "edits": [
+      {
+        "tool": "qwen_edit2.py (Qwen-Image-Edit-2511 Q8, 8 steps, seed 1)",
+        "region": "60,260,520,620",
+        "prompt": "Remove all words and letters at the top of the answer sheet so the sheet shows only empty boxes and no writing. Keep everything else exactly the same."
+      },
+      {
+        "tool": "manual",
+        "note": "faint heading on the answer sheet painted over with the paper colour, box 112,316-300,349"
+      }
+    ]
+  },
+  "why-it-gets-cold": {
+    "seed": 354845944,
+    "steps": 24,
+    "cfg": 4
+  },
+  "superheat-and-subcooling": {
+    "seed": 1324635243,
+    "steps": 24,
+    "cfg": 4,
+    "extra": "The evaporator is a finned copper coil with rows of thin aluminium fins and copper hairpin tubes, shown cut away; inside the tubes blue liquid turns to bubbles then to pale vapour. No water pipes. The digital manifold screen is blank."
+  },
+  "the-liquid-line-and-its-parts": {
+    "seed": 2103365539,
+    "steps": 24,
+    "cfg": 4,
+    "extra": "The sight glass is a short brass tube fitting with a tiny round glass porthole window on top, like a ship's porthole, showing liquid; it has no face, no needle and no tick marks, and there are no gauges anywhere in the image. The expansion valve's sensing bulb is a small copper capillary bulb clamped to the pipe. Everything is dry, no water drops.",
+    "edits": [
+      {
+        "tool": "qwen_edit2.py (Qwen-Image-Edit-2511 Q8, 8 steps, seed 1)",
+        "region": "740,260,1200,720",
+        "prompt": "Replace the round gauge with a sight glass: a short brass fitting on the copper pipe with a small round glass porthole window on top showing green liquid. No dial face, no needle, no tick marks. Keep everything else exactly the same."
+      }
+    ]
+  },
+  "the-heat-pump-and-the-4-way-valve": {
+    "seed": 1492579232,
+    "steps": 24,
+    "cfg": 4,
+    "extra": "Left half is winter with snow; right half is summer with green grass, sunshine and no snow anywhere. The four-way valve is a brass cylindrical body with four copper pipe stubs and no dial."
+  },
+  "the-refrigerant-families": {
+    "seed": 1421441014,
+    "steps": 24,
+    "cfg": 4
+  },
+  "gwp-the-numbers-to-learn": {
+    "seed": 1008614264,
+    "steps": 24,
+    "cfg": 4,
+    "extra": "The left pan holds one small plain grey cloud puff with no face, dial or gauge on it, and that pan rides high; the right pan holding the cylinder sits low, clearly heavier. There are no dials, gauges or clocks anywhere in the image."
+  },
+  "blends-and-temperature-glide": {
+    "seed": 939357786,
+    "steps": 24,
+    "cfg": 4
+  },
+  "the-safety-classes": {
+    "seed": 1327168109,
+    "steps": 24,
+    "cfg": 4
+  },
+  "oil-and-moisture": {
+    "seed": 222488299,
+    "steps": 24,
+    "cfg": 4
+  },
+  "recovered-recycled-reclaimed": {
+    "seed": 1951032684,
+    "steps": 24,
+    "cfg": 4
+  },
+  "two-regulations": {
+    "seed": 1480120898,
+    "steps": 24,
+    "cfg": 4
+  },
+  "personnel-categories": {
+    "seed": 1901342691,
+    "steps": 24,
+    "cfg": 4,
+    "extra": "The technicians have normal friendly human faces, not gauges. Each stands beside their own tools as described."
+  },
+  "operator-and-contractor": {
+    "seed": 652538162,
+    "steps": 24,
+    "cfg": 4
+  },
+  "the-equipment-label": {
+    "seed": 1514880822,
+    "steps": 24,
+    "cfg": 4
+  },
+  "phase-down-and-bans": {
+    "seed": 431578314,
+    "steps": 24,
+    "cfg": 4
+  },
+  "co2-equivalent": {
+    "seed": 986555634,
+    "steps": 24,
+    "cfg": 4
+  },
+  "how-often-to-check": {
+    "seed": 1481542147,
+    "steps": 24,
+    "cfg": 4,
+    "extra": "The calendars are blank with no numbers, just empty grid squares."
+  },
+  "where-leaks-happen": {
+    "seed": 147765355,
+    "steps": 24,
+    "cfg": 4
+  },
+  "direct-and-indirect-methods": {
+    "seed": 274963006,
+    "steps": 24,
+    "cfg": 4
+  },
+  "the-nitrogen-standing-pressure-test": {
+    "seed": 629758842,
+    "steps": 24,
+    "cfg": 4
+  },
+  "recovery-methods": {
+    "seed": 246487578,
+    "steps": 24,
+    "cfg": 4,
+    "extra": "All refrigerant stays inside the hoses; nothing sprays or splashes into the air. A cutaway window in one hose shows pale blue liquid inside. The recovery cylinder is grey with a yellow shoulder, standing on scales.",
+    "edits": [
+      {
+        "tool": "qwen_edit2.py (Qwen-Image-Edit-2511 Q8, 8 steps, seed 1)",
+        "prompt": "Remove every spray, splash and droplet of liquid in the air; the hoses connect cleanly and nothing escapes. Keep everything else exactly the same."
+      }
+    ]
+  },
+  "where-the-gas-goes": {
+    "seed": 1889197916,
+    "steps": 24,
+    "cfg": 4,
+    "extra": "The cylinder being loaded into the van is grey with a yellow shoulder. No writing on any building, van or sign.",
+    "edits": [
+      {
+        "tool": "qwen_edit2.py (Qwen-Image-Edit-2511 Q8, 8 steps, seed 1)",
+        "region": "800,340,1120,780",
+        "prompt": "Remove the yellow cloth and paint the top dome shoulder of the grey cylinder bright yellow, like a UK refrigerant recovery cylinder. Keep everything else exactly the same."
+      }
+    ]
+  },
+  "brazing-with-nitrogen": {
+    "seed": 1882035891,
+    "steps": 24,
+    "cfg": 4
+  },
+  "strength-and-tightness-tests": {
+    "seed": 556905095,
+    "steps": 24,
+    "cfg": 4,
+    "extra": "The nitrogen cylinder is dark charcoal grey with a brass regulator. The large gauge face shows only tick marks."
+  },
+  "the-vacuum": {
+    "seed": 1666927587,
+    "steps": 24,
+    "cfg": 4,
+    "extra": "A single two-stage vacuum pump sits on the floor; a yellow hose runs to a small handheld digital gauge with a blank screen, then to the service valve of an outdoor unit. A cutaway section of copper pipe shows faint vapour wisps flowing toward the pump. Nothing sprays out anywhere.",
+    "edits": [
+      {
+        "tool": "qwen_edit2.py (Qwen-Image-Edit-2511 Q8, 8 steps, seed 1)",
+        "prompt": "Remove the water dripping from the copper pipe and the puddle on the floor; the floor is dry. Keep everything else exactly the same."
+      }
+    ]
+  },
+  "charging-by-weight": {
+    "seed": 933309501,
+    "steps": 24,
+    "cfg": 4,
+    "extra": "The cylinder stands upside down directly on top of the electronic scale platform. The scale display is blank; gauge faces show only tick marks."
+  },
+  "commissioning-in-order": {
+    "seed": 1287530307,
+    "steps": 24,
+    "cfg": 4,
+    "extra": "Show at most one gauge, its face with only tick marks and no digits. The thermometer is a plain glass tube with a red bulb and no scale markings. The logbook shows only blank lines.",
+    "edits": [
+      {
+        "tool": "qwen_edit2.py (Qwen-Image-Edit-2511 Q8, 8 steps, seed 1)",
+        "prompt": "Remove all numbers and letters from the gauge face and from the thermometer, leaving only plain tick marks. Keep everything else exactly the same."
+      }
+    ]
+  },
+  "four-fault-fingerprints": {
+    "seed": 463572236,
+    "steps": 24,
+    "cfg": 4
+  },
+  "reading-the-sight-glass": {
+    "seed": 886923438,
+    "steps": 24,
+    "cfg": 4,
+    "extra": "Each sight glass is a short brass tube fitting with a small round glass porthole window on top, like a ship's porthole, seen from above; there is no needle, no dial face and no tick marks on any of them. First window shows clear liquid, second is full of bubbles, third has a small yellow dot in the centre.",
+    "edits": [
+      {
+        "tool": "qwen_edit2.py (Qwen-Image-Edit-2511 Q8, 8 steps, seed 1)",
+        "prompt": "Turn these three into sight glass windows: remove every needle, tick mark and dial marking. The first window shows clear liquid, the second is full of bubbles, the third is clear with only a small yellow dot in the centre. Keep the brass bodies and pipe exactly the same."
+      }
+    ]
+  },
+  "heavier-than-air": {
+    "seed": 1204776552,
+    "steps": 24,
+    "cfg": 4,
+    "extra": "The refrigerant gas is a faint, see-through bluish haze like low-lying fog or dry-ice mist, hugging the floor and drifting down into the pit. There is absolutely no liquid, no water, no puddle and no splash anywhere.",
+    "edits": [
+      {
+        "tool": "qwen_edit2.py (Qwen-Image-Edit-2511 Q8, 8 steps, seed 1)",
+        "prompt": "Remove all the water and puddles from the floor so the floor is dry; instead a faint transparent pale-blue fog lies low across the floor and drifts down into the pit. Keep everything else exactly the same."
+      }
+    ]
+  },
+  "cylinders-do-and-never": {
+    "seed": 183099521,
+    "steps": 24,
+    "cfg": 4,
+    "extra": "The right-hand scene has a large red circle with a diagonal red bar, a prohibition sign, drawn over the whole scene. No gauges on the cylinders."
+  },
+  "flames-and-refrigerant": {
+    "seed": 1002891409,
+    "steps": 24,
+    "cfg": 4,
+    "extra": "The prohibition overlay is a large red circle with a diagonal red bar over the torch scene, not a medical cross. The nitrogen cylinder is dark charcoal grey."
+  },
+  "working-with-a2l-refrigerants": {
+    "seed": 1342616203,
+    "steps": 24,
+    "cfg": 4,
+    "extra": "The recovery machine and cylinder carry only a plain flame-in-shield pictogram with no words or letters at all. No real fire anywhere.",
+    "edits": [
+      {
+        "tool": "qwen_edit2.py (Qwen-Image-Edit-2511 Q8, 8 steps, seed 1)",
+        "prompt": "Remove the lettering from the indoor unit and remove the real fire burning on top of the green cylinder; keep the small flame icon on the cylinder's badge. Keep everything else exactly the same."
+      },
+      {
+        "tool": "qwen_edit2.py",
+        "region": "1310,610,1460,780",
+        "prompt": "Erase the tiny marks under the flame inside the shield badge, leaving a plain grey shield with only the red flame icon. Keep everything else exactly the same."
+      }
+    ]
+  },
+  "the-equipment-record": {
+    "seed": 1374444237,
+    "steps": 24,
+    "cfg": 4,
+    "extra": "Instead of a calendar, a row of five closed ring binders stands on a shelf on the wall. The tablet screen shows only empty boxes. No clocks, no calendars, no numbers anywhere.",
+    "edits": [
+      {
+        "tool": "qwen_edit2.py (Qwen-Image-Edit-2511 Q8, 8 steps, seed 1)",
+        "prompt": "Remove the wall calendar completely, leaving plain wall where it was. Keep everything else exactly the same."
+      }
+    ]
+  }
+}

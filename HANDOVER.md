@@ -85,7 +85,32 @@ Not done:
   page with real company details, a Stripe Payment Link or Gumroad product that
   delivers the PDF, and a price. Nothing built yet.
 
-## Illustrations: where it stands (2026-11-09)
+## Illustrations: done (2026-11-09, second session)
+
+All 38 pages now have a generated illustration in `guide/images/<slug>.png`
+(1664x928), replacing the three hand-drawn pilots. `node guide/build.js`
+reports 38 of 38; every hero renders at the same 172x96 mm with nothing cropped.
+
+- Generator: the local ComfyUI on the SWCC PC (127.0.0.1:8188, no key), running
+  Qwen-Image-Edit-2511 Q8 as text-to-image: 24 steps, CFG 4, with a negative
+  prompt against text. Script: `node guide/generate-images.js [slug ...]`
+  (`--extra "..."` adds a correction, `--seed n` fixes the seed).
+- The style line is reworded for generation (agreed with Luke): the hex codes
+  became plain colour words and "infographic" was dropped, because the model
+  painted them as fake signs and callout boxes. `--verbatim-style` uses the
+  original line.
+- Every image was checked against the checklist below. Failures were regenerated
+  with a per-image correction. Ten stubborn ones were then fixed with targeted
+  Qwen image edits (`C:\Users\Luke\Documents\comfyui-mcp\photo-edit\qwen_edit2.py`).
+  One faint heading was painted out by hand. `guide/images/seeds.json` records
+  each image's seed, correction and edits.
+- "The equipment record" shows a shelf of five ring binders instead of a
+  calendar, because every calendar came out with dates on it (OK'd by Luke).
+- The PNGs are about 1.8 MB each. `build.js` re-encodes them as JPEG (quality
+  0.85, full resolution) inside the PDF and `guide.html` only, so the PDF is
+  about 7 MB and `guide.html` about 8 MB; the PNG sources are untouched.
+
+## Illustrations: how it got here (first session, 2026-11-09)
 
 Branch: `guide-illustrations`. Goal: one image per topic page, in the style and
 with the filenames given in `guide/IMAGE-PROMPTS.md`.
